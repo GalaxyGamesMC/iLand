@@ -24,4 +24,14 @@ class Session
     {
         $this->data['B'] = $B;
     }
+	
+	public function getPositionA(): float
+    {
+        return $this->data['A'];
+    }
+	
+	public function getPositionB(): float
+    {
+        return $this->data['B'];
+    }
 }
