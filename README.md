@@ -8,6 +8,7 @@
 - [X] Main Form
 - [ ] Manage Form
 - [ ] Teleport Form
+- [ ] Economy System
 - [ ] Set Pos Claim System
 - [ ] Added Icon For Form
 - [ ] More
