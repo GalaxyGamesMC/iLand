@@ -8,6 +8,9 @@
 - [X] Main Form
 - [ ] Manage Form
 - [ ] Teleport Form
+- [ ] Settings Form
+- [ ] OP Form 
+- [ ] Anti Attack Land
 - [ ] Economy System
 - [ ] Set Pos Claim System
 - [ ] Added Icon For Form
