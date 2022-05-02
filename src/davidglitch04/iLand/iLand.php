@@ -4,6 +4,7 @@ namespace davidglitch04\iLand;
 
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
+use davidglitch04\iLand\Session\SessionManager;
 use jojoe77777\FormAPI\FormAPI;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
@@ -85,5 +86,9 @@ class iLand extends PluginBase
         }
 
         return $database;
+    }
+
+    public function getSessionManager(): SessionManager{
+        return new SessionManager();
     }
 }
