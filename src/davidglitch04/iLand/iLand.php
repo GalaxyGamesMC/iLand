@@ -2,8 +2,6 @@
 
 namespace davidglitch04\iLand;
 
-use CortexPE\Commando\BaseCommand;
-use CortexPE\Commando\PacketHooker;
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
 use jojoe77777\FormAPI\FormAPI;
@@ -39,25 +37,13 @@ class iLand extends PluginBase
 
     public function onEnable(): void
     {
-        foreach ([
-            'Commando' => BaseCommand::class,
-            'FormAPI' => FormAPI::class,
-        ] as $virions) {
-            if (!class_exists($virions)) {
-                $this->getLogger()->notice('Please install Commando, FormAPI virion');
-                $this->getServer()->shutdown();
-            }
-        }
         $this->saveDefaultConfig();
         $this->initDataBase();
         $this->initLanguage(strval($this->getConfig()->get('language', 'eng')), $this->languages);
         if (self::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning('You are on development, unexpected errors will occur DavidGlitch04 will not fix this!');
         }
-        if (!PacketHooker::isRegistered()) {
-            PacketHooker::register($this);
-        }
-		$this->getServer()->getCommandMap()->register("land", new iLandCommand($this, "land", "iLand Cpanel", ["iland"]));
+		$this->getServer()->getCommandMap()->register("land", new iLandCommand($this));
     }
 
     public function initDataBase(): void

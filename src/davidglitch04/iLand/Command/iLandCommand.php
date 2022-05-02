@@ -2,20 +2,32 @@
 
 namespace davidglitch04\iLand\Command;
 
-use CortexPE\Commando\BaseCommand;
+use davidglitch04\iLand\iLand;
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 
-class iLandCommand extends BaseCommand
+class iLandCommand extends Command implements PluginOwned
 {
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
+
+    protected iland $iland;
+
+    public function __construct(iLand $iland)
     {
-        //TODO:
-        //If form is disable player must use command else sendForm to Player
+        $this->iland = $iland;
+        parent::__construct("land");
+        $this->setDescription("iLand control panel");
+        $this->setAliases(["iland"]);
     }
 
-    public function prepare(): void
+    public function getOwningPlugin(): Plugin
     {
-        //TODO:
-        //Register args
+        return $this->iland;
+    }
+
+    public function execute(CommandSender $sender, string $commandLabel, array $args): void
+    {
+        //TODO
     }
 }
