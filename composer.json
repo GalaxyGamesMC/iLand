@@ -1,0 +1,17 @@
+{
+    "name": "davidglitch04/iland",
+    "description": "Powerful land plugin, based on PMMP",
+    "type": "project",
+    "license": "GPL-3.0",
+    "autoload": {
+        "psr-4": {
+            "Davidglitch04\\Iland\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DavidGlitch04"
+        }
+    ],
+    "require": {}
+}
