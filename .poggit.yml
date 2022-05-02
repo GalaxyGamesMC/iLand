@@ -1,0 +1,11 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/David-pm-pl/iLand
+build-by-default: true
+branches:
+- stable
+projects:
+  iLand:
+    path: ""
+    icon: "assets/images/icon.png"
+    lint:
+      phpstan: false
+...
