@@ -12,8 +12,12 @@ use pocketmine\plugin\PluginOwned;
 
 class iLandCommand extends Command implements PluginOwned
 {
-    protected iland $iland;
+    /**@var iLand $iland */
+    protected iLand $iland;
 
+    /**
+     * @param iLand $iland
+     */
     public function __construct(iLand $iland)
     {
         $this->iland = $iland;
@@ -22,11 +26,20 @@ class iLandCommand extends Command implements PluginOwned
         $this->setAliases(['iland']);
     }
 
+    /**
+     * @return Plugin
+     */
     public function getOwningPlugin(): Plugin
     {
         return $this->iland;
     }
 
+    /**
+     * @param  CommandSender $sender
+     * @param  string        $commandLabel
+     * @param  array         $args
+     * @return void
+     */
     public function execute(CommandSender $sender, string $commandLabel, array $args): void
     {
         if ($sender instanceof Player) {

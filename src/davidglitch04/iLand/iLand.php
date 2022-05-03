@@ -13,42 +13,52 @@ class iLand extends PluginBase
 {
     use SingletonTrait;
 
-    protected const IS_DEVELOPMENT_BUILD = true;
-
-    protected const CONFIG = 'Yaml';
-
+    /**@var Language $language */
     private static Language $language;
 
+    /** @var array $languages */
     private array $languages = [
         'eng',
         'vie',
         'china',
     ];
 
+    /**
+     * @return Language
+     */
     public static function getLanguage(): Language
     {
         return self::$language;
     }
 
+    /**
+     * @return void
+     */
     public function onLoad(): void
     {
         $this->setInstance($this);
     }
 
+    /**
+     * @return void
+     */
     public function onEnable(): void
     {
         $this->saveDefaultConfig();
         $this->initDataBase();
         $this->initLanguage(strval($this->getConfig()->get('language', 'eng')), $this->languages);
-        if (self::IS_DEVELOPMENT_BUILD) {
-            $this->getLogger()->warning('You are on development, unexpected errors will occur DavidGlitch04 will not fix this!');
+        if (VersionInfo::IS_DEVELOPMENT_BUILD) {
+            $this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
         }
         $this->getServer()->getCommandMap()->register('land', new iLandCommand($this));
     }
 
+    /**
+     * @return void
+     */
     public function initDataBase(): void
     {
-        switch (self::CONFIG) {
+        switch ($this->getConfig()->get('config', 'Yaml')) {
             case 'Yaml':
                 $database = new YamlProvider($this);
                 break;
@@ -59,6 +69,11 @@ class iLand extends PluginBase
         $database->initConfig();
     }
 
+    /**
+     * @param  string $lang
+     * @param  array  $languageFiles
+     * @return void
+     */
     public function initLanguage(string $lang, array $languageFiles): void
     {
         $path = $this->getDataFolder().'languages/';
@@ -73,9 +88,12 @@ class iLand extends PluginBase
         self::$language = new Language($lang, $path);
     }
 
+    /**
+     * @return mixed
+     */
     public function getDataBase()
     {
-        switch (self::CONFIG) {
+        switch ($this->getConfig()->get('config', 'Yaml')) {
             case 'Yaml':
                 $database = new YamlProvider($this);
                 break;
@@ -86,7 +104,10 @@ class iLand extends PluginBase
 
         return $database;
     }
-
+    
+    /**
+     * @return SessionManager
+     */
     public function getSessionManager(): SessionManager
     {
         return new SessionManager();

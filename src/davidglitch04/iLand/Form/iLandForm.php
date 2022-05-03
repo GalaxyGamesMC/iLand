@@ -8,11 +8,18 @@ use pocketmine\player\Player;
 
 class iLandForm
 {
+    /**
+     * @param Player $player
+     */
     public function __construct(Player $player)
     {
         $this->sendForm($player);
     }
-
+    
+    /**
+     * @param  Player $player
+     * @return mixed
+     */
     private function sendForm(Player $player)
     {
         $form = new SimpleForm(function (Player $player, $data) {
