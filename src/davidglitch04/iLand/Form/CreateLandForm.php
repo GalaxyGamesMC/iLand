@@ -17,14 +17,18 @@ class CreateLandForm
     {
         $form = new SimpleForm(function (Player $player, $data) {
             if (!isset($data)) {
-                return false;
+                return new iLandForm($player);
             }
             if ($data === 0) {
                 iLand::getInstance()->getSessionManager()->addPlayer($player);
+            } else {
+                new iLandForm($player);
             }
         });
-        $form->setTitle('Create Land');
-        $form->addButton('Start Create');
+        $language = iLand::getLanguage();
+        $form->setTitle($language->translateString('gui.buyland.title'));
+        $form->addButton($language->translateString('gui.buyland.start'));
+        $form->addButton($language->translateString('gui.general.back'));
         $player->sendForm($form);
 
         return $form;

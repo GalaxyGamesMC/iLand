@@ -5,7 +5,6 @@ namespace davidglitch04\iLand;
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
 use davidglitch04\iLand\Session\SessionManager;
-use jojoe77777\FormAPI\FormAPI;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
@@ -44,7 +43,7 @@ class iLand extends PluginBase
         if (self::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning('You are on development, unexpected errors will occur DavidGlitch04 will not fix this!');
         }
-		$this->getServer()->getCommandMap()->register("land", new iLandCommand($this));
+        $this->getServer()->getCommandMap()->register('land', new iLandCommand($this));
     }
 
     public function initDataBase(): void
@@ -74,7 +73,7 @@ class iLand extends PluginBase
         self::$language = new Language($lang, $path);
     }
 
-    public function getDataBase(): mixed
+    public function getDataBase()
     {
         switch (self::CONFIG) {
             case 'Yaml':
@@ -88,7 +87,8 @@ class iLand extends PluginBase
         return $database;
     }
 
-    public function getSessionManager(): SessionManager{
+    public function getSessionManager(): SessionManager
+    {
         return new SessionManager();
     }
 }

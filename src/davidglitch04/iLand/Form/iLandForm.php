@@ -8,14 +8,12 @@ use pocketmine\player\Player;
 
 class iLandForm
 {
-    protected iLand $iland;
-
-    public function __construct(iLand $iland)
+    public function __construct(Player $player)
     {
-        $this->iland = $iland;
+        $this->sendForm($player);
     }
 
-    public function mainForm(Player $player)
+    private function sendForm(Player $player)
     {
         $form = new SimpleForm(function (Player $player, $data) {
             if (!isset($data)) {
@@ -33,11 +31,13 @@ class iLandForm
                 break;
             }
         });
-        $form->setTitle('iLand');
-        $form->addButton('New Land');
-        $form->addButton('Manage Land');
-        $form->addButton('Teleport To Land');
-        $form->addButton('Exit');
+        $language = iLand::getLanguage();
+        $form->setTitle($language->translateString('gui.fastgde.title'));
+        $form->setContent($language->translateString('gui.fastgde.content', [iLand::getInstance()->getDataBase()->CountLand($player)]));
+        $form->addButton($language->translateString('gui.fastgde.create'));
+        $form->addButton($language->translateString('gui.fastgde.manage'));
+        $form->addButton($language->translateString('gui.fastgde.landtp'));
+        $form->addButton($language->translateString('gui.general.back'));
         $player->sendForm($form);
     }
 }
