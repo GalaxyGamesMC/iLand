@@ -6,6 +6,10 @@ projects:
   iLand:
     path: ""
     icon: "assets/images/icon.png"
+    libs:
+     - src: davidglitch04/libEco/libEco
+       version: ^3.0.0
+       branch: stable
     lint:
       phpstan: false
 ...
