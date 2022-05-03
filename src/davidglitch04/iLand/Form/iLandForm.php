@@ -31,10 +31,10 @@ class iLandForm
                     new CreateLandForm($player);
                 break;
                 case 1:
-                    new ManageLandForm($player);
+                   // new ManageLandForm($player);
                 break;
                 case 2:
-                    new TeleportLandForm($player);
+                   // new TeleportLandForm($player);
                 break;
             }
         });

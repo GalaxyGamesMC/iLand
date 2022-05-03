@@ -2,6 +2,7 @@
 
 namespace davidglitch04\iLand;
 
+use CortexPE\Commando\PacketHooker;
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
 use davidglitch04\iLand\Session\SessionManager;
@@ -50,7 +51,8 @@ class iLand extends PluginBase
         if (VersionInfo::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
         }
-        $this->getServer()->getCommandMap()->register('land', new iLandCommand($this));
+        if (!PacketHooker::isRegistered()) PacketHooker::register($this);
+        $this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
     }
 
     /**
@@ -58,14 +60,7 @@ class iLand extends PluginBase
      */
     public function initDataBase(): void
     {
-        switch ($this->getConfig()->get('config', 'Yaml')) {
-            case 'Yaml':
-                $database = new YamlProvider($this);
-                break;
-            default:
-            $database = new YamlProvider($this);
-                break;
-        }
+        $database = new YamlProvider($this);
         $database->initConfig();
     }
 
@@ -89,19 +84,11 @@ class iLand extends PluginBase
     }
 
     /**
-     * @return mixed
+     * @return YamlProvider
      */
-    public function getDataBase()
+    public function getDataBase(): YamlProvider
     {
-        switch ($this->getConfig()->get('config', 'Yaml')) {
-            case 'Yaml':
-                $database = new YamlProvider($this);
-                break;
-            default:
-            $database = new YamlProvider($this);
-                break;
-        }
-
+        $database = new YamlProvider($this);
         return $database;
     }
     

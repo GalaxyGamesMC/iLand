@@ -27,6 +27,7 @@ class CreateLandForm
             }
             if ($data === 0) {
                 iLand::getInstance()->getSessionManager()->addPlayer($player);
+                $player->sendMessage("true");
             } else {
                 new iLandForm($player);
             }

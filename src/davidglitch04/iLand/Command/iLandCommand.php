@@ -2,50 +2,56 @@
 
 namespace davidglitch04\iLand\Command;
 
+use CortexPE\Commando\args\RawStringArgument;
+use CortexPE\Commando\BaseCommand;
+use CortexPE\Commando\BaseSubCommand;
+use davidglitch04\iLand\Command\SubCommands\Buy;
 use davidglitch04\iLand\Form\iLandForm;
 use davidglitch04\iLand\iLand;
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
-use pocketmine\plugin\Plugin;
-use pocketmine\plugin\PluginOwned;
 
-class iLandCommand extends Command implements PluginOwned
+class iLandCommand extends BaseCommand
 {
-    /**@var iLand $iland */
-    protected iLand $iland;
-
-    /**
-     * @param iLand $iland
-     */
-    public function __construct(iLand $iland)
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        $this->iland = $iland;
-        parent::__construct('land');
-        $this->setDescription('iLand control panel');
-        $this->setAliases(['iland']);
-    }
-
-    /**
-     * @return Plugin
-     */
-    public function getOwningPlugin(): Plugin
-    {
-        return $this->iland;
-    }
-
-    /**
-     * @param  CommandSender $sender
-     * @param  string        $commandLabel
-     * @param  array         $args
-     * @return void
-     */
-    public function execute(CommandSender $sender, string $commandLabel, array $args): void
-    {
-        if ($sender instanceof Player) {
+        $subcommands = array_values(array_map(function (BaseSubCommand $subCommand): string {
+            return $subCommand->getName();
+        }, $this->getSubCommands()));
+        if(!isset($args["args"]) and $sender instanceof Player){
             new iLandForm($sender);
-        } else {
-            $sender->sendMessage(iLand::getLanguage()->translateString('use.ingame'));
+        } elseif($args["args"] == "set" and $sender instanceof Player){
+            if(!iLand::getInstance()->getSessionManager()->inSession($sender)){
+                $sender->sendTip(iLand::getLanguage()->translateString("title.rangeselector.fail.outmode"));
+                return;
+            } else{
+                if(iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A")){
+                    iLand::getInstance()->getSessionManager()->getSession($sender)->setPositionA($sender->getPosition());
+                    $sender->sendTip(iLand::getLanguage()->translateString("title.rangeselector.pointed", [
+                        "A", 
+                        $sender->getWorld()->getFolderName(), 
+                        $sender->getLocation()->getX(), 
+                        $sender->getLocation()->getY(), 
+                        $sender->getLocation()->getZ()])
+                    );
+                } elseif(iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B")){
+                    iLand::getInstance()->getSessionManager()->getSession($sender)->setPositionB($sender->getPosition());
+                    $sender->sendTip(iLand::getLanguage()->translateString("title.rangeselector.pointed", [
+                        "B", 
+                        $sender->getWorld()->getFolderName(), 
+                        $sender->getLocation()->getX(), 
+                        $sender->getLocation()->getY(), 
+                        $sender->getLocation()->getZ()])
+                    );
+                }
+            }
         }
+        $sender->sendMessage("Usage: /land <" . implode("|", $subcommands) . ">");
+    }
+
+    protected function prepare(): void{
+        $this->registerArgument(0, new RawStringArgument("args", true));
+        $this->registerArgument(1, new RawStringArgument("select", true));
+        $this->registerSubCommand(new Buy("buy", iLand::getLanguage()->translateString("Buy the selected land")));
     }
 }

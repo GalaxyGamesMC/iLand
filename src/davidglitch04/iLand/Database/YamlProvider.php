@@ -59,4 +59,9 @@ class YamlProvider implements Provider
         $land = $this->land->get($owner);
         return new Position($land["Spawn"]["X"], $land["Spawn"]["Y"], $land["Spawn"]["Z"], $land["World"]);
     }
+
+    public function CountLand(Player $player): int{
+        //TEST
+        return 0;
+    }
 }

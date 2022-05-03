@@ -34,4 +34,12 @@ class Session
     {
         return $this->data['B'];
     }
+
+    public function isNull(string $location): bool{
+        if(is_null($this->data[$location])){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

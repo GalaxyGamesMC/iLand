@@ -6,11 +6,19 @@ use pocketmine\player\Player;
 
 class SessionManager
 {
-    private static array $session = [];
+    private $session = [];
 
     public function __construct()
     {
         //NOTHING
+    }
+
+    public function addPlayer(Player $player): void
+    {
+        $name = strtolower($player->getName());
+        if (!isset($this->session[$name])) {
+            $this->session[$name] = new Session($name);
+        }
     }
 
     public function inSession(Player $player): bool
@@ -23,15 +31,14 @@ class SessionManager
         }
     }
 
-    public function addPlayer(Player $player): void
-    {
+    public function removePlayer(Player $player): void{
         $name = strtolower($player->getName());
-        if (!isset($this->session[$name])) {
-            $this->session[$name] = new Session($name);
+        if (isset($this->session[$name])) {
+            unset($this->session[$name]);
         }
     }
 
-    public function getData(Player $player): Session
+    public function getSession(Player $player): Session
     {
         $name = strtolower($player->getName());
 
