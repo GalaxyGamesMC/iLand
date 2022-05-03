@@ -18,7 +18,7 @@ interface Provider
      * @param  string $name
      * @return void
      */
-    public function getDatabase(string $name): array;
+    public function getData(string $name): array;
 
     /**
      * @param string $name

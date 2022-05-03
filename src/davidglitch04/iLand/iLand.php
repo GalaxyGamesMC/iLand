@@ -86,7 +86,7 @@ class iLand extends PluginBase
     /**
      * @return YamlProvider
      */
-    public function getDataBase(): YamlProvider
+    public function getProvider(): YamlProvider
     {
         $database = new YamlProvider($this);
         return $database;
