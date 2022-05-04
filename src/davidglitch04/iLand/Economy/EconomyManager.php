@@ -14,9 +14,6 @@ final class EconomyManager
 
     private const BEDROCKECONOMYAPI = 'BedrockEco';
 
-    /**
-     * @return array<string, object>
-     */
     private static function getEconomy(): array
     {
         $api = Server::getInstance()->getPluginManager()->getPlugin('EconomyAPI');
@@ -30,9 +27,6 @@ final class EconomyManager
         }
     }
 
-    /**
-     * @return int
-     */
     public static function myMoney(Player $player, Closure $callback): void
     {
         if (self::getEconomy()[0] === self::ECONOMYAPI) {
