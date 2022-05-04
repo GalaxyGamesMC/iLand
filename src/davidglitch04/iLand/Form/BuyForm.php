@@ -24,8 +24,8 @@ class BuyForm{
         $form->setTitle($language->translateString("gui.buyland.title"));
         $startpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionA();
         $endpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionB();
-        $length = $startpos->getX() - $endpos->getX();
-        $width = $startpos->getY() - $endpos->getY();
+        $length = abs((int)$startpos->getX() - (int)$endpos->getX());
+        $width = abs((int)$startpos->getZ() - (int)$endpos->getZ());
         $priceperblock = iLand::getInstance()->getConfig()->get("Price/Area");
         $blocks = $length * $width;
         $price = $priceperblock * $blocks;

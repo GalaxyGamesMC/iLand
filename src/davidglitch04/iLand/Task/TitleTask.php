@@ -19,7 +19,7 @@ class TitleTask extends Task{
     public function onRun(): void
     {
         if(!$this->player->isConnected()){
-            return;
+            throw new CancelTaskException();
         }
         $status = '';
         $statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("A");
