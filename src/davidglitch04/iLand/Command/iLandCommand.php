@@ -27,7 +27,9 @@ class iLandCommand extends BaseCommand
                 return;
             } else {
                 if (iLand::getInstance()->getSessionManager()->getSession($sender)->isNull('A')) {
-                    if (iLand::getInstance()->getProvider()->isOverlap($sender->getPosition()->getX(), $sender->getPosition()->getZ(), $sender->getPosition()->getX(), $sender->getPosition()->getZ())) {
+                    $x = $sender->getPosition()->getX();
+                    $z = $sender->getPosition()->getZ();
+                    if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
                         $sender->sendMessage('');
                     }
                     $sender->sendTip(iLand::getLanguage()->translateString('title.rangeselector.pointed', [

@@ -48,7 +48,7 @@ class iLand extends PluginBase
     public function onEnable(): void
     {
         $this->saveDefaultConfig();
-        $this->initDataBase();
+        $this->initProvider();
         $this->initLanguage(strval($this->getConfig()->get('language', 'eng')), $this->languages);
         if (VersionInfo::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
@@ -60,7 +60,7 @@ class iLand extends PluginBase
     /**
      * @return void
      */
-    public function initDataBase(): void
+    public function initProvider(): void
     {
         $database = new YamlProvider($this);
         $database->initConfig();
