@@ -28,7 +28,7 @@ class NewLandForm
             }
             if ($data === 0) {
                 iLand::getInstance()->getSessionManager()->addPlayer($player);
-                iLand::getInstance()->getScheduler()->scheduleRepeatingTask(new TitleTask($player), 1);
+                iLand::getInstance()->getScheduler()->scheduleRepeatingTask(new TitleTask($player), 20);
             } else {
                 new iLandForm($player);
             }

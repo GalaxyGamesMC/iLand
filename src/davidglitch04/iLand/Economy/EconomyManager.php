@@ -27,15 +27,15 @@ final class EconomyManager
         }
     }
 
-    public static function myMoney(Player $player, Closure $callback): void
+    public static function myMoney(string $player, Closure $callback): void
     {
         if (self::getEconomy()[0] === self::ECONOMYAPI) {
             $money = self::getEconomy()[1]->myMoney($player);
             assert(is_float($money));
             $callback($money);
         } elseif (self::getEconomy()[0] === self::BEDROCKECONOMYAPI) {
-            self::getEconomy()[1]->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function (?int $balance) use ($callback): void {
-                $callback($balance ?? 0);
+            self::getEconomy()[1]->getAPI()->getPlayerBalance($player, ClosureContext::create(static function (?int $money) use ($callback): void {
+                $callback($money ?? 0);
             }));
         }
     }
