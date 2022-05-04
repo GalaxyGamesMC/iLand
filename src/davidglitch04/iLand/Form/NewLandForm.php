@@ -3,10 +3,11 @@
 namespace davidglitch04\iLand\Form;
 
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\Task\TitleTask;
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\player\Player;
 
-class CreateLandForm
+class NewLandForm
 {
     /**
      * @param Player $player
@@ -27,7 +28,7 @@ class CreateLandForm
             }
             if ($data === 0) {
                 iLand::getInstance()->getSessionManager()->addPlayer($player);
-                $player->sendMessage("true");
+                iLand::getInstance()->getScheduler()->scheduleRepeatingTask(new TitleTask($player), 1);
             } else {
                 new iLandForm($player);
             }

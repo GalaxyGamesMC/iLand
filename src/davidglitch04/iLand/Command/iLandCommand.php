@@ -6,6 +6,7 @@ use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseCommand;
 use CortexPE\Commando\BaseSubCommand;
 use davidglitch04\iLand\Command\SubCommands\Buy;
+use davidglitch04\iLand\Form\BuyForm;
 use davidglitch04\iLand\Form\iLandForm;
 use davidglitch04\iLand\iLand;
 use pocketmine\command\CommandSender;
@@ -26,25 +27,22 @@ class iLandCommand extends BaseCommand
 
                 return;
             } else {
-                if (iLand::getInstance()->getSessionManager()->getSession($sender)->isNull('A')) {
-                    $x = $sender->getPosition()->getX();
-                    $z = $sender->getPosition()->getZ();
-                    if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
-                        $sender->sendMessage('');
-                    }
-                    $sender->sendTip(iLand::getLanguage()->translateString('title.rangeselector.pointed', [
-                        iLand::getInstance()->getSessionManager()->getSession($sender)->setNextPosition($sender->getPosition()),
-                        $sender->getWorld()->getFolderName(),
-                        $sender->getLocation()->getX(),
-                        $sender->getLocation()->getY(),
-                        $sender->getLocation()->getZ(), ])
-                    );
-                    $statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
-                    $statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
-                    if(!$statusA and !$statusB){
-                        // TODO:
-                        // Send Player Buy Form
-                    }
+                $x = $sender->getPosition()->getX();
+                $z = $sender->getPosition()->getZ();
+                if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
+                    $sender->sendMessage('');
+                }
+                $sender->sendTip(iLand::getLanguage()->translateString('title.rangeselector.pointed', [
+                    iLand::getInstance()->getSessionManager()->getSession($sender)->setNextPosition($sender->getPosition()),
+                    $sender->getWorld()->getFolderName(),
+                    $sender->getLocation()->getX(),
+                    $sender->getLocation()->getY(),
+                    $sender->getLocation()->getZ(), ])
+                );
+                $statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
+                $statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
+                if(!$statusA and !$statusB){
+                    new BuyForm($sender);
                 }
             }
         }

@@ -19,19 +19,20 @@ class Session
     {
         if ($this->isNull('A')) {
             $this->data['A'] = $position;
-            return "A";
-        } else{
+            $string = "A";
+        } elseif($this->isNull('B')){
             $this->data['B'] = $position;
-            return "B";
+            $string = "B";
         }
+        return $string;
     }
 
-    public function getPositionA(): float
+    public function getPositionA(): Position
     {
         return $this->data['A'];
     }
 
-    public function getPositionB(): float
+    public function getPositionB(): Position
     {
         return $this->data['B'];
     }

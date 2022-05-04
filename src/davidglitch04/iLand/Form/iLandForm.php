@@ -28,7 +28,7 @@ class iLandForm
             }
             switch ($data) {
                 case 0:
-                    new CreateLandForm($player);
+                    new NewLandForm($player);
                 break;
                 case 1:
                    // new ManageLandForm($player);

@@ -1,2 +1,4 @@
 language: eng
 config: Yaml
+# Price of one block
+Price/Area: 70.0

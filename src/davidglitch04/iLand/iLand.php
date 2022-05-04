@@ -19,6 +19,8 @@ class iLand extends PluginBase
 	
 	public array $session;
 
+    protected YamlProvider $provider;
+
     /** @var array $languages */
     private array $languages = [
         'eng',
@@ -40,6 +42,7 @@ class iLand extends PluginBase
     public function onLoad(): void
     {
         $this->setInstance($this);
+        $this->provider = new YamlProvider($this);
     }
 
     /**
@@ -47,23 +50,14 @@ class iLand extends PluginBase
      */
     public function onEnable(): void
     {
+        $this->provider->initConfig();
         $this->saveDefaultConfig();
-        $this->initProvider();
         $this->initLanguage(strval($this->getConfig()->get('language', 'eng')), $this->languages);
         if (VersionInfo::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
         }
         if (!PacketHooker::isRegistered()) PacketHooker::register($this);
         $this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
-    }
-
-    /**
-     * @return void
-     */
-    public function initProvider(): void
-    {
-        $database = new YamlProvider($this);
-        $database->initConfig();
     }
 
     /**
@@ -90,8 +84,7 @@ class iLand extends PluginBase
      */
     public function getProvider(): YamlProvider
     {
-        $database = new YamlProvider($this);
-        return $database;
+        return $this->provider;
     }
     
     /**
