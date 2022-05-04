@@ -16,6 +16,8 @@ class iLand extends PluginBase
 
     /**@var Language $language */
     private static Language $language;
+	
+	public array $session;
 
     /** @var array $languages */
     private array $languages = [

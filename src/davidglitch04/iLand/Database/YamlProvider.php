@@ -6,13 +6,12 @@ use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
+use pocketmine\world\World;
 
 class YamlProvider implements Provider
 {
-    /** @var iLand $iland */
     protected iLand $iland;
 
-    /** @var Config $land */
     protected Config $land;
 
     public function __construct(iLand $iland)
@@ -46,5 +45,22 @@ class YamlProvider implements Provider
     {
         //TEST
         return 0;
+    }
+
+    public function isOverlap(float $startX, float $endX, float $startZ, float $endZ, World $world): bool
+    {
+        if ($world instanceof World) {
+            $WorldName = $world->getFolderName();
+        }
+        foreach ($this->land as $lands) {
+            if ($WorldName === $lands['World']) {
+                if (($startX <= $lands['endX'] and $endX >= $lands['startX']
+                and $endZ >= $lands['startZ'] and $startZ <= $lands['endZ'])) {
+                    return $lands;
+                }
+            }
+        }
+
+        return false;
     }
 }
