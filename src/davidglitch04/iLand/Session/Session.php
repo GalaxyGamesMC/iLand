@@ -15,30 +15,32 @@ class Session
         $this->data['B'] = null;
     }
 
-    public function setPositionA(Position $A): void
+    public function setNextPosition(Position $position): string
     {
-        $this->data['A'] = $A;
+        if ($this->isNull('A')) {
+            $this->data['A'] = $position;
+            return "A";
+        } else{
+            $this->data['B'] = $position;
+            return "B";
+        }
     }
 
-    public function setPositionB(Position $B): void
-    {
-        $this->data['B'] = $B;
-    }
-	
-	public function getPositionA(): float
+    public function getPositionA(): float
     {
         return $this->data['A'];
     }
-	
-	public function getPositionB(): float
+
+    public function getPositionB(): float
     {
         return $this->data['B'];
     }
 
-    public function isNull(string $location): bool{
-        if(is_null($this->data[$location])){
+    public function isNull(string $location): bool
+    {
+        if (is_null($this->data[$location])) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }

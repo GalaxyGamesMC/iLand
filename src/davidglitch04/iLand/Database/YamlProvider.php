@@ -47,15 +47,15 @@ class YamlProvider implements Provider
         return 0;
     }
 
-    public function isOverlap(float $startX, float $endX, float $startZ, float $endZ, World $world): bool
+    public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world): bool
     {
         if ($world instanceof World) {
             $WorldName = $world->getFolderName();
         }
         foreach ($this->land as $lands) {
             if ($WorldName === $lands['World']) {
-                if (($startX <= $lands['endX'] and $endX >= $lands['startX']
-                and $endZ >= $lands['startZ'] and $startZ <= $lands['endZ'])) {
+                if (($startX <= $lands['EndX'] and $endX >= $lands['StartX']
+                and $endZ >= $lands['StartZ'] and $startZ <= $lands['EndZ'])) {
                     return $lands;
                 }
             }
