@@ -13,5 +13,8 @@
             "name": "DavidGlitch04"
         }
     ],
-    "require": {}
+    "require": {
+        "vecnavium/formsui": "^1.1",
+        "cortexpe/commando": "dev-master"
+    }
 }

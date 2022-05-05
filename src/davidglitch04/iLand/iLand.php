@@ -5,7 +5,6 @@ namespace davidglitch04\iLand;
 use CortexPE\Commando\PacketHooker;
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
-use davidglitch04\iLand\Economy\EconomyManager;
 use davidglitch04\iLand\Session\SessionManager;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;

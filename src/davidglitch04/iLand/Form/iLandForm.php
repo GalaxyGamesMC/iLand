@@ -3,7 +3,7 @@
 namespace davidglitch04\iLand\Form;
 
 use davidglitch04\iLand\iLand;
-use jojoe77777\FormAPI\SimpleForm;
+use davidglitch04\iLand\Libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 
 class iLandForm

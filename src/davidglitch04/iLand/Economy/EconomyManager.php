@@ -10,53 +10,56 @@ use pocketmine\Server;
 
 final class EconomyManager
 {
-    private const ECONOMYAPI = 'EcoAPI';
+    /** @var \pocketmine\plugin\Plugin|null $eco */
+    private $eco;
 
-    private const BEDROCKECONOMYAPI = 'BedrockEco';
-
-    private static function getEconomy(): array
-    {
-        $api = Server::getInstance()->getPluginManager()->getPlugin('EconomyAPI');
-        if ($api !== null) {
-            return [self::ECONOMYAPI, $api];
-        } else {
-            $api = Server::getInstance()->getPluginManager()->getPlugin('BedrockEconomy');
-            if ($api !== null) {
-                return [self::BEDROCKECONOMYAPI, $api];
-            }
+    public function __construct(){
+        $manager = Server::getInstance()->getPluginManager();
+        $this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
+        unset($manager);
+    }
+    /**
+     * @param Player $player
+     * @return int
+     */
+    public function getMoney(Player $player, Closure $callback): void {
+        switch ($this->eco->getName()){
+            case "EconomyAPI":
+                $money = $this->eco->myMoney($player);
+		        assert(is_float($money));
+		        $callback($money);
+                break;
+            case "BedrockEconomy":
+                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void{
+                    $callback($balance ?? 0);
+                }));
+                break;
+            default:
+                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void{
+                    $callback($balance ?? 0);
+                }));
         }
     }
 
-    public static function myMoney(string $player, Closure $callback): void
-    {
-        if (self::getEconomy()[0] === self::ECONOMYAPI) {
-            $money = self::getEconomy()[1]->myMoney($player);
-            assert(is_float($money));
-            $callback($money);
-        } elseif (self::getEconomy()[0] === self::BEDROCKECONOMYAPI) {
-            self::getEconomy()[1]->getAPI()->getPlayerBalance($player, ClosureContext::create(static function (?int $money) use ($callback): void {
-                $callback($money ?? 0);
-            }));
+    /**
+     * @param Player $player
+     * @param int $amount
+     * @return bool
+     */
+    public function reduceMoney(Player $player, int $amount, Closure $callback){
+        if($this->eco == null){
+            $this->plugin->getLogger()->warning("You not have Economy plugin");
+            return true;
         }
-    }
-
-    public static function addMoney(Player $player, int $amount): void
-    {
-        if (self::getEconomy()[0] === self::ECONOMYAPI) {
-            self::getEconomy()[1]->addMoney($player, $amount);
-        } elseif (self::getEconomy()[0] === self::BEDROCKECONOMYAPI) {
-            self::getEconomy()[1]->getAPI()->addToPlayerBalance($player->getName(), (int) $amount);
-        }
-    }
-
-    public static function reduceMoney(Player $player, int $amount, Closure $callback): void
-    {
-        if (self::getEconomy()[0] === self::ECONOMYAPI) {
-            $callback(self::getEconomy()[1]->reduceMoney($player, $amount) === EconomyAPI::RET_SUCCESS);
-        } elseif (self::getEconomy()[0] === self::BEDROCKECONOMYAPI) {
-            self::getEconomy()[1]->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function (bool $success) use ($callback): void {
-                $callback($success);
-            }));
+        switch ($this->eco->getName()){
+            case "EconomyAPI":
+                $callback($this->eco->reduceMoney($player, $amount) === EconomyAPI::RET_SUCCESS);
+                break;
+            case "BedrockEconomy":
+                $this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void{
+                    $callback($success);
+                }));
+                break;
         }
     }
 }
