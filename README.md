@@ -12,7 +12,7 @@
 - [ ] OP Form 
 - [ ] Anti Attack Land
 - [ ] Set Pos Claim System
-- [ ] Area selected
+- [X] Particel area selected
 - [ ] Added Icon For Form
 - [ ] More
 - [ ] Capital Support

@@ -36,6 +36,9 @@ class BuyForm{
                             if(!isset($data)){
                                 return false;
                             }
+                            switch ($data){
+                                //TODO
+                            }
                         });
                         $secondform->setTitle("Complete");
                         $secondform->setContent($language->translateString("gui.buyland.succeed"));

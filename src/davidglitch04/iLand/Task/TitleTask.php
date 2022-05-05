@@ -37,12 +37,12 @@ class TitleTask extends Task{
                 $posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
                 $posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
                 for ($x=$posA->getX();($posA->getX() < $posB->getX()) ? $x<=$posB->getX() : $x>=$posB->getX();($posA->getX() < $posB->getX()) ? $x++ : $x--){
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY(), $posA->getZ()));
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY(), $posB->getZ()));
+                    $this->spawnParticleEffect($this->player, new Vector3($x, $posA->getY(), $posA->getZ()));
+                    $this->spawnParticleEffect($this->player, new Vector3($x, $posA->getY(), $posB->getZ()));
                 }
                 for ($z=$posA->getZ();($posA->getZ() < $posB->getZ()) ? $z<=$posB->getZ() : $z>=$posB->getZ();($posA->getZ() < $posB->getZ()) ? $z++ : $z--){
-                    $this->spawnParticleEffect($this->player, new Vector3($posA->getX(), $this->player->getPosition()->getY(), $z));
-                    $this->spawnParticleEffect($this->player, new Vector3($posB->getX(), $this->player->getPosition()->getY(), $z));
+                    $this->spawnParticleEffect($this->player, new Vector3($posA->getX(), $posA->getY(), $z));
+                    $this->spawnParticleEffect($this->player, new Vector3($posB->getX(), $posA->getY(), $z));
                 }
             }
             $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2"));
