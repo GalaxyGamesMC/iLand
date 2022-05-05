@@ -5,6 +5,8 @@ namespace davidglitch04\iLand;
 use CortexPE\Commando\PacketHooker;
 use davidglitch04\iLand\Command\iLandCommand;
 use davidglitch04\iLand\Database\YamlProvider;
+use davidglitch04\iLand\Listeners\BlockListener;
+use davidglitch04\iLand\Listeners\PlayerListener;
 use davidglitch04\iLand\Session\SessionManager;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
@@ -58,6 +60,12 @@ class iLand extends PluginBase
         }
         if (!PacketHooker::isRegistered()) PacketHooker::register($this);
         $this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
+        foreach ([
+            new PlayerListener($this), 
+            new BlockListener($this)] as $event
+        ) {
+            $this->getServer()->getPluginManager()->registerEvents($event, $this);
+        }
     }
 
     /**

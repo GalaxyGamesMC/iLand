@@ -1,4 +1,5 @@
 language: eng
 config: Yaml
 # Price of one block
-Price/Area: 70.0
+price/area: 70.0
+particel-selected: false

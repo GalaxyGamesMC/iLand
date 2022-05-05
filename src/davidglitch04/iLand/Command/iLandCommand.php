@@ -39,20 +39,15 @@ class iLandCommand extends BaseCommand
                     $sender->getLocation()->getY(),
                     $sender->getLocation()->getZ(), ])
                 );
-                $statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
-                $statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
-                if(!$statusA and !$statusB){
-                    new BuyForm($sender);
-                }
             }
+        } else{
+            $sender->sendMessage('Usage: /land <'.implode('|', $subcommands).'>');
         }
-        $sender->sendMessage('Usage: /land <'.implode('|', $subcommands).'>');
     }
 
     protected function prepare(): void
     {
         $this->registerArgument(0, new RawStringArgument('args', true));
-        $this->registerArgument(1, new RawStringArgument('select', true));
         $this->registerSubCommand(new Buy('buy', iLand::getLanguage()->translateString('Buy the selected land')));
     }
 }
