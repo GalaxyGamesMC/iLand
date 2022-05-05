@@ -9,6 +9,7 @@ use davidglitch04\iLand\Command\SubCommands\Buy;
 use davidglitch04\iLand\Form\BuyForm;
 use davidglitch04\iLand\Form\iLandForm;
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\Libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
@@ -29,8 +30,23 @@ class iLandCommand extends BaseCommand
             } else {
                 $x = $sender->getPosition()->getX();
                 $z = $sender->getPosition()->getZ();
+                $statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
+                $statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
                 if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
-                    $sender->sendMessage('');
+                    $form = new SimpleForm(function (Player $sender, $data){
+                        if(!isset($data)){
+                            return false;
+                        }
+                    });
+                    $form->setTitle(iLand::getLanguage()->translateString("gui.overlap.title"));
+                    $form->setContent(iLand::getLanguage()->translateString("gui.overlap.content"));
+                    $form->addButton(iLand::getLanguage()->translateString("gui.general.close"));
+                    $sender->sendForm($form);
+                    return;
+                }
+                if(!$statusA and !$statusB){
+                    new BuyForm($sender);
+                    return;
                 }
                 $sender->sendTip(iLand::getLanguage()->translateString('title.rangeselector.pointed', [
                     iLand::getInstance()->getSessionManager()->getSession($sender)->setNextPosition($sender->getPosition()),

@@ -8,6 +8,8 @@ use davidglitch04\iLand\Database\YamlProvider;
 use davidglitch04\iLand\Listeners\BlockListener;
 use davidglitch04\iLand\Listeners\PlayerListener;
 use davidglitch04\iLand\Session\SessionManager;
+use pocketmine\item\Item;
+use pocketmine\item\StringToItemParser;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
@@ -101,5 +103,15 @@ class iLand extends PluginBase
     public function getSessionManager(): SessionManager
     {
         return new SessionManager();
+    }
+
+    public function getTool(): Item
+    {
+        $item = StringToItemParser::getInstance()->parse($this->getConfig()->get("tool_name", "Wooden_Axe"));
+        if($item !== null){
+            return $item;
+        } else{
+            return StringToItemParser::getInstance()->parse("Wooden_Axe");
+        }
     }
 }

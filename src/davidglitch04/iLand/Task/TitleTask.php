@@ -31,21 +31,21 @@ class TitleTask extends Task{
         } elseif($statusB){
             $status = "B";
         }
-        $this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [$status]));
+        $this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [iLand::getInstance()->getTool()->getName(),$status]));
         if(!$statusA and !$statusB and iLand::getInstance()->getSessionManager()->inSession($this->player)){
             if(iLand::getInstance()->getConfig()->get("particel-selected", false)){
                 $posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
                 $posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
                 for ($x=$posA->getX();($posA->getX() < $posB->getX()) ? $x<=$posB->getX() : $x>=$posB->getX();($posA->getX() < $posB->getX()) ? $x++ : $x--){
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $posA->getY(), $posA->getZ()));
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $posA->getY(), $posB->getZ()));
+                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY()+3, $posA->getZ()));
+                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY()+3, $posB->getZ()));
                 }
                 for ($z=$posA->getZ();($posA->getZ() < $posB->getZ()) ? $z<=$posB->getZ() : $z>=$posB->getZ();($posA->getZ() < $posB->getZ()) ? $z++ : $z--){
-                    $this->spawnParticleEffect($this->player, new Vector3($posA->getX(), $posA->getY(), $z));
-                    $this->spawnParticleEffect($this->player, new Vector3($posB->getX(), $posA->getY(), $z));
+                    $this->spawnParticleEffect($this->player, new Vector3($posA->getX(), $this->player->getPosition()->getY()+3, $z));
+                    $this->spawnParticleEffect($this->player, new Vector3($posB->getX(), $this->player->getPosition()->getY()+3, $z));
                 }
             }
-            $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2"));
+            $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [iLand::getInstance()->getTool()->getName()]));
         }
         if(!iLand::getInstance()->getSessionManager()->inSession($this->player)){
             throw new CancelTaskException();

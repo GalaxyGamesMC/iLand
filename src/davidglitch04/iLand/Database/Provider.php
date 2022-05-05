@@ -5,6 +5,7 @@ namespace davidglitch04\iLand\Database;
 use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
+use pocketmine\world\World;
 
 interface Provider
 {
@@ -32,4 +33,8 @@ interface Provider
      * @return Position
      */
     public function getSafeSpawn(string $owner): Position;
+
+    public function CountLand(Player $player): int;
+
+    public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world): bool;
 }
