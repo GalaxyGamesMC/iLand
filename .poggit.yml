@@ -10,6 +10,8 @@ projects:
       - src: David-pm-pl/libEco/libEco
         version: ^3.0.0
         branch: stable
+      - src: Vecnavium/FormsUI/FormsUI
+        version: ^1.1.2
     lint:
       phpstan: false
 ...
