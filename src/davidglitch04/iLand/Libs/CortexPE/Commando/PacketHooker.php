@@ -27,12 +27,12 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\libs\CortexPE\Commando;
+namespace davidglitch04\iLand\Libs\CortexPE\Commando;
 
 
-use davidglitch04\iLand\libs\CortexPE\Commando\exception\HookAlreadyRegistered;
-use davidglitch04\iLand\libs\CortexPE\Commando\store\SoftEnumStore;
-use davidglitch04\iLand\libs\CortexPE\Commando\traits\IArgumentable;
+use davidglitch04\iLand\Libs\CortexPE\Commando\exception\HookAlreadyRegistered;
+use davidglitch04\iLand\Libs\CortexPE\Commando\store\SoftEnumStore;
+use davidglitch04\iLand\Libs\CortexPE\Commando\traits\IArgumentable;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\CommandMap;
 use pocketmine\command\CommandSender;

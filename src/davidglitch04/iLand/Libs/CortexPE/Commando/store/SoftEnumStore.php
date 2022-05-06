@@ -1,10 +1,10 @@
 <?php
 
 
-namespace davidglitch04\iLand\libs\CortexPE\Commando\store;
+namespace davidglitch04\iLand\Libs\CortexPE\Commando\store;
 
 
-use davidglitch04\iLand\libs\CortexPE\Commando\exception\CommandoException;
+use davidglitch04\iLand\Libs\CortexPE\Commando\exception\CommandoException;
 use pocketmine\network\mcpe\protocol\ClientboundPacket;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;

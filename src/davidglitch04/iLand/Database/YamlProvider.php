@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types = 1);
-
-namespace davidglitch04\iLand\database;
+namespace davidglitch04\iLand\Database;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;

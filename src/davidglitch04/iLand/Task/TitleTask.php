@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types = 1);
-
-namespace davidglitch04\iLand\task;
+namespace davidglitch04\iLand\Task;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\math\Vector3;

@@ -2,7 +2,7 @@
 
 namespace davidglitch04\iLand\Command\SubCommands;
 
-use davidglitch04\iLand\libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 
 class Buy extends BaseSubCommand{

@@ -1,0 +1,6 @@
+language: eng
+config: Yaml
+# Price of one block
+price/area: 70.0
+particel-selected: true
+tool_name: "Wooden_Axe"

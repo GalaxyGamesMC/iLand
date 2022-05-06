@@ -27,12 +27,12 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\libs\CortexPE\Commando;
+namespace davidglitch04\iLand\Libs\CortexPE\Commando;
 
 
-use davidglitch04\iLand\libs\CortexPE\Commando\constraint\BaseConstraint;
-use davidglitch04\iLand\libs\CortexPE\Commando\traits\ArgumentableTrait;
-use davidglitch04\iLand\libs\CortexPE\Commando\traits\IArgumentable;
+use davidglitch04\iLand\Libs\CortexPE\Commando\constraint\BaseConstraint;
+use davidglitch04\iLand\Libs\CortexPE\Commando\traits\ArgumentableTrait;
+use davidglitch04\iLand\Libs\CortexPE\Commando\traits\IArgumentable;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;
 use function explode;

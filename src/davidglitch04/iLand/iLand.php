@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace davidglitch04\iLand;
 
-use davidglitch04\iLand\command\iLandCommand;
-use davidglitch04\iLand\database\YamlProvider;
-use davidglitch04\iLand\libs\CortexPE\Commando\PacketHooker;
-use davidglitch04\iLand\listeners\BlockListener;
-use davidglitch04\iLand\listeners\PlayerListener;
-use davidglitch04\iLand\session\SessionManager;
+use CortexPE\Commando\PacketHooker;
+use davidglitch04\iLand\Command\iLandCommand;
+use davidglitch04\iLand\Database\YamlProvider;
+use davidglitch04\iLand\Listeners\BlockListener;
+use davidglitch04\iLand\Listeners\PlayerListener;
+use davidglitch04\iLand\Session\SessionManager;
 use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
 use pocketmine\lang\Language;

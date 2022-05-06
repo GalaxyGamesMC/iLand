@@ -27,7 +27,7 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\libs\CortexPE\Commando\constraint;
+namespace davidglitch04\iLand\Libs\CortexPE\Commando\constraint;
 
 
 use pocketmine\command\CommandSender;

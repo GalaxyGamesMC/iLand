@@ -27,10 +27,10 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\libs\CortexPE\Commando\traits;
+namespace davidglitch04\iLand\Libs\CortexPE\Commando\traits;
 
 
-use davidglitch04\iLand\libs\CortexPE\Commando\args\BaseArgument;
+use davidglitch04\iLand\Libs\CortexPE\Commando\args\BaseArgument;
 use pocketmine\command\CommandSender;
 
 interface IArgumentable {

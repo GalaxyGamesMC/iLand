@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace davidglitch04\iLand\libs\Vecnavium\FormsUI;
+namespace davidglitch04\iLand\Libs\Vecnavium\FormsUI;
 
 use pocketmine\plugin\PluginBase;
 
