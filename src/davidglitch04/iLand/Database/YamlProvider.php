@@ -4,6 +4,7 @@ namespace davidglitch04\iLand\Database;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use pocketmine\world\World;
@@ -34,33 +35,86 @@ class YamlProvider implements Provider
         //TODO:
     }
 
-    public function getSafeSpawn(string $owner): Position
-    {
-        $land = $this->land->get($owner);
-
-        return new Position($land['Spawn']['X'], $land['Spawn']['Y'], $land['Spawn']['Z'], $land['World']);
-    }
-
     public function CountLand(Player $player): int
     {
-        //TEST
-        return 0;
+        $name = $player->getName();
+        $counts = 0;
+        foreach ($this->land as $lands) {
+            if($lands["Owner"] == $name){
+                $counts++;
+            }
+        }
+        return $counts;
     }
 
-    public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world): bool
+    public function isOverlap(
+        float $startX, 
+        float $startZ, 
+        float $endX, 
+        float $endZ, 
+        World $world
+        ): bool
     {
         if ($world instanceof World) {
             $WorldName = $world->getFolderName();
         }
         foreach ($this->land as $lands) {
             if ($WorldName === $lands['World']) {
-                if (($startX <= $lands['EndX'] and $endX >= $lands['StartX']
-                and $endZ >= $lands['StartZ'] and $startZ <= $lands['EndZ'])) {
+                $start = $this->StringToPosition($lands['Start']);
+                $end = $this->StringToPosition($lands['End']);
+                if (($startX <= $end->getX() and $endX >= $start->getX()
+                and $endZ >= $start->getZ() and $startZ <= $end->getZ())) {
                     return $lands;
                 }
             }
         }
 
         return false;
+    }
+
+    public function addLand(
+        Player $player, 
+        Position $positionA, 
+        Position $positionB
+        ): void
+    {
+        $counts = 0;
+        foreach ($this->land as $lands){
+            $counts++;
+        }
+        $landDb = [
+            "Owner" => $player->getName(),
+            "Spawn" => $this->PositionToString($positionA),
+            "Start" => $this->PositionToString($positionA),
+            "End" => $this->PositionToString($positionB),
+            "Members" => [],
+            "Settings" => []
+        ];
+        $this->land->set($counts+1, $landDb);
+        $this->land->save();
+    }
+
+    public function PositionToString(Position $position): string{
+        $x = (int)$position->getX();
+        $y = (int)$position->getY();
+        $z = (int)$position->getZ();
+        $world = (string)$position->getWorld()->getDisplayName();
+        $string = $x.",".$y.",".$z."z".$world;
+        return $string;
+    }
+
+    public function StringToPosition(string $string): Position{
+        $position = explode(",", $string);
+        return new Position(
+            $position[0], 
+            $position[1], 
+            $position[2], 
+            Server::getInstance()->getWorldManager()->getWorldByName($position[3])
+        );
+    }
+
+    public function save(): void
+    {
+        $this->land->save();
     }
 }

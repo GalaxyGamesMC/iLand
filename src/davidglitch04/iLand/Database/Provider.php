@@ -28,13 +28,15 @@ interface Provider
      */
     public function addOwner(string $name, Player $owner): void;
 
-    /**
-     * @param  string $owner
-     * @return Position
-     */
-    public function getSafeSpawn(string $owner): Position;
-
     public function CountLand(Player $player): int;
 
     public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world): bool;
+
+    public function addLand(Player $player, Position $positionA, Position $positionB): void;
+
+    public function PositionToString(Position $position): string;
+
+    public function StringToPosition(string $string): Position;
+
+    public function save() : void;
 }

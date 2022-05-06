@@ -69,7 +69,11 @@ class iLand extends PluginBase
             $this->getServer()->getPluginManager()->registerEvents($event, $this);
         }
     }
-
+    
+    protected function onDisable(): void
+    {
+        $this->getProvider()->save();
+    }
     /**
      * @param  string $lang
      * @param  array  $languageFiles

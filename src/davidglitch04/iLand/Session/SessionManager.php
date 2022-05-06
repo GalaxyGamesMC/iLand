@@ -42,7 +42,7 @@ class SessionManager
     public function getSession(Player $player): Session
     {
         $name = strtolower($player->getName());
-
+        
         return iLand::getInstance()->session[$name];
     }
 }

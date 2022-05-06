@@ -32,6 +32,7 @@ class BuyForm{
                 $ecomgr->reduceMoney($player, (int)$price, static function(bool $success) use($player, $startpos, $endpos, $language) {
                     if($success){
                         iLand::getInstance()->getProvider()->addLand($player, $startpos, $endpos);
+                        iLand::getInstance()->getSessionManager()->removePlayer($player);
                         $secondform = new SimpleForm(function (Player $player, $data) use ($language){
                             if(!isset($data)){
                                 return false;
@@ -45,6 +46,7 @@ class BuyForm{
                         $secondform->addButton($language->translateString("gui.general.looklook"));
                         $secondform->addButton($language->translateString("gui.general.close"));
                         $player->sendForm($secondform);
+                        return $secondform;
                     } else{
 
                     }
@@ -56,5 +58,6 @@ class BuyForm{
         $form->addButton($language->translateString("gui.buyland.button.confirm"));
         $form->addButton($language->translateString("gui.buyland.button.cancel"));
         $player->sendForm($form);
+        return $form;
     }
 }

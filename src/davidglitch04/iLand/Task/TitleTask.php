@@ -23,6 +23,9 @@ class TitleTask extends Task{
         if(!$this->player->isConnected()){
             throw new CancelTaskException();
         }
+        if(!iLand::getInstance()->getSessionManager()->inSession($this->player)){
+            throw new CancelTaskException();
+        }
         $status = '';
         $statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("A");
         $statusB = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("B");
@@ -46,9 +49,6 @@ class TitleTask extends Task{
                 }
             }
             $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [iLand::getInstance()->getTool()->getName()]));
-        }
-        if(!iLand::getInstance()->getSessionManager()->inSession($this->player)){
-            throw new CancelTaskException();
         }
     }
     public function spawnParticleEffect(Player $player, Vector3 $position): void {

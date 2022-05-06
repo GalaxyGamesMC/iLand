@@ -14,5 +14,5 @@
 - [ ] Set Pos Claim System
 - [X] Particel area selected
 - [ ] Added Icon For Form
-- [ ] More
+- [ ] Land Border
 - [ ] Capital Support
