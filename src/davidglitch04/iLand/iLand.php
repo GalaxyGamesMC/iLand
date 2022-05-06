@@ -21,7 +21,7 @@ class iLand extends PluginBase
     /**@var Language $language */
     private static Language $language;
 	
-	public array $session;
+	public array $session = [];
 
     protected YamlProvider $provider;
 
