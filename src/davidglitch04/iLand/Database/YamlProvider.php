@@ -56,12 +56,12 @@ class YamlProvider implements Provider
         ): bool
     {
         if ($world instanceof World) {
-            $WorldName = $world->getFolderName();
+            $WorldName = $world->getDisplayName();
         }
         foreach ($this->land as $lands) {
-            if ($WorldName === $lands['World']) {
-                $start = $this->StringToPosition($lands['Start']);
-                $end = $this->StringToPosition($lands['End']);
+            $start = $this->StringToPosition($lands['Start']);
+            $end = $this->StringToPosition($lands['End']);
+            if($start->getWorld()->getDisplayName() == $WorldName){
                 if (($startX <= $end->getX() and $endX >= $start->getX()
                 and $endZ >= $start->getZ() and $startZ <= $end->getZ())) {
                     return $lands;
@@ -99,7 +99,7 @@ class YamlProvider implements Provider
         $y = (int)$position->getY();
         $z = (int)$position->getZ();
         $world = (string)$position->getWorld()->getDisplayName();
-        $string = $x.",".$y.",".$z."z".$world;
+        $string = $x.",".$y.",".$z.",".$world;
         return $string;
     }
 
