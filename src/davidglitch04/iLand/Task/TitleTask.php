@@ -1,6 +1,8 @@
 <?php
 
-namespace davidglitch04\iLand\Task;
+declare(strict_types = 1);
+
+namespace davidglitch04\iLand\task;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\math\Vector3;
@@ -40,20 +42,25 @@ class TitleTask extends Task{
                 $posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
                 $posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
                 for ($x=$posA->getX();($posA->getX() < $posB->getX()) ? $x<=$posB->getX() : $x>=$posB->getX();($posA->getX() < $posB->getX()) ? $x++ : $x--){
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY()+3, $posA->getZ()));
-                    $this->spawnParticleEffect($this->player, new Vector3($x, $this->player->getPosition()->getY()+3, $posB->getZ()));
+                    $this->addBorder($this->player, $x, $this->player->getPosition()->getY()+3, $posA->getZ());
+                    $this->addBorder($this->player, $x, $this->player->getPosition()->getY()+3, $posB->getZ());
                 }
                 for ($z=$posA->getZ();($posA->getZ() < $posB->getZ()) ? $z<=$posB->getZ() : $z>=$posB->getZ();($posA->getZ() < $posB->getZ()) ? $z++ : $z--){
-                    $this->spawnParticleEffect($this->player, new Vector3($posA->getX(), $this->player->getPosition()->getY()+3, $z));
-                    $this->spawnParticleEffect($this->player, new Vector3($posB->getX(), $this->player->getPosition()->getY()+3, $z));
+                    $this->addBorder($this->player, $posA->getX(), $this->player->getPosition()->getY()+3, $z);
+                    $this->addBorder($this->player, $posB->getX(), $this->player->getPosition()->getY()+3, $z);
                 }
             }
             $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [iLand::getInstance()->getTool()->getName()]));
         }
     }
-    public function spawnParticleEffect(Player $player, Vector3 $position): void {
+    public function addBorder(
+        Player $player, 
+        float $x, 
+        float $y, 
+        float $z): void 
+    {
 		$packet = new SpawnParticleEffectPacket();
-		$packet->position = $position;
+		$packet->position = new Vector3($x, $y, $z);
 		$packet->particleName = "minecraft:villager_happy";
 		$packet->molangVariablesJson = '';
 		$player->getNetworkSession()->sendDataPacket($packet);

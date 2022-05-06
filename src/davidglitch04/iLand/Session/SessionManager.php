@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Session;
+namespace davidglitch04\iLand\session;
 
 use pocketmine\player\Player;
 use davidglitch04\iLand\iLand;
@@ -42,7 +42,7 @@ class SessionManager
     public function getSession(Player $player): Session
     {
         $name = strtolower($player->getName());
-        
+
         return iLand::getInstance()->session[$name];
     }
 }

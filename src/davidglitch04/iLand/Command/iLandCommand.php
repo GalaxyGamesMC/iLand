@@ -1,15 +1,17 @@
 <?php
 
-namespace davidglitch04\iLand\Command;
+declare(strict_types = 1);
 
-use CortexPE\Commando\args\RawStringArgument;
-use CortexPE\Commando\BaseCommand;
-use CortexPE\Commando\BaseSubCommand;
-use davidglitch04\iLand\Command\SubCommands\Buy;
-use davidglitch04\iLand\Form\BuyForm;
-use davidglitch04\iLand\Form\iLandForm;
+namespace davidglitch04\iLand\command;
+
+use davidglitch04\iLand\command\SubCommands\Buy;
+use davidglitch04\iLand\form\BuyForm;
+use davidglitch04\iLand\form\iLandForm;
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\Libs\Vecnavium\FormsUI\SimpleForm;
+use davidglitch04\iLand\libs\CortexPE\Commando\args\RawStringArgument;
+use davidglitch04\iLand\libs\CortexPE\Commando\BaseCommand;
+use davidglitch04\iLand\libs\CortexPE\Commando\BaseSubCommand;
+use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 

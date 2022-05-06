@@ -27,14 +27,14 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\Libs\CortexPE\Commando;
+namespace davidglitch04\iLand\libs\CortexPE\Commando;
 
 
-use davidglitch04\iLand\Libs\CortexPE\Commando\args\BaseArgument;
-use davidglitch04\iLand\Libs\CortexPE\Commando\constraint\BaseConstraint;
-use davidglitch04\iLand\Libs\CortexPE\Commando\exception\InvalidErrorCode;
-use davidglitch04\iLand\Libs\CortexPE\Commando\traits\ArgumentableTrait;
-use davidglitch04\iLand\Libs\CortexPE\Commando\traits\IArgumentable;
+use davidglitch04\iLand\libs\CortexPE\Commando\args\BaseArgument;
+use davidglitch04\iLand\libs\CortexPE\Commando\constraint\BaseConstraint;
+use davidglitch04\iLand\libs\CortexPE\Commando\exception\InvalidErrorCode;
+use davidglitch04\iLand\libs\CortexPE\Commando\traits\ArgumentableTrait;
+use davidglitch04\iLand\libs\CortexPE\Commando\traits\IArgumentable;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;

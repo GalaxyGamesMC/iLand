@@ -27,7 +27,7 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\Libs\CortexPE\Commando\exception;
+namespace davidglitch04\iLand\libs\CortexPE\Commando\exception;
 
 
 class HookAlreadyRegistered extends CommandoException {

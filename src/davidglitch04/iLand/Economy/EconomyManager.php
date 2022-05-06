@@ -1,6 +1,8 @@
 <?php
 
-namespace davidglitch04\iLand\Economy;
+declare(strict_types = 1);
+
+namespace davidglitch04\iLand\economy;
 
 use Closure;
 use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;

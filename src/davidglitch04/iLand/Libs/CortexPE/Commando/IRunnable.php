@@ -27,10 +27,10 @@
  */
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\Libs\CortexPE\Commando;
+namespace davidglitch04\iLand\libs\CortexPE\Commando;
 
 
-use davidglitch04\iLand\Libs\CortexPE\Commando\constraint\BaseConstraint;
+use davidglitch04\iLand\libs\CortexPE\Commando\constraint\BaseConstraint;
 
 /**
  * Interface IRunnable
