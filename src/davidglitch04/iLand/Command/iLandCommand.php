@@ -64,6 +64,7 @@ class iLandCommand extends BaseCommand
     protected function prepare(): void
     {
         $this->registerArgument(0, new RawStringArgument('args', true));
+        $this->setPermission("iland.allow.command");
         $this->registerSubCommand(new Buy('buy', iLand::getLanguage()->translateString('Buy the selected land')));
     }
 }
