@@ -117,14 +117,4 @@ class iLand extends PluginBase
     {
         return new SessionManager();
     }
-
-    public function getTool(): Item
-    {
-        $item = StringToItemParser::getInstance()->parse(self::getDefaultConfig()->get("tool_name", "Wooden_Axe"));
-        if($item !== null){
-            return $item;
-        } else{
-            return StringToItemParser::getInstance()->parse("Wooden_Axe");
-        }
-    }
 }

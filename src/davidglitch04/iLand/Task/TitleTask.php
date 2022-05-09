@@ -3,6 +3,7 @@
 namespace davidglitch04\iLand\Task;
 
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\Item\ItemUtils;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\SpawnParticleEffectPacket;
 use pocketmine\player\Player;
@@ -34,7 +35,7 @@ class TitleTask extends Task{
         } elseif($statusB){
             $status = "B";
         }
-        $this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [iLand::getInstance()->getTool()->getName(),$status]));
+        $this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [ItemUtils::getItem()->getName(),$status]));
         if(!$statusA and !$statusB and iLand::getInstance()->getSessionManager()->inSession($this->player)){
             if(iLand::getDefaultConfig()->get("particel-selected", false)){
                 $posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
@@ -48,7 +49,7 @@ class TitleTask extends Task{
                     $this->addBorder($this->player, $posB->getX(), $this->player->getPosition()->getY()+3, $z);
                 }
             }
-            $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [iLand::getInstance()->getTool()->getName()]));
+            $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [ItemUtils::getItem()->getName()]));
         }
     }
     public function addBorder(

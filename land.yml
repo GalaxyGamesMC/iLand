@@ -1,9 +1,9 @@
 ---
 1:
   Owner: DavidGlitch04
-  Spawn: 253,4,259,default
-  Start: 253,4,259,default
-  End: 257,4,264,default
+  Spawn: 253,4,258,default
+  Start: 253,4,258,default
+  End: 256,4,262,default
   Members: []
   Settings: []
 ...

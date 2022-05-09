@@ -9,6 +9,8 @@ use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use pocketmine\world\World;
 
+use function Ramsey\Uuid\v1;
+
 class YamlProvider implements Provider
 {
     protected iLand $iland;
@@ -39,7 +41,7 @@ class YamlProvider implements Provider
     {
         $name = $player->getName();
         $counts = 0;
-        foreach ($this->land as $lands) {
+        foreach ((array)$this->land->getAll() as $lands){
             if($lands["Owner"] == $name){
                 $counts++;
             }
@@ -55,20 +57,16 @@ class YamlProvider implements Provider
         World $world
         ): bool
     {
-        if ($world instanceof World) {
-            $WorldName = $world->getDisplayName();
-        }
-        foreach ($this->land as $lands) {
-            $start = $this->StringToPosition($lands['Start']);
-            $end = $this->StringToPosition($lands['End']);
-            if($start->getWorld()->getDisplayName() == $WorldName){
-                if (($startX <= $end->getX() and $endX >= $start->getX()
+    foreach ((array)$this->land->getAll() as $lands){
+        $start = $this->StringToPosition($lands['Start']);
+        $end = $this->StringToPosition($lands['End']);
+        if($start->getWorld()->getFolderName() == $world->getFolderName()){
+            if (($startX <= $end->getX() and $endX >= $start->getX()
                 and $endZ >= $start->getZ() and $startZ <= $end->getZ())) {
-                    return $lands;
+                    return true;
                 }
             }
         }
-
         return false;
     }
 
@@ -79,8 +77,8 @@ class YamlProvider implements Provider
         ): void
     {
         $counts = 0;
-        foreach ($this->land as $lands){
-            $counts++;
+        foreach ((array)$this->land->getAll() as $lands){
+            $counts = $counts+1;
         }
         $landDb = [
             "Owner" => $player->getName(),
@@ -106,9 +104,9 @@ class YamlProvider implements Provider
     public function StringToPosition(string $string): Position{
         $position = explode(",", $string);
         return new Position(
-            $position[0], 
-            $position[1], 
-            $position[2], 
+            intval($position[0]), 
+            intval($position[1]), 
+            intval($position[2]), 
             Server::getInstance()->getWorldManager()->getWorldByName($position[3])
         );
     }

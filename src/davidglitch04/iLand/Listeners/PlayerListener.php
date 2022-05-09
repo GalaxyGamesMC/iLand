@@ -4,6 +4,7 @@ namespace davidglitch04\iLand\Listeners;
 
 use davidglitch04\iLand\Form\BuyForm;
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\Item\ItemUtils;
 use davidglitch04\iLand\Libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -36,6 +37,7 @@ class PlayerListener implements Listener{
             $x = $player->getPosition()->getX();
             $z = $player->getPosition()->getZ();
             if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $player->getWorld())) {
+                $event->cancel();
                 $form = new SimpleForm(function (Player $player, $data){
                     if(!isset($data)){
                         return false;
@@ -48,7 +50,7 @@ class PlayerListener implements Listener{
                 return;
             }
             if($this->iland->getSessionManager()->inSession($player)){
-                if($item->equals($this->iland->getTool(), false, false)){
+                if($item->equals(ItemUtils::getItem(), false, false)){
                     if(!$statusA and !$statusB){
                         new BuyForm($player);
                         return;
