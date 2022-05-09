@@ -9,8 +9,6 @@ use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use pocketmine\world\World;
 
-use function Ramsey\Uuid\v1;
-
 class YamlProvider implements Provider
 {
     protected iLand $iland;

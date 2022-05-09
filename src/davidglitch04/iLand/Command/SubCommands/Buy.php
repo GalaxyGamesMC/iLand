@@ -2,9 +2,9 @@
 
 namespace davidglitch04\iLand\Command\SubCommands;
 
-use CortexPE\Commando\BaseSubCommand;
 use davidglitch04\iLand\Form\BuyForm;
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\Libs\CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 

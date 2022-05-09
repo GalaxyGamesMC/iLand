@@ -24,7 +24,7 @@ class ManageLandForm{
         });
         $form->setTitle($language->translateString("gui.landmgr.title"));
         foreach (iLand::getInstance()->getProvider()->getAllLand() as $lands){
-            if ($lands["Owner"] == $player->getName()){
+            if (strcmp($lands["Owner"], $player->getName()) == 0){
                 $form->addButton($lands["Name"]);
             }
         }
