@@ -38,5 +38,7 @@ interface Provider
 
     public function StringToPosition(string $string): Position;
 
+    public function getAllLand(): array;
+
     public function save() : void;
 }

@@ -11,7 +11,7 @@
 - [ ] Settings Form
 - [ ] OP Form 
 - [ ] Anti Attack Land
-- [ ] Set Pos Claim System
+- [X] Set Pos Claim System
 - [X] Particel area selected
 - [ ] Added Icon For Form
 - [ ] Land Border

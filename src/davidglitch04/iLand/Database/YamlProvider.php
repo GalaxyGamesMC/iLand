@@ -82,6 +82,7 @@ class YamlProvider implements Provider
         }
         $landDb = [
             "Owner" => $player->getName(),
+            "Name" => "Unnamed",
             "Spawn" => $this->PositionToString($positionA),
             "Start" => $this->PositionToString($positionA),
             "End" => $this->PositionToString($positionB),
@@ -109,6 +110,11 @@ class YamlProvider implements Provider
             intval($position[2]), 
             Server::getInstance()->getWorldManager()->getWorldByName($position[3])
         );
+    }
+
+    public function getAllLand(): array
+    {
+        return (array)$this->land->getAll();
     }
 
     public function save(): void
