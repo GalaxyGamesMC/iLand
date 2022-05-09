@@ -12,6 +12,7 @@ use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 
 class iLand extends PluginBase
@@ -24,6 +25,8 @@ class iLand extends PluginBase
 	public array $session = [];
 
     protected YamlProvider $provider;
+
+    private static Config $config;
 
     /** @var array $languages */
     private array $languages = [
@@ -38,6 +41,11 @@ class iLand extends PluginBase
     public static function getLanguage(): Language
     {
         return self::$language;
+    }
+
+    public static function getDefaultConfig(): Config
+    {
+        return self::$config;
     }
 
     /**
@@ -55,8 +63,9 @@ class iLand extends PluginBase
     public function onEnable(): void
     {
         $this->provider->initConfig();
-        $this->saveDefaultConfig();
-        $this->initLanguage(strval($this->getConfig()->get('language', 'eng')), $this->languages);
+        $this->saveResource("config.json");
+        self::$config = new Config($this->getDataFolder() . "config.json", Config::JSON);
+        $this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
         if (VersionInfo::IS_DEVELOPMENT_BUILD) {
             $this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
         }
@@ -111,7 +120,7 @@ class iLand extends PluginBase
 
     public function getTool(): Item
     {
-        $item = StringToItemParser::getInstance()->parse($this->getConfig()->get("tool_name", "Wooden_Axe"));
+        $item = StringToItemParser::getInstance()->parse(self::getDefaultConfig()->get("tool_name", "Wooden_Axe"));
         if($item !== null){
             return $item;
         } else{

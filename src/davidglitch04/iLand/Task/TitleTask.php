@@ -36,7 +36,7 @@ class TitleTask extends Task{
         }
         $this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [iLand::getInstance()->getTool()->getName(),$status]));
         if(!$statusA and !$statusB and iLand::getInstance()->getSessionManager()->inSession($this->player)){
-            if(iLand::getInstance()->getConfig()->get("particel-selected", false)){
+            if(iLand::getDefaultConfig()->get("particel-selected", false)){
                 $posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
                 $posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
                 for ($x=$posA->getX();($posA->getX() < $posB->getX()) ? $x<=$posB->getX() : $x>=$posB->getX();($posA->getX() < $posB->getX()) ? $x++ : $x--){

@@ -20,7 +20,7 @@ class BuyForm{
         $endpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionB();
         $length = abs((int)$startpos->getX() - (int)$endpos->getX());
         $width = abs((int)$startpos->getZ() - (int)$endpos->getZ());
-        $priceperblock = iLand::getInstance()->getConfig()->get("price/area");
+        $priceperblock = iLand::getDefaultConfig()->get("price/area");
         $blocks = $length * $width;
         $price = $priceperblock * $blocks;
         $form = new SimpleForm(function (Player $player, $data) use ($price, $startpos, $endpos, $blocks, $language){
