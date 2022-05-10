@@ -7,3 +7,8 @@ website: https://github.com/DavidGlitch04
 description: "Powerful land plugin, based on PMMP."
 extensions:
   core: ">=8.0"
+
+permissions:
+  iland.allow.command:
+    description: "Allow player to use iLand"
+    default: op

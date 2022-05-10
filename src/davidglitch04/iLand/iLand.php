@@ -9,8 +9,6 @@ use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\session\SessionManager;
 use pocketmine\lang\Language;
-use pocketmine\permission\DefaultPermissions;
-use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
@@ -76,12 +74,6 @@ class iLand extends PluginBase
         ) {
             $this->getServer()->getPluginManager()->registerEvents($event, $this);
         }
-        $this->initCommand();
-    }
-
-    public function initCommand() : void
-    {
-        DefaultPermissions::registerPermission(new Permission("iland.allow.command", "Allow player to use iland"));
         $this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
     }
     
