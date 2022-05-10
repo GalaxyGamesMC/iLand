@@ -1,5 +1,6 @@
 name: iLand
 main: davidglitch04\iLand\iLand
+src-namespace-prefix: davidglitch04\iLand
 api: 4.0.0
 version: 1.0.0
 author: DavidGlitch04
