@@ -1,10 +1,10 @@
 <?php
 
-namespace davidglitch04\iLand\Command\SubCommands;
+namespace davidglitch04\iLand\command\SubCommands;
 
-use davidglitch04\iLand\Form\BuyForm;
+use davidglitch04\iLand\form\BuyForm;
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\Libs\CortexPE\Commando\BaseSubCommand;
+use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 

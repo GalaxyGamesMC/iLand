@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Item;
+namespace davidglitch04\iLand\item;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\item\Item;

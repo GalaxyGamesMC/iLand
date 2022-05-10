@@ -2,12 +2,12 @@
 
 namespace davidglitch04\iLand;
 
-use davidglitch04\iLand\Command\iLandCommand;
-use davidglitch04\iLand\Database\YamlProvider;
-use davidglitch04\iLand\Libs\CortexPE\Commando\PacketHooker;
-use davidglitch04\iLand\Listeners\BlockListener;
-use davidglitch04\iLand\Listeners\PlayerListener;
-use davidglitch04\iLand\Session\SessionManager;
+use CortexPE\Commando\PacketHooker;
+use davidglitch04\iLand\command\iLandCommand;
+use davidglitch04\iLand\database\YamlProvider;
+use davidglitch04\iLand\listeners\BlockListener;
+use davidglitch04\iLand\listeners\PlayerListener;
+use davidglitch04\iLand\session\SessionManager;
 use pocketmine\lang\Language;
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission;
@@ -63,7 +63,6 @@ class iLand extends PluginBase
     public function onEnable(): void
     {
         $this->provider->initConfig();
-        $this->initCommand();
         $this->saveResource("config.json");
         self::$config = new Config($this->getDataFolder() . "config.json", Config::JSON);
         $this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
@@ -77,6 +76,7 @@ class iLand extends PluginBase
         ) {
             $this->getServer()->getPluginManager()->registerEvents($event, $this);
         }
+        $this->initCommand();
     }
 
     public function initCommand() : void

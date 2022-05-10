@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Session;
+namespace davidglitch04\iLand\session;
 
 use pocketmine\world\Position;
 

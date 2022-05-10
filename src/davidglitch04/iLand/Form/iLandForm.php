@@ -1,9 +1,9 @@
 <?php
 
-namespace davidglitch04\iLand\Form;
+namespace davidglitch04\iLand\form;
 
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\Libs\Vecnavium\FormsUI\SimpleForm;
+use Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 
 class iLandForm

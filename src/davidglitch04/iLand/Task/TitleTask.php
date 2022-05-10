@@ -1,9 +1,9 @@
 <?php
 
-namespace davidglitch04\iLand\Task;
+namespace davidglitch04\iLand\task;
 
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\Item\ItemUtils;
+use davidglitch04\iLand\item\ItemUtils;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\SpawnParticleEffectPacket;
 use pocketmine\player\Player;

@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Listeners;
+namespace davidglitch04\iLand\listeners;
 
 use pocketmine\event\Listener;
 

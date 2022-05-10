@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Database;
+namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;

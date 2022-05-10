@@ -1,6 +1,6 @@
 <?php
 
-namespace davidglitch04\iLand\Database;
+namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\player\Player;
@@ -80,7 +80,7 @@ class YamlProvider implements Provider
         }
         $landDb = [
             "Owner" => $player->getName(),
-            "Name" => "Unnamed",
+            "Name" => iLand::getLanguage()->translateString("gui.landmgr.unnamed"),
             "Spawn" => $this->PositionToString($positionA),
             "Start" => $this->PositionToString($positionA),
             "End" => $this->PositionToString($positionB),
