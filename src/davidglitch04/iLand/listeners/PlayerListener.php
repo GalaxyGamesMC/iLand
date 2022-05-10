@@ -5,7 +5,7 @@ namespace davidglitch04\iLand\listeners;
 use davidglitch04\iLand\form\BuyForm;
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\item\ItemUtils;
-use Vecnavium\FormsUI\SimpleForm;
+use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerQuitEvent;

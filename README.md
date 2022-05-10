@@ -16,7 +16,3 @@
 - [ ] Added Icon For Form
 - [ ] Land Border
 - [ ] Capital Support
-
-## Credits
-* [libFormsUI](https://github.com/Vecnavium/FormsUI/~)
-* [Commando](https://github.com/CortexPE/Commando/~)

@@ -4,7 +4,7 @@ namespace davidglitch04\iLand\command\SubCommands;
 
 use davidglitch04\iLand\form\BuyForm;
 use davidglitch04\iLand\iLand;
-use CortexPE\Commando\BaseSubCommand;
+use davidglitch04\iLand\libs\CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 

@@ -4,7 +4,7 @@ namespace davidglitch04\iLand\form;
 
 use davidglitch04\iLand\economy\EconomyManager;
 use davidglitch04\iLand\iLand;
-use Vecnavium\FormsUI\SimpleForm;
+use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 
 class BuyForm{
