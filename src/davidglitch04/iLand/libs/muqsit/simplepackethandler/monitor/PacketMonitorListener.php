@@ -16,13 +16,14 @@ use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\network\mcpe\protocol\ServerboundPacket;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
+use function assert;
+use function count;
+use function is_a;
+use function spl_object_id;
 
 final class PacketMonitorListener implements IPacketMonitor, Listener{
 
 	/**
-	 * @param Closure $handler
-	 * @return int
-	 *
 	 * @phpstan-template TPacket of \pocketmine\network\mcpe\protocol\Packet
 	 * @phpstan-template UPacket of TPacket
 	 * @phpstan-param Closure(UPacket, NetworkSession) : void $handler

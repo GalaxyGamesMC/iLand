@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando\traits;
 
-
 use davidglitch04\iLand\libs\CortexPE\Commando\args\BaseArgument;
 use davidglitch04\iLand\libs\CortexPE\Commando\args\TextArgument;
 use davidglitch04\iLand\libs\CortexPE\Commando\BaseCommand;
@@ -39,6 +38,7 @@ use function array_slice;
 use function count;
 use function implode;
 use function is_array;
+use function trim;
 use function usort;
 
 trait ArgumentableTrait {
@@ -50,15 +50,12 @@ trait ArgumentableTrait {
 	/**
 	 * This is where all the arguments, permissions, sub-commands, etc would be registered
 	 */
-	abstract protected function prepare(): void;
+	abstract protected function prepare() : void;
 
 	/**
-	 * @param int          $position
-	 * @param BaseArgument $argument
-	 *
 	 * @throws ArgumentOrderException
 	 */
-	public function registerArgument(int $position, BaseArgument $argument): void {
+	public function registerArgument(int $position, BaseArgument $argument) : void {
 		if($position < 0) {
 			throw new ArgumentOrderException("You cannot register arguments at negative positions");
 		}
@@ -79,7 +76,7 @@ trait ArgumentableTrait {
 		}
 	}
 
-	public function parseArguments(array $rawArgs, CommandSender $sender): array {
+	public function parseArguments(array $rawArgs, CommandSender $sender) : array {
 		$return = [
 			"arguments" => [],
 			"errors" => []
@@ -96,7 +93,7 @@ trait ArgumentableTrait {
 		if(count($rawArgs) > 0) {
 			foreach($this->argumentList as $pos => $possibleArguments) {
 				// try the one that spans more first... before the others
-				usort($possibleArguments, function (BaseArgument $a, BaseArgument $b): int {
+				usort($possibleArguments, function (BaseArgument $a, BaseArgument $b) : int {
 					if($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited arguments, pull it down
 						return 1;
 					}
@@ -161,7 +158,7 @@ trait ArgumentableTrait {
 		return $return;
 	}
 
-	public function generateUsageMessage(): string {
+	public function generateUsageMessage() : string {
 		$msg = $this->getName() . " ";
 		$args = [];
 		foreach($this->argumentList as $pos => $arguments) {
@@ -185,11 +182,11 @@ trait ArgumentableTrait {
 		return $msg;
 	}
 
-	public function hasArguments(): bool {
+	public function hasArguments() : bool {
 		return !empty($this->argumentList);
 	}
 
-	public function hasRequiredArguments(): bool {
+	public function hasRequiredArguments() : bool {
 		foreach($this->argumentList as $arguments) {
 			foreach($arguments as $argument) {
 				if(!$argument->isOptional()) {
@@ -204,7 +201,7 @@ trait ArgumentableTrait {
 	/**
 	 * @return BaseArgument[][]
 	 */
-	public function getArgumentList(): array {
+	public function getArgumentList() : array {
 		return $this->argumentList;
 	}
 }

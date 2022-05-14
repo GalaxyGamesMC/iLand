@@ -33,15 +33,15 @@ use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 
 class RawStringArgument extends BaseArgument {
-	public function getNetworkType(): int {
+	public function getNetworkType() : int {
 		return AvailableCommandsPacket::ARG_TYPE_STRING;
 	}
 
-	public function getTypeName(): string {
+	public function getTypeName() : string {
 		return "string";
 	}
 
-	public function canParse(string $testString, CommandSender $sender): bool {
+	public function canParse(string $testString, CommandSender $sender) : bool {
 		return true;
 	}
 

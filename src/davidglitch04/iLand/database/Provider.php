@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
@@ -10,42 +12,36 @@ use pocketmine\world\World;
 
 interface Provider
 {
-    /** @param iLand $iland */
-    public function __construct(iLand $iland);
+	/** @param iLand $iland */
+	public function __construct(iLand $iland);
 
-    /** @return void */
-    public function initConfig(): void;
+	/** @return void */
+	public function initConfig() : void;
 
-    /**
-     * @param  string $name
-     * @return void
-     */
-    public function getData(string $name): array;
+	/**
+	 * @return void
+	 */
+	public function getData(string $name) : array;
 
-    /**
-     * @param string $key
-     * @param Player $member
-     * @return void
-     */
-    public function addMembers(string $key, Player $member): void;
+	public function addMembers(string $key, Player $member) : void;
 
-    public function CountLand(Player $player): int;
+	public function CountLand(Player $player) : int;
 
-    public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world): bool;
+	public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world) : bool;
 
-    public function addLand(Player $player, Position $positionA, Position $positionB): void;
+	public function addLand(Player $player, Position $positionA, Position $positionB) : void;
 
-    public function PositionToString(Position $position): string;
+	public function PositionToString(Position $position) : string;
 
-    public function StringToPosition(string $string): Position;
+	public function StringToPosition(string $string) : Position;
 
-    public function testPlayer(Event $event): bool;
+	public function testPlayer(Event $event) : bool;
 
-    public function testBlock(Event $event): bool;
+	public function testBlock(Event $event) : bool;
 
-    public function inLand(Position $position): array;
+	public function inLand(Position $position) : array;
 
-    public function getAllLand(): array;
+	public function getAllLand() : array;
 
-    public function save() : void;
+	public function save() : void;
 }

@@ -29,8 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando;
 
-
-use davidglitch04\iLand\libs\CortexPE\Commando\args\BaseArgument;
 use davidglitch04\iLand\libs\CortexPE\Commando\constraint\BaseConstraint;
 use davidglitch04\iLand\libs\CortexPE\Commando\exception\InvalidErrorCode;
 use davidglitch04\iLand\libs\CortexPE\Commando\traits\ArgumentableTrait;
@@ -95,7 +93,7 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 		$this->usageMessage = implode("\n - /" . $this->getName() . " ", $usages);
 	}
 
-	public function getOwningPlugin(): Plugin {
+	public function getOwningPlugin() : Plugin {
 		return $this->plugin;
 	}
 
@@ -146,11 +144,8 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 
 	/**
 	 * @param ArgumentableTrait $ctx
-	 * @param array             $args
-	 *
-	 * @return array|null
 	 */
-	private function attemptArgumentParsing($ctx, array $args): ?array {
+	private function attemptArgumentParsing($ctx, array $args) : ?array {
 		$dat = $ctx->parseArguments($args, $this->currentSender);
 		if(!empty(($errors = $dat["errors"]))) {
 			foreach($errors as $error) {
@@ -164,38 +159,36 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 	}
 
 	/**
-	 * @param CommandSender  $sender
-	 * @param string         $aliasUsed
 	 * @param array|array<string,mixed|array<mixed>> $args
 	 */
-	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args): void;
+	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void;
 
-	protected function sendUsage(): void {
+	protected function sendUsage() : void {
 		$this->currentSender->sendMessage("Usage: " . $this->getUsage());
 	}
 
-	public function sendError(int $errorCode, array $args = []): void {
+	public function sendError(int $errorCode, array $args = []) : void {
 		$str = $this->errorMessages[$errorCode];
 		foreach($args as $item => $value) {
-			$str = str_replace("{{$item}}", (string)$value, $str);
+			$str = str_replace("{{$item}}", (string) $value, $str);
 		}
 		$this->currentSender->sendMessage($str);
 	}
 
-	public function setErrorFormat(int $errorCode, string $format): void {
+	public function setErrorFormat(int $errorCode, string $format) : void {
 		if(!isset($this->errorMessages[$errorCode])) {
 			throw new InvalidErrorCode("Invalid error code 0x" . dechex($errorCode));
 		}
 		$this->errorMessages[$errorCode] = $format;
 	}
 
-	public function setErrorFormats(array $errorFormats): void {
+	public function setErrorFormats(array $errorFormats) : void {
 		foreach($errorFormats as $errorCode => $format) {
 			$this->setErrorFormat($errorCode, $format);
 		}
 	}
 
-	public function registerSubCommand(BaseSubCommand $subCommand): void {
+	public function registerSubCommand(BaseSubCommand $subCommand) : void {
 		$keys = $subCommand->getAliases();
 		array_unshift($keys, $subCommand->getName());
 		$keys = array_unique($keys);
@@ -212,7 +205,7 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 	/**
 	 * @return BaseSubCommand[]
 	 */
-	public function getSubCommands(): array {
+	public function getSubCommands() : array {
 		return $this->subCommands;
 	}
 
@@ -223,11 +216,11 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 	/**
 	 * @return BaseConstraint[]
 	 */
-	public function getConstraints(): array {
+	public function getConstraints() : array {
 		return $this->constraints;
 	}
 
-	public function getUsageMessage(): string {
+	public function getUsageMessage() : string {
 		return $this->getUsage();
 	}
 }

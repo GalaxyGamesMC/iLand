@@ -15,6 +15,7 @@
     ],
     "require": {
         "vecnavium/formsui": "^1.1",
-        "cortexpe/commando": "dev-master"
+        "cortexpe/commando": "dev-master",
+        "friendsofphp/php-cs-fixer": "^3.8"
     }
 }

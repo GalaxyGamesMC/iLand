@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando\exception;
 
-
 class InvalidErrorCode extends CommandoException {
 
 }

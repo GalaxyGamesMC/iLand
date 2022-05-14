@@ -29,25 +29,24 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando;
 
-
 use davidglitch04\iLand\libs\CortexPE\Commando\exception\HookAlreadyRegistered;
 use davidglitch04\iLand\libs\CortexPE\Commando\store\SoftEnumStore;
 use davidglitch04\iLand\libs\CortexPE\Commando\traits\IArgumentable;
 use davidglitch04\iLand\libs\muqsit\simplepackethandler\SimplePacketHandler;
-use pocketmine\command\CommandMap;
 use pocketmine\command\CommandSender;
 use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketSendEvent;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
-use function array_unique;
+use function array_map;
+use function array_product;
 use function array_unshift;
-use function array_values;
+use function count;
+use function spl_object_id;
 
 class PacketHooker implements Listener {
 	/** @var bool */
@@ -55,11 +54,11 @@ class PacketHooker implements Listener {
 	/** @var bool */
 	private static $isIntercepting = false;
 
-	public static function isRegistered(): bool {
+	public static function isRegistered() : bool {
 		return self::$isRegistered;
 	}
 
-	public static function register(Plugin $registrant): void {
+	public static function register(Plugin $registrant) : void {
 		if(self::$isRegistered) {
 			throw new HookAlreadyRegistered("Event listener is already registered by another plugin.");
 		}
@@ -88,12 +87,9 @@ class PacketHooker implements Listener {
 	}
 
 	/**
-	 * @param CommandSender $cs
-	 * @param BaseCommand $command
-	 *
 	 * @return CommandParameter[][]
 	 */
-	private static function generateOverloads(CommandSender $cs, BaseCommand $command): array {
+	private static function generateOverloads(CommandSender $cs, BaseCommand $command) : array {
 		$overloads = [];
 
 		foreach($command->getSubCommands() as $label => $subCommand) {
@@ -130,11 +126,9 @@ class PacketHooker implements Listener {
 	}
 
 	/**
-	 * @param IArgumentable $argumentable
-	 *
 	 * @return CommandParameter[][]
 	 */
-	private static function generateOverloadList(IArgumentable $argumentable): array {
+	private static function generateOverloadList(IArgumentable $argumentable) : array {
 		$input = $argumentable->getArgumentList();
 		$combinations = [];
 		$outputLength = array_product(array_map("count", $input));

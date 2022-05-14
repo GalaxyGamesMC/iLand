@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando\args;
 
-
 use pocketmine\command\CommandSender;
 
 class BooleanArgument extends StringEnumArgument {
@@ -38,7 +37,7 @@ class BooleanArgument extends StringEnumArgument {
 		"false" => false,
 	];
 
-	public function getTypeName(): string {
+	public function getTypeName() : string {
 		return "bool";
 	}
 

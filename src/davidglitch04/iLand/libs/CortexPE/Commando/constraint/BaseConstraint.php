@@ -29,35 +29,29 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando\constraint;
 
-
 use davidglitch04\iLand\libs\CortexPE\Commando\IRunnable;
 use pocketmine\command\CommandSender;
 
 abstract class BaseConstraint {
-    /** @var IRunnable */
-    protected $context;
+	/** @var IRunnable */
+	protected $context;
 
-    /**
-     * BaseConstraint constructor.
-     *
-     * "Context" is required so that this new-constraint-system doesn't hinder getting command info
-     *
-     * @param IRunnable $context
-     */
-    public function __construct(IRunnable $context) {
-        $this->context = $context;
-    }
+	/**
+	 * BaseConstraint constructor.
+	 *
+	 * "Context" is required so that this new-constraint-system doesn't hinder getting command info
+	 */
+	public function __construct(IRunnable $context) {
+		$this->context = $context;
+	}
 
-    /**
-     * @return IRunnable
-     */
-    public function getContext(): IRunnable {
-        return $this->context;
-    }
+	public function getContext() : IRunnable {
+		return $this->context;
+	}
 
-    abstract public function test(CommandSender $sender, string $aliasUsed, array $args): bool;
+	abstract public function test(CommandSender $sender, string $aliasUsed, array $args) : bool;
 
-    abstract public function onFailure(CommandSender $sender, string $aliasUsed, array $args): void;
+	abstract public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void;
 
-    abstract public function isVisibleTo(CommandSender $sender): bool;
+	abstract public function isVisibleTo(CommandSender $sender) : bool;
 }

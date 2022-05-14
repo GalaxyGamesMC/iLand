@@ -9,13 +9,14 @@ use InvalidArgumentException;
 use pocketmine\event\HandlerListManager;
 use ReflectionFunction;
 use ReflectionNamedType;
+use function count;
+use function implode;
+use function is_a;
 
 final class Utils{
 
 	/**
-	 * @param Closure $closure
 	 * @param string[] $params
-	 * @param string $return_type
 	 * @return string[]
 	 */
 	public static function parseClosureSignature(Closure $closure, array $params, string $return_type) : array{
@@ -49,11 +50,6 @@ final class Utils{
 	}
 
 	/**
-	 * @param string $event
-	 * @param Closure $handler
-	 * @param int $priority
-	 * @return bool
-	 *
 	 * @phpstan-template TEvent of \pocketmine\event\Event
 	 * @phpstan-param class-string<TEvent> $event
 	 * @phpstan-param Closure(TEvent) : void $handler

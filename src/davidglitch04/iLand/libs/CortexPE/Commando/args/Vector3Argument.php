@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando\args;
 
-
 use pocketmine\command\CommandSender;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
@@ -39,15 +38,15 @@ use function preg_match;
 use function substr;
 
 class Vector3Argument extends BaseArgument {
-	public function getNetworkType(): int {
+	public function getNetworkType() : int {
 		return AvailableCommandsPacket::ARG_TYPE_POSITION;
 	}
 
-	public function getTypeName(): string {
+	public function getTypeName() : string {
 		return "x y z";
 	}
 
-	public function canParse(string $testString, CommandSender $sender): bool {
+	public function canParse(string $testString, CommandSender $sender) : bool {
 		$coords = explode(" ", $testString);
 		if(count($coords) === 3) {
 			foreach($coords as $coord) {
@@ -62,8 +61,8 @@ class Vector3Argument extends BaseArgument {
 		return false;
 	}
 
-	public function isValidCoordinate(string $coordinate, bool $locatable): bool {
-		return (bool)preg_match("/^(?:" . ($locatable ? "(?:~-|~\+)?" : "") . "-?(?:\d+|\d*\.\d+))" . ($locatable ? "|~" : "") . "$/", $coordinate);
+	public function isValidCoordinate(string $coordinate, bool $locatable) : bool {
+		return (bool) preg_match("/^(?:" . ($locatable ? "(?:~-|~\+)?" : "") . "-?(?:\d+|\d*\.\d+))" . ($locatable ? "|~" : "") . "$/", $coordinate);
 	}
 
 	public function parse(string $argument, CommandSender $sender) {
@@ -89,12 +88,12 @@ class Vector3Argument extends BaseArgument {
 						break;
 				}
 			}
-			$vals[] = (float)$coord + (float)$offset;
+			$vals[] = (float) $coord + (float) $offset;
 		}
 		return new Vector3(...$vals);
 	}
 
-	public function getSpanLength(): int {
+	public function getSpanLength() : int {
 		return 3;
 	}
 }

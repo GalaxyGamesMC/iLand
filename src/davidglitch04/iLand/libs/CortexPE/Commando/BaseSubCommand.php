@@ -29,7 +29,6 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\CortexPE\Commando;
 
-
 use davidglitch04\iLand\libs\CortexPE\Commando\constraint\BaseConstraint;
 use davidglitch04\iLand\libs\CortexPE\Commando\traits\ArgumentableTrait;
 use davidglitch04\iLand\libs\CortexPE\Commando\traits\IArgumentable;
@@ -66,51 +65,36 @@ abstract class BaseSubCommand implements IArgumentable, IRunnable {
 		$this->usageMessage = $this->generateUsageMessage();
 	}
 
-	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args): void;
+	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void;
 
-	/**
-	 * @return string
-	 */
-	public function getName(): string {
+	public function getName() : string {
 		return $this->name;
 	}
 
 	/**
 	 * @return string[]
 	 */
-	public function getAliases(): array {
+	public function getAliases() : array {
 		return $this->aliases;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getDescription(): string {
+	public function getDescription() : string {
 		return $this->description;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getUsageMessage(): string {
+	public function getUsageMessage() : string {
 		return $this->usageMessage;
 	}
 
-	/**
-	 * @return string|null
-	 */
-	public function getPermission(): ?string {
+	public function getPermission() : ?string {
 		return $this->permission;
 	}
 
-	/**
-	 * @param string $permission
-	 */
-	public function setPermission(string $permission): void {
+	public function setPermission(string $permission) : void {
 		$this->permission = $permission;
 	}
 
-	public function testPermissionSilent(CommandSender $sender): bool {
+	public function testPermissionSilent(CommandSender $sender) : bool {
 		if(empty($this->permission)) {
 			return true;
 		}
@@ -124,46 +108,39 @@ abstract class BaseSubCommand implements IArgumentable, IRunnable {
 	}
 
 	/**
-	 * @param CommandSender $currentSender
-	 *
 	 * @internal Used to pass the current sender from the parent command
 	 */
-	public function setCurrentSender(CommandSender $currentSender): void {
+	public function setCurrentSender(CommandSender $currentSender) : void {
 		$this->currentSender = $currentSender;
 	}
 
 	/**
-	 * @param BaseCommand $parent
-	 *
 	 * @internal Used to pass the parent context from the parent command
 	 */
-	public function setParent(BaseCommand $parent): void {
+	public function setParent(BaseCommand $parent) : void {
 		$this->parent = $parent;
 	}
 
-	public function sendError(int $errorCode, array $args = []): void {
+	public function sendError(int $errorCode, array $args = []) : void {
 		$this->parent->sendError($errorCode, $args);
 	}
 
-	public function sendUsage():void {
+	public function sendUsage() : void {
 		$this->currentSender->sendMessage("/{$this->parent->getName()} {$this->usageMessage}");
 	}
 
-    public function addConstraint(BaseConstraint $constraint) : void {
-        $this->constraints[] = $constraint;
-    }
-
-    /**
-     * @return BaseConstraint[]
-     */
-    public function getConstraints(): array {
-        return $this->constraints;
-    }
+	public function addConstraint(BaseConstraint $constraint) : void {
+		$this->constraints[] = $constraint;
+	}
 
 	/**
-	 * @return Plugin
+	 * @return BaseConstraint[]
 	 */
-	public function getOwningPlugin(): Plugin {
+	public function getConstraints() : array {
+		return $this->constraints;
+	}
+
+	public function getOwningPlugin() : Plugin {
 		return $this->parent->getOwningPlugin();
 	}
 }

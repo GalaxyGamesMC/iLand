@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\libs\muqsit\simplepackethandler;
 
-use InvalidArgumentException;
 use davidglitch04\iLand\libs\muqsit\simplepackethandler\interceptor\IPacketInterceptor;
 use davidglitch04\iLand\libs\muqsit\simplepackethandler\interceptor\PacketInterceptor;
 use davidglitch04\iLand\libs\muqsit\simplepackethandler\monitor\IPacketMonitor;
 use davidglitch04\iLand\libs\muqsit\simplepackethandler\monitor\PacketMonitor;
+use InvalidArgumentException;
 use pocketmine\event\EventPriority;
 use pocketmine\plugin\Plugin;
 
