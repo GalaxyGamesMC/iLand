@@ -24,6 +24,7 @@ use function in_array;
 use function intval;
 use function max;
 use function min;
+use function strtolower;
 
 class YamlProvider implements Provider
 {
@@ -50,11 +51,6 @@ class YamlProvider implements Provider
 	{
 		$this->land->set($name, $data);
 		$this->land->save();
-	}
-
-	public function addMembers(string $key, Player $member) : void
-	{
-		//TODO:
 	}
 
 	public function CountLand(Player $player) : int
@@ -152,11 +148,11 @@ class YamlProvider implements Provider
 				if($results['Status']){
 					if($results['Data']['Owner'] == $player->getName()){
 						return true;
-					} elseif (in_array($player->getName(), $results['Data']['Members'], true)
+					} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true)
 					&& !$results['Data']['Settings']['allow_open_chest']
 					&& $block instanceof Chest){
 						return false;
-					} elseif (in_array($player->getName(), $results['Data']['Members'], true)
+					} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true)
 					&& !$results['Data']['Settings']['use_furnace']
 					&& $block instanceof Furnace){
 						return false;
@@ -170,7 +166,7 @@ class YamlProvider implements Provider
 			if($results['Status']){
 				if($results['Data']['Owner'] == $player->getName()){
 					return true;
-				} elseif (in_array($player->getName(), $results['Data']['Members'], true) && $results['Data']['Settings']['use_bucket']){
+				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['use_bucket']){
 					return true;
 				}
 				return false;
@@ -181,7 +177,7 @@ class YamlProvider implements Provider
 			if($results['Status']){
 				if($results['Data']['Owner'] == $player->getName()){
 					return true;
-				} elseif (in_array($player->getName(), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_dropitem']){
+				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_dropitem']){
 					return true;
 				}
 				return false;
@@ -192,7 +188,7 @@ class YamlProvider implements Provider
 			if($results['Status']){
 				if($results['Data']['Owner'] == $player->getName()){
 					return true;
-				} elseif (in_array($player->getName(), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_pickupitem']){
+				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_pickupitem']){
 					return true;
 				}
 				return false;
@@ -210,7 +206,7 @@ class YamlProvider implements Provider
 			if($results['Status']){
 				if($results['Data']['Owner'] == $player->getName()){
 					return true;
-				} elseif (in_array($player->getName(), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_destroy']){
+				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_destroy']){
 					return true;
 				}
 				return false;
@@ -222,7 +218,7 @@ class YamlProvider implements Provider
 			if($results['Status']){
 				if($results['Data']['Owner'] == $player->getName()){
 					return true;
-				} elseif (in_array($player->getName(), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_place']){
+				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_place']){
 					return true;
 				}
 				return false;

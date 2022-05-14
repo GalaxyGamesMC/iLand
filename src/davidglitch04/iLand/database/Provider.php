@@ -23,8 +23,6 @@ interface Provider
 	 */
 	public function getData(string $name) : array;
 
-	public function addMembers(string $key, Player $member) : void;
-
 	public function CountLand(Player $player) : int;
 
 	public function isOverlap(float $startX, float $startZ, float $endX, float $endZ, World $world) : bool;
