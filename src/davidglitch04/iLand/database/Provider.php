@@ -3,6 +3,7 @@
 namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
+use pocketmine\event\Event;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
@@ -22,11 +23,11 @@ interface Provider
     public function getData(string $name): array;
 
     /**
-     * @param string $name
-     * @param Player $owner
+     * @param string $key
+     * @param Player $member
      * @return void
      */
-    public function addOwner(string $name, Player $owner): void;
+    public function addMembers(string $key, Player $member): void;
 
     public function CountLand(Player $player): int;
 
@@ -37,6 +38,12 @@ interface Provider
     public function PositionToString(Position $position): string;
 
     public function StringToPosition(string $string): Position;
+
+    public function testPlayer(Event $event): bool;
+
+    public function testBlock(Event $event): bool;
+
+    public function inLand(Position $position): array;
 
     public function getAllLand(): array;
 

@@ -48,6 +48,10 @@ class TitleTask extends Task{
                     $this->addBorder($this->player, $posA->getX(), $this->player->getPosition()->getY()+3, $z);
                     $this->addBorder($this->player, $posB->getX(), $this->player->getPosition()->getY()+3, $z);
                 }
+                for ($y=1;$y<=255;$y++){
+                    $this->addBorder($this->player, $posA->getX(), $y, $posA->getZ());
+                    $this->addBorder($this->player, $posB->getX(), $y, $posB->getZ());
+                }
             }
             $this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [ItemUtils::getItem()->getName()]));
         }

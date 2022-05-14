@@ -43,7 +43,6 @@ class BuyForm{
                         });
                         $secondform->setTitle("Complete");
                         $secondform->setContent($language->translateString("gui.buyland.succeed"));
-                        $secondform->addButton($language->translateString("gui.general.looklook"));
                         $secondform->addButton($language->translateString("gui.general.close"));
                         $player->sendForm($secondform);
                         return $secondform;

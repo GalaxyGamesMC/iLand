@@ -9,6 +9,9 @@ use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\entity\EntityItemPickupEvent;
+use pocketmine\event\player\PlayerBucketEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\player\Player;
 
 class PlayerListener implements Listener{
@@ -63,6 +66,29 @@ class PlayerListener implements Listener{
                         $player->getLocation()->getZ(), ])
                     );
                 }
+            }
+        }
+        if (!$this->iland->getProvider()->testPlayer($event)){
+            $event->cancel();
+        }
+    }
+
+    public function onBucket(PlayerBucketEvent $event): void{
+        if (!$this->iland->getProvider()->testPlayer($event)){
+            $event->cancel();
+        }
+    }
+
+    public function onDrop(PlayerDropItemEvent $event): void{
+        if (!$this->iland->getProvider()->testPlayer($event)){
+            $event->cancel();
+        }
+    }
+
+    public function onPickup(EntityItemPickupEvent $event): void{
+        if($event->getEntity() instanceof Player){
+            if (!$this->iland->getProvider()->testPlayer($event)){
+                $event->cancel();
             }
         }
     }

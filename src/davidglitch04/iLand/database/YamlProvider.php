@@ -3,6 +3,15 @@
 namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
+use pocketmine\block\Chest;
+use pocketmine\block\Furnace;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\entity\EntityItemPickupEvent;
+use pocketmine\event\Event;
+use pocketmine\event\player\PlayerBucketEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
@@ -22,15 +31,21 @@ class YamlProvider implements Provider
 
     public function initConfig(): void
     {
-        $this->land = new Config($this->iland->getDataFolder().'land.yml', Config::YAML);
+        $this->land = new Config($this->iland->getDataFolder().'land.json', Config::JSON);
     }
 
-    public function getData(string $name): array
+    public function getData($name): array
     {
         return $this->land->get($name, []);
     }
 
-    public function addOwner(string $name, Player $owner): void
+    public function setData($name, $data): void
+    {
+        $this->land->set($name, $data);
+        $this->land->save();
+    }
+
+    public function addMembers(string $key, Player $member): void
     {
         //TODO:
     }
@@ -85,22 +100,32 @@ class YamlProvider implements Provider
             "Start" => $this->PositionToString($positionA),
             "End" => $this->PositionToString($positionB),
             "Members" => [],
-            "Settings" => []
+            "Settings" => [
+                "allow_open_chest" => false,
+                "use_bucket" => false,
+                "use_furnace" => false,
+                "allow_place" => false,
+                "allow_dropitem" => false,
+                "allow_pickupitem" => false,
+                "allow_destroy" => false
+            ]
         ];
         $this->land->set($counts+1, $landDb);
         $this->land->save();
     }
 
-    public function PositionToString(Position $position): string{
+    public function PositionToString(Position $position): string
+    {
         $x = (int)$position->getX();
         $y = (int)$position->getY();
         $z = (int)$position->getZ();
-        $world = (string)$position->getWorld()->getDisplayName();
+        $world = (string)$position->getWorld()->getFolderName();
         $string = $x.",".$y.",".$z.",".$world;
         return $string;
     }
 
-    public function StringToPosition(string $string): Position{
+    public function StringToPosition(string $string): Position
+    {
         $position = explode(",", $string);
         return new Position(
             intval($position[0]), 
@@ -108,6 +133,125 @@ class YamlProvider implements Provider
             intval($position[2]), 
             Server::getInstance()->getWorldManager()->getWorldByName($position[3])
         );
+    }
+
+    public function testPlayer(Event $event): bool
+    { 
+       if ($event instanceof PlayerInteractEvent){
+           $player = $event->getPlayer();
+           $block = $event->getBlock();
+            if ($event->getAction() == PlayerInteractEvent::RIGHT_CLICK_BLOCK){
+                $results = $this->inLand($player->getPosition())['Results'];
+                if($results['Status']){
+                    if($results['Data']['Owner'] == $player->getName()){
+                        return true;
+                    } elseif (in_array($player->getName(), $results['Data']['Members']) 
+                    and !$results['Data']['Settings']['allow_open_chest'] 
+                    and $block instanceof Chest){
+                        return false;
+                    } elseif (in_array($player->getName(), $results['Data']['Members']) 
+                    and !$results['Data']['Settings']['use_furnace'] 
+                    and $block instanceof Furnace){
+                        return false;
+                    }
+                    return true;
+                }
+           }
+        } elseif ($event instanceof PlayerBucketEvent){
+            $player = $event->getPlayer();
+            $results = $this->inLand($player->getPosition())['Results'];
+            if($results['Status']){
+                if($results['Data']['Owner'] == $player->getName()){
+                    return true;
+                } elseif (in_array($player->getName(), $results['Data']['Members']) and $results['Data']['Settings']['use_bucket']){
+                    return true;
+                }
+                return false;
+            }
+        } elseif ($event instanceof PlayerDropItemEvent){
+            $player = $event->getPlayer();
+            $results = $this->inLand($player->getPosition())['Results'];
+            if($results['Status']){
+                if($results['Data']['Owner'] == $player->getName()){
+                    return true;
+                } elseif (in_array($player->getName(), $results['Data']['Members']) and $results['Data']['Settings']['allow_dropitem']){
+                    return true;
+                }
+                return false;
+            }
+        } elseif ($event instanceof EntityItemPickupEvent){
+            $player = $event->getEntity();
+            $results = $this->inLand($player->getPosition())['Results'];
+            if($results['Status']){
+                if($results['Data']['Owner'] == $player->getName()){
+                    return true;
+                } elseif (in_array($player->getName(), $results['Data']['Members']) and $results['Data']['Settings']['allow_pickupitem']){
+                    return true;
+                }
+                return false;
+            }
+        }
+       return true;
+    }
+
+    public function testBlock(Event $event): bool
+    {
+        if ($event instanceof BlockBreakEvent){
+            $block = $event->getBlock();
+            $player = $event->getPlayer();
+            $results = $this->inLand($block->getPosition())['Results'];
+            if($results['Status']){
+                if($results['Data']['Owner'] == $player->getName()){
+                    return true;
+                } elseif (in_array($player->getName(), $results['Data']['Members']) and $results['Data']['Settings']['allow_destroy']){
+                    return true;
+                }
+                return false;
+            }
+        } elseif ($event instanceof BlockPlaceEvent){
+            $block = $event->getBlock();
+            $player = $event->getPlayer();
+            $results = $this->inLand($block->getPosition())['Results'];
+            if($results['Status']){
+                if($results['Data']['Owner'] == $player->getName()){
+                    return true;
+                } elseif (in_array($player->getName(), $results['Data']['Members']) and $results['Data']['Settings']['allow_place']){
+                    return true;
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function inLand(Position $position): array
+    {
+        foreach ((array)$this->land->getAll() as $lands){
+            $start = $this->StringToPosition($lands['Start']);
+            $end = $this->StringToPosition($lands['End']);
+            $x = $position->getX();
+            $z = $position->getZ();
+            $worldname = $position->getWorld()->getFolderName();
+            $x1 = min($start->getX(), $end->getX());
+            $x2 = max($start->getX(), $end->getX());
+            $z1 = min($start->getZ(), $end->getZ());
+            $z2 = max($start->getZ(), $end->getZ());
+            if(($worldname == $start->getWorld()->getFolderName())
+            and ($x >= $x1) and ($x <= $x2) and ($z >= $z1) and ($z < $z2)){
+               return [
+                   'Results' => [
+                       'Status' => true,
+                       'Data' => $lands
+                   ]
+                ];
+            }
+        }
+        return [
+            'Results' => [
+                'Status' => false,
+                'Data' => null
+            ]
+        ];
     }
 
     public function getAllLand(): array
