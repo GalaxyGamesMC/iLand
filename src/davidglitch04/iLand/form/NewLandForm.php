@@ -17,7 +17,7 @@ class NewLandForm {
 	 * @return mixed
 	 */
 	private function sendForm(Player $player) {
-		$form = new SimpleForm(function (Player $player, $data) {
+		$form = new SimpleForm(function (Player $player, int|null $data) {
 			if (!isset($data)) {
 				return new iLandForm($player);
 			}

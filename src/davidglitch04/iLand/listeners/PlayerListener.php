@@ -41,7 +41,7 @@ class PlayerListener implements Listener {
 			$z = $player->getPosition()->getZ();
 			if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $player->getWorld())) {
 				$event->cancel();
-				$form = new SimpleForm(function (Player $player, $data) {
+				$form = new SimpleForm(function (Player $player, int|null $data) {
 					if (!isset($data)) {
 						return false;
 					}

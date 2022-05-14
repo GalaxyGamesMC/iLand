@@ -6,22 +6,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-php:
-    name: Prepare PHP
-    runs-on: ${{ matrix.image }}
-
-    strategy:
-      matrix:
-        image: [ubuntu-20.04]
-        php: [8.0.18]
-
-    steps:
-      - name: Build and prepare PHP cache
-        uses: pmmp/setup-php-action@aa636a4fe0c1c035fd9a3f05e360eadd86e06440
-        with:
-          php-version: ${{ matrix.php }}
-          install-path: "./bin"
-          
   codestyle:
     name: Code Style checks
     runs-on: ubuntu-20.04
