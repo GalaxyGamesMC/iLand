@@ -2,6 +2,7 @@
     "language": "eng",
     "config": "Yaml",
     "price/area": 70.0,
+    "recycle/area": 35.0,
     "particel-selected": false,
     "tool_name": "Wooden_Axe"
 }

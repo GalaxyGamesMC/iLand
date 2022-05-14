@@ -244,6 +244,11 @@ class YamlProvider implements Provider {
 		];
 	}
 
+	public function delLand(int $key) : void {
+		$this->land->remove($key);
+		$this->land->save();
+	}
+
 	public function getAllLand() : array {
 		return (array) $this->land->getAll();
 	}

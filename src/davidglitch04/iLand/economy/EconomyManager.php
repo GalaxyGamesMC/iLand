@@ -9,6 +9,7 @@ use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\player\Player;
 use pocketmine\Server;
+use function addToPlayerBalance;
 use function assert;
 use function ceil;
 use function is_float;
@@ -60,6 +61,21 @@ final class EconomyManager {
 				$this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use ($callback) : void {
 					$callback($success);
 				}));
+				break;
+		}
+	}
+
+	public function addMoney(Player $player, float $amount) {
+		if ($this->eco == null) {
+			$this->plugin->getLogger()->warning("You not have Economy plugin");
+			return true;
+		}
+		switch ($this->eco->getName()) {
+			case "EconomyAPI":
+				$this->eco->addMoney($player, $amount);
+				break;
+			case "BedrockEconomy":
+				$this->eco->getAPI() - addToPlayerBalance($player->getName(), $amount);
 				break;
 		}
 	}

@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand\form;
 
+use davidglitch04\iLand\economy\EconomyManager;
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\CustomForm;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
+use pocketmine\Server;
+
 use function abs;
 use function count;
+use function floatval;
 use function in_array;
+use function is_null;
 use function strcmp;
 use function strtolower;
 
@@ -58,6 +63,12 @@ class ManageLandForm {
 				case 3:
 					$this->LandNickname($player, $key);
 					break;
+				case 4:
+					$this->LandTransfer($player, $key);
+					break;
+				case 5:
+					$this->DeleteLand($player, $key);
+					break;
 			}
 		});
 		$form->setTitle($language->translateString("gui.fastlmgr.title"));
@@ -66,7 +77,6 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.landmgr.options.landperm"));
 		$form->addButton($language->translateString("gui.landmgr.options.landtrust"));
 		$form->addButton($language->translateString("gui.landmgr.options.landtag"));
-		$form->addButton($language->translateString("gui.landmgr.options.landdescribe"));
 		$form->addButton($language->translateString("gui.landmgr.options.landtransfer"));
 		$form->addButton($language->translateString("gui.landmgr.options.delland"));
 		$form->addButton($language->translateString("gui.general.close"));
@@ -230,6 +240,70 @@ class ManageLandForm {
 		$form->setTitle($language->translateString("gui.landtag.title"));
 		$form->addLabel($language->translateString("gui.landtag.tip"));
 		$form->addInput("", $dataland["Name"]);
+		$player->sendForm($form);
+	}
+
+	private function LandTransfer(Player $player, int $key) : void {
+		$language = iLand::getLanguage();
+		$form = new SimpleForm(function (Player $player, int|null $data) use ($key, $language) {
+			if (!isset($data)) {
+				return;
+			}
+			if ($data === 0) {
+				$form = new CustomForm(function (Player $player, array|null $data) use ($key, $language) {
+					if (!isset($data)) {
+						return;
+					}
+					if (isset($data[1])) {
+						if (!is_null(Server::getInstance()->getPlayerByPrefix($data[1]))) {
+							$landdb = iLand::getInstance()->getProvider()->getData($key);
+							$landdb["Owner"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
+							iLand::getInstance()->getProvider()->setData($key, $landdb);
+							$this->CompleteForm($player);
+						} else {
+							$player->sendMessage($language->translateString("gui.general.player"));
+							return;
+						}
+					}
+				});
+				$form->setTitle($language->translateString("gui.itemselector.transfer.title"));
+				$form->addLabel("§lInstructions " . $language->translateString("gui.itemselector.transfer.tip_usage"));
+				$form->addInput($language->translateString("gui.itemselector.transfer.search"), "Player Username");
+				$player->sendForm($form);
+			}
+		});
+		$form->setTitle($language->translateString("gui.landmgr.options.landtransfer"));
+		$form->setContent($language->translateString("gui.landtransfer.tip"));
+		$form->addButton($language->translateString("gui.general.yes"));
+		$form->addButton($language->translateString("gui.general.close"));
+		$player->sendForm($form);
+	}
+
+	private function DeleteLand(Player $player, int $key) : void {
+		$language = iLand::getLanguage();
+		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
+		$startpos = iLand::getInstance()->getProvider()->StringToPosition($dataland["Start"]);
+		$endpos = iLand::getInstance()->getProvider()->StringToPosition($dataland["End"]);
+		$length = abs((int) $startpos->getX() - (int) $endpos->getX());
+		$width = abs((int) $startpos->getZ() - (int) $endpos->getZ());
+		$priceperblock = iLand::getDefaultConfig()->get("recycle/area");
+		$blocks = $length * $width;
+		$price = $priceperblock * $blocks;
+		$form = new SimpleForm(function (Player $player, int|null $data) use ($key, $language, $price) {
+			if (!isset($data)) {
+				return;
+			}
+			if ($data === 0) {
+				$ecomgr = new EconomyManager();
+				$ecomgr->addMoney($player, floatval($price));
+				iLand::getInstance()->getProvider()->delLand($key);
+				$this->CompleteForm($player);
+			}
+		});
+		$form->setTitle($language->translateString("gui.delland.title"));
+		$form->setContent($language->translateString("gui.delland.content", [$price]));
+		$form->addButton($language->translateString("gui.general.yes"));
+		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
 

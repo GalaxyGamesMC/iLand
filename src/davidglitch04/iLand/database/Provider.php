@@ -38,6 +38,8 @@ interface Provider {
 
 	public function inLand(Position $position) : array;
 
+	public function delLand(int $key) : void;
+
 	public function getAllLand() : array;
 
 	public function save() : void;
