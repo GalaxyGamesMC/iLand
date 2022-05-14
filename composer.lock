@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8dea5b0f2eb5fd823026cc5056e007b9",
+    "content-hash": "9674e0e27a650303aa79a02aa711e647",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -735,6 +735,38 @@
                 "source": "https://github.com/cweiske/jsonmapper/tree/v4.0.0"
             },
             "time": "2020-12-01T19:48:11+00:00"
+        },
+        {
+            "name": "nhanaz/libregrsp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NhanAZ/libRegRsp.git",
+                "reference": "18dc4270f4fb8999b0d823e449ac4ea5ccfc6579"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NhanAZ/libRegRsp/zipball/18dc4270f4fb8999b0d823e449ac4ea5ccfc6579",
+                "reference": "18dc4270f4fb8999b0d823e449ac4ea5ccfc6579",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "NhanAZ\\libRegRsp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Resource pack register library for PocketMine plugins",
+            "support": {
+                "issues": "https://github.com/NhanAZ/libRegRsp/issues",
+                "source": "https://github.com/NhanAZ/libRegRsp/tree/master"
+            },
+            "time": "2022-05-05T08:56:22+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
@@ -3307,13 +3339,12 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "cortexpe/commando": 20
+        "cortexpe/commando": 20,
+        "nhanaz/libregrsp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": "^8.0"
-    },
+    "platform": [],
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
