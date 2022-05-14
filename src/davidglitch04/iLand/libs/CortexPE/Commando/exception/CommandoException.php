@@ -32,5 +32,4 @@ namespace davidglitch04\iLand\libs\CortexPE\Commando\exception;
 use Exception;
 
 class CommandoException extends Exception {
-
 }

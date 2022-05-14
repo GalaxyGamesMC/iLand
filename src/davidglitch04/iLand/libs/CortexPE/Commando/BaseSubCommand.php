@@ -95,11 +95,11 @@ abstract class BaseSubCommand implements IArgumentable, IRunnable {
 	}
 
 	public function testPermissionSilent(CommandSender $sender) : bool {
-		if(empty($this->permission)) {
+		if (empty($this->permission)) {
 			return true;
 		}
-		foreach(explode(";", $this->permission) as $permission) {
-			if($sender->hasPermission($permission)) {
+		foreach (explode(";", $this->permission) as $permission) {
+			if ($sender->hasPermission($permission)) {
 				return true;
 			}
 		}

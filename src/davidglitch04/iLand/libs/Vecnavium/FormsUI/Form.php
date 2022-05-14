@@ -7,7 +7,7 @@ namespace davidglitch04\iLand\libs\Vecnavium\FormsUI;
 use pocketmine\form\Form as IForm;
 use pocketmine\player\Player;
 
-abstract class Form implements IForm{
+abstract class Form implements IForm {
 
 	/** @var array */
 	protected $data = [];
@@ -37,7 +37,7 @@ abstract class Form implements IForm{
 	public function handleResponse(Player $player, $data) : void {
 		$this->processData($data);
 		$callable = $this->getCallable();
-		if($callable !== null) {
+		if ($callable !== null) {
 			$callable($player, $data);
 		}
 	}
@@ -45,7 +45,7 @@ abstract class Form implements IForm{
 	public function processData(&$data) : void {
 	}
 
-	public function jsonSerialize(){
+	public function jsonSerialize() {
 		return $this->data;
 	}
 }

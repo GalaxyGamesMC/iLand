@@ -8,14 +8,12 @@ use davidglitch04\iLand\iLand;
 use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
 
-final class ItemUtils{
-
-	public static function getItem() : Item
-	{
+final class ItemUtils {
+	public static function getItem() : Item {
 		$item = StringToItemParser::getInstance()->parse(iLand::getDefaultConfig()->get("tool_name", "Wooden_Axe"));
-		if($item !== null){
+		if ($item !== null) {
 			return $item;
-		} else{
+		} else {
 			return StringToItemParser::getInstance()->parse("Wooden_Axe");
 		}
 	}

@@ -18,10 +18,8 @@ use function array_map;
 use function array_values;
 use function implode;
 
-class iLandCommand extends BaseCommand
-{
-	public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void
-	{
+class iLandCommand extends BaseCommand {
+	public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void {
 		$subcommands = array_values(array_map(function (BaseSubCommand $subCommand) : string {
 			return $subCommand->getName();
 		}, $this->getSubCommands()));
@@ -38,8 +36,8 @@ class iLandCommand extends BaseCommand
 				$statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
 				$statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
 				if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
-					$form = new SimpleForm(function (Player $sender, $data){
-						if(!isset($data)){
+					$form = new SimpleForm(function (Player $sender, $data) {
+						if (!isset($data)) {
 							return false;
 						}
 					});
@@ -49,7 +47,7 @@ class iLandCommand extends BaseCommand
 					$sender->sendForm($form);
 					return;
 				}
-				if(!$statusA && !$statusB){
+				if (!$statusA && !$statusB) {
 					new BuyForm($sender);
 					return;
 				}
@@ -61,13 +59,12 @@ class iLandCommand extends BaseCommand
 					$sender->getLocation()->getZ(), ])
 				);
 			}
-		} else{
+		} else {
 			$sender->sendMessage('Usage: /land <' . implode('|', $subcommands) . '>');
 		}
 	}
 
-	protected function prepare() : void
-	{
+	protected function prepare() : void {
 		$this->registerArgument(0, new RawStringArgument('args', true));
 		$this->setPermission("iland.allow.command");
 		$this->registerSubCommand(new Buy('buy', iLand::getLanguage()->translateString('Buy the selected land')));

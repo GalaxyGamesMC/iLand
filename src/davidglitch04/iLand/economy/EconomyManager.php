@@ -13,12 +13,11 @@ use function assert;
 use function ceil;
 use function is_float;
 
-final class EconomyManager
-{
+final class EconomyManager {
 	/** @var \pocketmine\plugin\Plugin|null $eco */
 	private $eco;
 
-	public function __construct(){
+	public function __construct() {
 		$manager = Server::getInstance()->getPluginManager();
 		$this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
 		unset($manager);
@@ -27,19 +26,19 @@ final class EconomyManager
 	 * @return int
 	 */
 	public function getMoney(Player $player, Closure $callback) : void {
-		switch ($this->eco->getName()){
+		switch ($this->eco->getName()) {
 			case "EconomyAPI":
 				$money = $this->eco->myMoney($player);
 				assert(is_float($money));
 				$callback($money);
 				break;
 			case "BedrockEconomy":
-				$this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void{
+				$this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use ($callback) : void {
 					$callback($balance ?? 0);
 				}));
 				break;
 			default:
-				$this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void{
+				$this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use ($callback) : void {
 					$callback($balance ?? 0);
 				}));
 		}
@@ -48,17 +47,17 @@ final class EconomyManager
 	/**
 	 * @return bool
 	 */
-	public function reduceMoney(Player $player, int $amount, Closure $callback){
-		if($this->eco == null){
+	public function reduceMoney(Player $player, int $amount, Closure $callback) {
+		if ($this->eco == null) {
 			$this->plugin->getLogger()->warning("You not have Economy plugin");
 			return true;
 		}
-		switch ($this->eco->getName()){
+		switch ($this->eco->getName()) {
 			case "EconomyAPI":
 				$callback($this->eco->reduceMoney($player, $amount) === EconomyAPI::RET_SUCCESS);
 				break;
 			case "BedrockEconomy":
-				$this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void{
+				$this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use ($callback) : void {
 					$callback($success);
 				}));
 				break;

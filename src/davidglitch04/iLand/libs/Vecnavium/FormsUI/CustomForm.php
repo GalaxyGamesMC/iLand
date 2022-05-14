@@ -8,7 +8,6 @@ use function count;
 use function is_array;
 
 class CustomForm extends Form {
-
 	private $labelMap = [];
 
 	public function __construct(?callable $callable) {
@@ -19,7 +18,7 @@ class CustomForm extends Form {
 	}
 
 	public function processData(&$data) : void {
-		if(is_array($data)) {
+		if (is_array($data)) {
 			$new = [];
 			foreach ($data as $i => $v) {
 				$new[$this->labelMap[$i]] = $v;
@@ -43,7 +42,7 @@ class CustomForm extends Form {
 
 	public function addToggle(string $text, bool $default = null, ?string $label = null) : void {
 		$content = ["type" => "toggle", "text" => $text];
-		if($default !== null) {
+		if ($default !== null) {
 			$content["default"] = $default;
 		}
 		$this->addContent($content);
@@ -52,10 +51,10 @@ class CustomForm extends Form {
 
 	public function addSlider(string $text, int $min, int $max, int $step = -1, int $default = -1, ?string $label = null) : void {
 		$content = ["type" => "slider", "text" => $text, "min" => $min, "max" => $max];
-		if($step !== -1) {
+		if ($step !== -1) {
 			$content["step"] = $step;
 		}
-		if($default !== -1) {
+		if ($default !== -1) {
 			$content["default"] = $default;
 		}
 		$this->addContent($content);
@@ -64,7 +63,7 @@ class CustomForm extends Form {
 
 	public function addStepSlider(string $text, array $steps, int $defaultIndex = -1, ?string $label = null) : void {
 		$content = ["type" => "step_slider", "text" => $text, "steps" => $steps];
-		if($defaultIndex !== -1) {
+		if ($defaultIndex !== -1) {
 			$content["default"] = $defaultIndex;
 		}
 		$this->addContent($content);
@@ -90,5 +89,4 @@ class CustomForm extends Form {
 	private function addContent(array $content) : void {
 		$this->data["content"][] = $content;
 	}
-
 }

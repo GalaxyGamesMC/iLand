@@ -48,9 +48,9 @@ class Vector3Argument extends BaseArgument {
 
 	public function canParse(string $testString, CommandSender $sender) : bool {
 		$coords = explode(" ", $testString);
-		if(count($coords) === 3) {
-			foreach($coords as $coord) {
-				if(!$this->isValidCoordinate($coord, $sender instanceof Vector3)) {
+		if (count($coords) === 3) {
+			foreach ($coords as $coord) {
+				if (!$this->isValidCoordinate($coord, $sender instanceof Vector3)) {
 					return false;
 				}
 			}
@@ -68,15 +68,15 @@ class Vector3Argument extends BaseArgument {
 	public function parse(string $argument, CommandSender $sender) {
 		$coords = explode(" ", $argument);
 		$vals = [];
-		foreach($coords as $k => $coord){
+		foreach ($coords as $k => $coord) {
 			$offset = 0;
 			// if it's locatable and starts with ~- or ~+
-			if($sender instanceof Vector3 && preg_match("/^(?:~-|~\+)|~/", $coord)){
+			if ($sender instanceof Vector3 && preg_match("/^(?:~-|~\+)|~/", $coord)) {
 				// this will work with -n, +n and "" due to typecast later
 				$offset = substr($coord, 1);
 
 				// replace base coordinate with actual entity coordinates
-				switch($k){
+				switch ($k) {
 					case 0:
 						$coord = $sender->x;
 						break;

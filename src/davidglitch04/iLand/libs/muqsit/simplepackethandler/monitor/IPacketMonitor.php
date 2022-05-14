@@ -9,7 +9,7 @@ use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\ClientboundPacket;
 use pocketmine\network\mcpe\protocol\ServerboundPacket;
 
-interface IPacketMonitor{
+interface IPacketMonitor {
 
 	/**
 	 * @phpstan-template TServerboundPacket of ServerboundPacket

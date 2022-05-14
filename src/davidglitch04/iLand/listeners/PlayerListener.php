@@ -16,35 +16,33 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
 
-class PlayerListener implements Listener{
-
+class PlayerListener implements Listener {
 	protected iLand $iland;
 
-	public function __construct(iLand $iland)
-	{
+	public function __construct(iLand $iland) {
 		$this->iland = $iland;
 	}
 
-	public function onQuit(PlayerQuitEvent $event){
+	public function onQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
-		if($this->iland->getSessionManager()->inSession($player)){
+		if ($this->iland->getSessionManager()->inSession($player)) {
 			$this->iland->getSessionManager()->removePlayer($player);
 		}
 	}
 
-	public function onInteract(PlayerInteractEvent $event) : void{
+	public function onInteract(PlayerInteractEvent $event) : void {
 		$player = $event->getPlayer();
 		$item = $player->getInventory()->getItemInHand();
-		if($event->getAction() == PlayerInteractEvent::LEFT_CLICK_BLOCK
-		 && $this->iland->getSessionManager()->inSession($player)){
+		if ($event->getAction() == PlayerInteractEvent::LEFT_CLICK_BLOCK
+		 && $this->iland->getSessionManager()->inSession($player)) {
 			$statusA = $this->iland->getSessionManager()->getSession($player)->isNull("A");
 			$statusB = $this->iland->getSessionManager()->getSession($player)->isNull("B");
 			$x = $player->getPosition()->getX();
 			$z = $player->getPosition()->getZ();
 			if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $player->getWorld())) {
 				$event->cancel();
-				$form = new SimpleForm(function (Player $player, $data){
-					if(!isset($data)){
+				$form = new SimpleForm(function (Player $player, $data) {
+					if (!isset($data)) {
 						return false;
 					}
 				});
@@ -54,9 +52,9 @@ class PlayerListener implements Listener{
 				$player->sendForm($form);
 				return;
 			}
-			if($this->iland->getSessionManager()->inSession($player)){
-				if($item->equals(ItemUtils::getItem(), false, false)){
-					if(!$statusA && !$statusB){
+			if ($this->iland->getSessionManager()->inSession($player)) {
+				if ($item->equals(ItemUtils::getItem(), false, false)) {
+					if (!$statusA && !$statusB) {
 						new BuyForm($player);
 						return;
 					}
@@ -70,26 +68,26 @@ class PlayerListener implements Listener{
 				}
 			}
 		}
-		if (!$this->iland->getProvider()->testPlayer($event)){
+		if (!$this->iland->getProvider()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
-	public function onBucket(PlayerBucketEvent $event) : void{
-		if (!$this->iland->getProvider()->testPlayer($event)){
+	public function onBucket(PlayerBucketEvent $event) : void {
+		if (!$this->iland->getProvider()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
-	public function onDrop(PlayerDropItemEvent $event) : void{
-		if (!$this->iland->getProvider()->testPlayer($event)){
+	public function onDrop(PlayerDropItemEvent $event) : void {
+		if (!$this->iland->getProvider()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
-	public function onPickup(EntityItemPickupEvent $event) : void{
-		if($event->getEntity() instanceof Player){
-			if (!$this->iland->getProvider()->testPlayer($event)){
+	public function onPickup(EntityItemPickupEvent $event) : void {
+		if ($event->getEntity() instanceof Player) {
+			if (!$this->iland->getProvider()->testPlayer($event)) {
 				$event->cancel();
 			}
 		}

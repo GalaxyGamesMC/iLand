@@ -19,8 +19,7 @@ use function is_file;
 use function mkdir;
 use function strval;
 
-class iLand extends PluginBase
-{
+class iLand extends PluginBase {
 	use SingletonTrait;
 
 	/**@var Language $language */
@@ -38,24 +37,20 @@ class iLand extends PluginBase
 		'zho',
 	];
 
-	public static function getLanguage() : Language
-	{
+	public static function getLanguage() : Language {
 		return self::$language;
 	}
 
-	public static function getDefaultConfig() : Config
-	{
+	public static function getDefaultConfig() : Config {
 		return self::$config;
 	}
 
-	public function onLoad() : void
-	{
+	public function onLoad() : void {
 		$this->setInstance($this);
 		$this->provider = new YamlProvider($this);
 	}
 
-	public function onEnable() : void
-	{
+	public function onEnable() : void {
 		$this->provider->initConfig();
 		$this->saveResource("config.json");
 		self::$config = new Config($this->getDataFolder() . "config.json", Config::JSON);
@@ -63,7 +58,9 @@ class iLand extends PluginBase
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
-		if (!PacketHooker::isRegistered()) PacketHooker::register($this);
+		if (!PacketHooker::isRegistered()) {
+			PacketHooker::register($this);
+		}
 		foreach ([
 			new PlayerListener($this),
 			new BlockListener($this)] as $event
@@ -73,13 +70,11 @@ class iLand extends PluginBase
 		$this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
 	}
 
-	protected function onDisable() : void
-	{
+	protected function onDisable() : void {
 		$this->getProvider()->save();
 	}
 
-	public function initLanguage(string $lang, array $languageFiles) : void
-	{
+	public function initLanguage(string $lang, array $languageFiles) : void {
 		$path = $this->getDataFolder() . 'languages/';
 		if (!is_dir($path)) {
 			@mkdir($path);
@@ -92,13 +87,11 @@ class iLand extends PluginBase
 		self::$language = new Language($lang, $path);
 	}
 
-	public function getProvider() : YamlProvider
-	{
+	public function getProvider() : YamlProvider {
 		return $this->provider;
 	}
 
-	public function getSessionManager() : SessionManager
-	{
+	public function getSessionManager() : SessionManager {
 		return new SessionManager();
 	}
 }

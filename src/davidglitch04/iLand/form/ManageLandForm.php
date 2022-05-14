@@ -15,26 +15,23 @@ use function in_array;
 use function strcmp;
 use function strtolower;
 
-class ManageLandForm{
-
-	public function __construct(Player $player)
-	{
+class ManageLandForm {
+	public function __construct(Player $player) {
 		$this->openForm($player);
 	}
 
-	private function openForm(Player $player)
-	{
+	private function openForm(Player $player) {
 		$language = iLand::getLanguage();
-		$form = new SimpleForm(function (Player $player, $data){
-			if(!isset($data)){
+		$form = new SimpleForm(function (Player $player, $data) {
+			if (!isset($data)) {
 				return false;
 			}
 			$this->Mgr($player, $data + 1);
 		});
 		$form->setTitle($language->translateString("gui.landmgr.title"));
 		$form->setContent($language->translateString("gui.landmgr.select"));
-		foreach (iLand::getInstance()->getProvider()->getAllLand() as $key => $data){
-			if (strcmp($data["Owner"], $player->getName()) == 0){
+		foreach (iLand::getInstance()->getProvider()->getAllLand() as $key => $data) {
+			if (strcmp($data["Owner"], $player->getName()) == 0) {
 				$form->addButton($data["Name"]);
 			}
 		}
@@ -42,14 +39,14 @@ class ManageLandForm{
 		return $form;
 	}
 
-	private function Mgr(Player $player, int $key){
+	private function Mgr(Player $player, int $key) {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new SimpleForm(function (Player $player, $data) use ($key){
-			if(!isset($data)){
+		$form = new SimpleForm(function (Player $player, $data) use ($key) {
+			if (!isset($data)) {
 				return false;
 			}
-			switch ($data){
+			switch ($data) {
 				case 0:
 					$this->LandInfo($player, $key);
 					break;
@@ -74,11 +71,11 @@ class ManageLandForm{
 		$player->sendForm($form);
 	}
 
-	private function LandInfo(Player $player, int $key) : void{
+	private function LandInfo(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new SimpleForm(function (Player $player, $data){
-			if(!isset($data)){
+		$form = new SimpleForm(function (Player $player, $data) {
+			if (!isset($data)) {
 				return;
 			}
 		});
@@ -101,7 +98,7 @@ class ManageLandForm{
 		$player->sendForm($form);
 	}
 
-	private function Permission(Player $player, int $key) : void{
+	private function Permission(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$alltoggle = [
 			0 => "allow_open_chest",
@@ -113,13 +110,13 @@ class ManageLandForm{
 			6 => "allow_destroy"
 		];
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new CustomForm(function (Player $player, $data) use ($key, $alltoggle){
-			if(!isset($data)){
+		$form = new CustomForm(function (Player $player, $data) use ($key, $alltoggle) {
+			if (!isset($data)) {
 				return;
 			}
 			$landdb = iLand::getInstance()->getProvider()->getData($key);
-			for ($i = 0;$i < count($alltoggle);$i++){
-				if($data != 0){
+			for ($i = 0;$i < count($alltoggle);$i++) {
+				if ($data != 0) {
 					$landdb["Settings"][$alltoggle[$i]] = $data[$i + 1];
 				}
 			}
@@ -127,33 +124,33 @@ class ManageLandForm{
 		});
 		$form->setTitle($language->translateString("gui.landmgr.landperm.title"));
 		$form->addLabel($language->translateString("gui.landmgr.landperm.options.title"));
-		foreach($alltoggle as $toggle){
+		foreach ($alltoggle as $toggle) {
 			$form->addToggle($language->translateString("gui.landmgr.landperm." . $toggle), $dataland["Settings"][$toggle]);
 		}
 		$form->addLabel($language->translateString("gui.landmgr.landperm.editevent"));
 		$player->sendForm($form);
 	}
 
-	private function LandTrust(Player $player, int $key) : void{
+	private function LandTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new SimpleForm(function (Player $player, $data) use ($key){
-			if (!isset($data)){
+		$form = new SimpleForm(function (Player $player, $data) use ($key) {
+			if (!isset($data)) {
 				return;
 			}
-			if ($data === 0){
+			if ($data === 0) {
 				$this->addTrust($player, $key);
-			} elseif ($data === 1){
+			} elseif ($data === 1) {
 				$this->rmTrust($player, $key);
 			}
 		});
 		$content = $language->translateString("gui.landtrust.tip");
 		$form->setTitle($language->translateString("gui.landtrust.title"));
 		$form->addButton($language->translateString("gui.landtrust.addtrust"));
-		if (count($dataland['Members']) >= 1){
+		if (count($dataland['Members']) >= 1) {
 			$form->addButton($language->translateString("gui.landtrust.rmtrust"));
 			$content .= "\n" . $language->translateString("gui.landtrust.trusted") . " ";
-			foreach ($dataland['Members'] as $trust){
+			foreach ($dataland['Members'] as $trust) {
 				$content .= "," . $trust;
 			}
 		}
@@ -161,26 +158,26 @@ class ManageLandForm{
 		$player->sendForm($form);
 	}
 
-	private function addTrust(Player $player, int $key) : void{
+	private function addTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$form = new CustomForm(function (Player $player, $data) use ($key, $language){
-			if (!isset($data)){
+		$form = new CustomForm(function (Player $player, $data) use ($key, $language) {
+			if (!isset($data)) {
 				return;
 			}
-			if (isset($data[1])){
+			if (isset($data[1])) {
 				$landdb = iLand::getInstance()->getProvider()->getData($key);
-				if (in_array($data[1], $landdb['Members'], true)){
+				if (in_array($data[1], $landdb['Members'], true)) {
 					$player->sendMessage($language->translateString("gui.landtrust.fail.alreadyexists"));
 					return;
 				}
-				if (strtolower($data[1]) == strtolower($player->getName())){
+				if (strtolower($data[1]) == strtolower($player->getName())) {
 					$player->sendMessage($language->translateString("gui.landtrust.fail.cantaddown"));
 					return;
 				}
 				$landdb['Members'][] = strtolower($data[1]);
 				iLand::getInstance()->getProvider()->setData($key, $landdb);
 				$player->sendMessage($language->translateString("gui.landtrust.addsuccess"));
-			} else{
+			} else {
 				$this->addTrust($player, $key);
 				return;
 			}
@@ -191,20 +188,20 @@ class ManageLandForm{
 		$player->sendForm($form);
 	}
 
-	private function rmTrust(Player $player, int $key) : void{
+	private function rmTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new CustomForm(function (Player $player, $data) use ($key, $language){
-			if (!isset($data)){
+		$form = new CustomForm(function (Player $player, $data) use ($key, $language) {
+			if (!isset($data)) {
 				return;
 			}
-			if (isset($data[1])){
+			if (isset($data[1])) {
 				$landdb = iLand::getInstance()->getProvider()->getData($key);
 				$name = $landdb['Members'][$data[1]];
 				unset($landdb['Members'][array_search($name, $landdb['Members'], true)]);
 				iLand::getInstance()->getProvider()->setData($key, $landdb);
 				$player->sendMessage($language->translateString("gui.landtrust.rmsuccess"));
-			} else{
+			} else {
 				$this->rmTrust($player, $key);
 				return;
 			}

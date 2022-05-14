@@ -12,37 +12,34 @@ use pocketmine\player\Player;
 use pocketmine\scheduler\CancelTaskException;
 use pocketmine\scheduler\Task;
 
-class TitleTask extends Task{
-
+class TitleTask extends Task {
 	protected Player $player;
 
-	public function __construct(Player $player)
-	{
+	public function __construct(Player $player) {
 		$this->player = $player;
 	}
 
-	public function onRun() : void
-	{
-		if(!$this->player->isConnected()){
+	public function onRun() : void {
+		if (!$this->player->isConnected()) {
 			throw new CancelTaskException();
 		}
-		if(!iLand::getInstance()->getSessionManager()->inSession($this->player)){
+		if (!iLand::getInstance()->getSessionManager()->inSession($this->player)) {
 			throw new CancelTaskException();
 		}
 		$status = '';
 		$statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("A");
 		$statusB = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("B");
-		if($statusA){
+		if ($statusA) {
 			$status = "A";
-		} elseif($statusB){
+		} elseif ($statusB) {
 			$status = "B";
 		}
 		$this->player->sendTitle(iLand::getLanguage()->translateString("title.rangeselector.inmode"), iLand::getLanguage()->translateString("title.rangeselector.selectpoint", [ItemUtils::getItem()->getName(),$status]));
-		if(!$statusA && !$statusB && iLand::getInstance()->getSessionManager()->inSession($this->player)){
-			if(iLand::getDefaultConfig()->get("particel-selected", false)){
+		if (!$statusA && !$statusB && iLand::getInstance()->getSessionManager()->inSession($this->player)) {
+			if (iLand::getDefaultConfig()->get("particel-selected", false)) {
 				$posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
 				$posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
-				for ($y = 1;$y <= 255;$y++){
+				for ($y = 1;$y <= 255;$y++) {
 					$this->addBorder($this->player, $posA->getX(), $y, $posA->getZ());
 					$this->addBorder($this->player, $posB->getX(), $y, $posB->getZ());
 					$this->addBorder($this->player, $posB->getX(), $y, $posA->getZ());
@@ -56,8 +53,7 @@ class TitleTask extends Task{
 		Player $player,
 		float $x,
 		float $y,
-		float $z) : void
-	{
+		float $z) : void {
 		$packet = new SpawnParticleEffectPacket();
 		$packet->position = new Vector3($x, $y, $z);
 		$packet->particleName = "minecraft:villager_happy";

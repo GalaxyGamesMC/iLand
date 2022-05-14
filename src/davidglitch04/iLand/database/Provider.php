@@ -10,8 +10,7 @@ use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
 
-interface Provider
-{
+interface Provider {
 	/** @param iLand $iland */
 	public function __construct(iLand $iland);
 

@@ -10,14 +10,12 @@ use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 use function abs;
 
-class BuyForm{
-
-	public function __construct(Player $player)
-	{
+class BuyForm {
+	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}
 
-	private function sendForm(Player $player){
+	private function sendForm(Player $player) {
 		$language = iLand::getLanguage();
 		$startpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionA();
 		$endpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionB();
@@ -26,21 +24,21 @@ class BuyForm{
 		$priceperblock = iLand::getDefaultConfig()->get("price/area");
 		$blocks = $length * $width;
 		$price = $priceperblock * $blocks;
-		$form = new SimpleForm(function (Player $player, $data) use ($price, $startpos, $endpos, $blocks, $language){
-			if(!isset($data)){
+		$form = new SimpleForm(function (Player $player, $data) use ($price, $startpos, $endpos, $blocks, $language) {
+			if (!isset($data)) {
 				return false;
 			}
-			if($data === 0){
+			if ($data === 0) {
 				$ecomgr = new EconomyManager();
-				$ecomgr->reduceMoney($player, (int) $price, static function(bool $success) use($player, $startpos, $endpos, $language) {
-					if($success){
+				$ecomgr->reduceMoney($player, (int) $price, static function(bool $success) use ($player, $startpos, $endpos, $language) {
+					if ($success) {
 						iLand::getInstance()->getProvider()->addLand($player, $startpos, $endpos);
 						iLand::getInstance()->getSessionManager()->removePlayer($player);
-						$secondform = new SimpleForm(function (Player $player, $data) use ($language){
-							if(!isset($data)){
+						$secondform = new SimpleForm(function (Player $player, $data) use ($language) {
+							if (!isset($data)) {
 								return false;
 							}
-							switch ($data){
+							switch ($data) {
 								//TODO
 							}
 						});
@@ -49,8 +47,7 @@ class BuyForm{
 						$secondform->addButton($language->translateString("gui.general.close"));
 						$player->sendForm($secondform);
 						return $secondform;
-					} else{
-
+					} else {
 					}
 				});
 			}

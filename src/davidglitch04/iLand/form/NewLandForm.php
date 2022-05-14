@@ -9,18 +9,14 @@ use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use davidglitch04\iLand\task\TitleTask;
 use pocketmine\player\Player;
 
-class NewLandForm
-{
-
-	public function __construct(Player $player)
-	{
+class NewLandForm {
+	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}
 	/**
 	 * @return mixed
 	 */
-	private function sendForm(Player $player)
-	{
+	private function sendForm(Player $player) {
 		$form = new SimpleForm(function (Player $player, $data) {
 			if (!isset($data)) {
 				return new iLandForm($player);

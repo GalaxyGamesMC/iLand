@@ -6,7 +6,7 @@ namespace davidglitch04\iLand\libs\Vecnavium\FormsUI;
 
 use pocketmine\plugin\PluginBase;
 
-class FormsUI extends PluginBase{
+class FormsUI extends PluginBase {
 
 	/**
 	 * @deprecated

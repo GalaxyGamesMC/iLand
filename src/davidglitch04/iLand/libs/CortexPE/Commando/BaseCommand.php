@@ -86,7 +86,7 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 		$this->prepare();
 
 		$usages = ["/" . $this->generateUsageMessage()];
-		foreach($this->subCommands as $subCommand) {
+		foreach ($this->subCommands as $subCommand) {
 			$usages[] = $subCommand->getUsageMessage();
 		}
 		$usages = array_unique($usages);
@@ -99,26 +99,26 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 
 	final public function execute(CommandSender $sender, string $usedAlias, array $args) {
 		$this->currentSender = $sender;
-		if(!$this->testPermission($sender)) {
+		if (!$this->testPermission($sender)) {
 			return;
 		}
 		/** @var BaseCommand|BaseSubCommand $cmd */
 		$cmd = $this;
 		$passArgs = [];
-		if(count($args) > 0) {
-			if(isset($this->subCommands[($label = $args[0])])) {
+		if (count($args) > 0) {
+			if (isset($this->subCommands[($label = $args[0])])) {
 				array_shift($args);
 				$cmd = $this->subCommands[$label];
 				$cmd->setCurrentSender($sender);
-				if(!$cmd->testPermissionSilent($sender)) {
+				if (!$cmd->testPermissionSilent($sender)) {
 					$msg = $this->getPermissionMessage();
-					if($msg === null) {
+					if ($msg === null) {
 						$sender->sendMessage(
 							$sender->getServer()->getLanguage()->translateString(
 								TextFormat::RED . "%commands.generic.permission"
 							)
 						);
-					} elseif(empty($msg)) {
+					} elseif (empty($msg)) {
 						$sender->sendMessage(str_replace("<permission>", $cmd->getPermission(), $msg));
 					}
 
@@ -127,13 +127,13 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 			}
 
 			$passArgs = $this->attemptArgumentParsing($cmd, $args);
-		} elseif($this->hasRequiredArguments()){
+		} elseif ($this->hasRequiredArguments()) {
 			$this->sendError(self::ERR_INSUFFICIENT_ARGUMENTS);
 			return;
 		}
-		if($passArgs !== null) {
-			foreach ($cmd->getConstraints() as $constraint){
-				if(!$constraint->test($sender, $usedAlias, $passArgs)){
+		if ($passArgs !== null) {
+			foreach ($cmd->getConstraints() as $constraint) {
+				if (!$constraint->test($sender, $usedAlias, $passArgs)) {
 					$constraint->onFailure($sender, $usedAlias, $passArgs);
 					return;
 				}
@@ -147,8 +147,8 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 	 */
 	private function attemptArgumentParsing($ctx, array $args) : ?array {
 		$dat = $ctx->parseArguments($args, $this->currentSender);
-		if(!empty(($errors = $dat["errors"]))) {
-			foreach($errors as $error) {
+		if (!empty(($errors = $dat["errors"]))) {
+			foreach ($errors as $error) {
 				$this->sendError($error["code"], $error["data"]);
 			}
 
@@ -169,21 +169,21 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 
 	public function sendError(int $errorCode, array $args = []) : void {
 		$str = $this->errorMessages[$errorCode];
-		foreach($args as $item => $value) {
+		foreach ($args as $item => $value) {
 			$str = str_replace("{{$item}}", (string) $value, $str);
 		}
 		$this->currentSender->sendMessage($str);
 	}
 
 	public function setErrorFormat(int $errorCode, string $format) : void {
-		if(!isset($this->errorMessages[$errorCode])) {
+		if (!isset($this->errorMessages[$errorCode])) {
 			throw new InvalidErrorCode("Invalid error code 0x" . dechex($errorCode));
 		}
 		$this->errorMessages[$errorCode] = $format;
 	}
 
 	public function setErrorFormats(array $errorFormats) : void {
-		foreach($errorFormats as $errorCode => $format) {
+		foreach ($errorFormats as $errorCode => $format) {
 			$this->setErrorFormat($errorCode, $format);
 		}
 	}
@@ -192,8 +192,8 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable, 
 		$keys = $subCommand->getAliases();
 		array_unshift($keys, $subCommand->getName());
 		$keys = array_unique($keys);
-		foreach($keys as $key) {
-			if(!isset($this->subCommands[$key])) {
+		foreach ($keys as $key) {
+			if (!isset($this->subCommands[$key])) {
 				$subCommand->setParent($this);
 				$this->subCommands[$key] = $subCommand;
 			} else {
