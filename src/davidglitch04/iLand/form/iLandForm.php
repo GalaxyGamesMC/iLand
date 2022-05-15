@@ -36,9 +36,9 @@ class iLandForm {
 		$language = iLand::getLanguage();
 		$form->setTitle($language->translateString('gui.fastgde.title'));
 		$form->setContent($language->translateString('gui.fastgde.content', [iLand::getInstance()->getProvider()->CountLand($player)]));
-		$form->addButton($language->translateString('gui.fastgde.create'));
-		$form->addButton($language->translateString('gui.fastgde.manage'));
-		$form->addButton($language->translateString('gui.fastgde.landtp'));
+		$form->addButton($language->translateString('gui.fastgde.create'), 0, "textures/iLand/newLand");
+		$form->addButton($language->translateString('gui.fastgde.manage'), 0, "textures/iLand/mgrLand");
+		$form->addButton($language->translateString('gui.fastgde.landtp'), 0, "textures/iLand/tpLand");
 		$form->addButton($language->translateString('gui.general.back'));
 		$player->sendForm($form);
 	}

@@ -36,7 +36,7 @@ class ManageLandForm {
 		$form->setContent($language->translateString("gui.landmgr.select"));
 		foreach (iLand::getInstance()->getProvider()->getAllLand() as $key => $data) {
 			if (strcmp($data["Owner"], $player->getName()) == 0) {
-				$form->addButton($data["Name"]);
+				$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 			}
 		}
 		$player->sendForm($form);
