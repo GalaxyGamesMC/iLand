@@ -12,6 +12,7 @@ use davidglitch04\iLand\libs\NhanAZ\libRegRsp\libRegRsp;
 use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\session\SessionManager;
+use davidglitch04\iLand\updater\GetUpdateInfo;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -60,6 +61,7 @@ class iLand extends PluginBase {
 		$this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
 		$this->validateConfigs();
 		$this->initPack();
+		$this->checkUpdater();
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
@@ -98,6 +100,10 @@ class iLand extends PluginBase {
 		}
 	}
 
+	private function checkUpdater() : void {
+		$this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
+	}
+
 	protected function onDisable() : void {
 		$this->getProvider()->save();
 	}
@@ -121,5 +127,9 @@ class iLand extends PluginBase {
 
 	public function getSessionManager() : SessionManager {
 		return new SessionManager();
+	}
+
+	public function getFileHack() : string {
+		return $this->getFile();
 	}
 }

@@ -39,3 +39,9 @@
 
 - If you found bugs or want to give suggestions, please visit <a href="https://github.com/David-pm-pl/iLand/issues">here</a> or join our Discord server.
 - We accept all contributions! If you want to contribute, please make a pull request in <a href="https://github.com/David-pm-pl/iLand/pulls">here</a>.
+
+# Credits
+
+| Logo  | Description |
+| ------------- | ----------- |
+| <img src="https://media.flaticon.com/dist/min/img/logo/flaticon_negative.svg" height="64" width="64" align="left"> | <a href="https://www.flaticon.com/free-icons/land">iLand icons created by Smashicons - Flaticon</a> |
