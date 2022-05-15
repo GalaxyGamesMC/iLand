@@ -74,7 +74,7 @@ class iLand extends PluginBase {
 		) {
 			$this->getServer()->getPluginManager()->registerEvents($event, $this);
 		}
-		$this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", self::getLanguage()->translateString("command.land"), ["iland"]));
+		$this->getServer()->getCommandMap()->register('iland', new iLandCommand($this, "iland", self::getLanguage()->translateString("command.land"), ["land"]));
 	}
 
 	private function initPack() : void {
