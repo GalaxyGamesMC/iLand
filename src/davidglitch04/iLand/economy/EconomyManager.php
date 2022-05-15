@@ -48,7 +48,7 @@ final class EconomyManager {
 	/**
 	 * @return bool
 	 */
-	public function reduceMoney(Player $player, int $amount, Closure $callback) {
+	public function reduceMoney(Player $player, int $amount, Closure $callback) : void {
 		if ($this->eco == null) {
 			$this->plugin->getLogger()->warning("You not have Economy plugin");
 			return true;
@@ -65,7 +65,7 @@ final class EconomyManager {
 		}
 	}
 
-	public function addMoney(Player $player, float $amount) {
+	public function addMoney(Player $player, float $amount) : void {
 		if ($this->eco == null) {
 			$this->plugin->getLogger()->warning("You not have Economy plugin");
 			return true;

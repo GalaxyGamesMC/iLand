@@ -17,6 +17,7 @@
         "vecnavium/formsui": "^1.1",
         "cortexpe/commando": "dev-master",
         "friendsofphp/php-cs-fixer": "^3.8",
-        "nhanaz/libregrsp": "dev-master"
+        "nhanaz/libregrsp": "dev-master",
+        "jackmd/configupdater": "dev-master"
     }
 }

@@ -5,14 +5,14 @@
 **Powerful land plugin, based on PMMP**
 
 ## TODO
-- [X] Main Form
-- [ ] Manage Form
-- [ ] Teleport Form
-- [ ] Settings Form
+- [✔️] Main Form
+- [✔️] Manage Form
+- [✔️] Teleport Form
+- [✔️] Settings Form
 - [ ] OP Form 
-- [ ] Anti Attack Land
-- [X] Set Pos Claim System
-- [X] Particel area selected
+- [✔️] Anti Attack Land
+- [✔️] Set Pos Claim System
+- [✔️] Particel area selected
 - [ ] Added Icon For Form
-- [ ] Land Border
+- [✔️] Land Border
 - [ ] Capital Support

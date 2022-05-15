@@ -33,13 +33,14 @@ class PlayerListener implements Listener {
 	public function onInteract(PlayerInteractEvent $event) : void {
 		$player = $event->getPlayer();
 		$item = $player->getInventory()->getItemInHand();
+		$block = $event->getBlock();
 		if ($event->getAction() == PlayerInteractEvent::LEFT_CLICK_BLOCK
 		 && $this->iland->getSessionManager()->inSession($player)) {
 			$statusA = $this->iland->getSessionManager()->getSession($player)->isNull("A");
 			$statusB = $this->iland->getSessionManager()->getSession($player)->isNull("B");
-			$x = $player->getPosition()->getX();
-			$z = $player->getPosition()->getZ();
-			if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $player->getWorld())) {
+			$x = $block->getPosition()->getX();
+			$z = $block->getPosition()->getZ();
+			if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $block->getPosition()->getWorld())) {
 				$event->cancel();
 				$form = new SimpleForm(function (Player $player, int|null $data) {
 					if (!isset($data)) {
@@ -60,10 +61,10 @@ class PlayerListener implements Listener {
 					}
 					$player->sendTip(iLand::getLanguage()->translateString('title.rangeselector.pointed', [
 						$this->iland->getSessionManager()->getSession($player)->setNextPosition($player->getPosition()),
-						$player->getWorld()->getFolderName(),
-						$player->getLocation()->getX(),
-						$player->getLocation()->getY(),
-						$player->getLocation()->getZ(), ])
+						$block->getPosition()->getWorld()->getFolderName(),
+						$block->getPosition()->getX(),
+						$block->getPosition()->getY(),
+						$block->getPosition()->getZ()])
 					);
 				}
 			}

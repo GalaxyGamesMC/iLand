@@ -15,7 +15,7 @@ class BuyForm {
 		$this->sendForm($player);
 	}
 
-	private function sendForm(Player $player) {
+	private function sendForm(Player $player) : void {
 		$language = iLand::getLanguage();
 		$startpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionA();
 		$endpos = iLand::getInstance()->getSessionManager()->getSession($player)->getPositionB();
@@ -26,7 +26,7 @@ class BuyForm {
 		$price = $priceperblock * $blocks;
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($price, $startpos, $endpos, $blocks, $language) {
 			if (!isset($data)) {
-				return false;
+				return;
 			}
 			if ($data === 0) {
 				$ecomgr = new EconomyManager();
@@ -36,7 +36,7 @@ class BuyForm {
 						iLand::getInstance()->getSessionManager()->removePlayer($player);
 						$secondform = new SimpleForm(function (Player $player, int|null $data) use ($language) {
 							if (!isset($data)) {
-								return false;
+								return;
 							}
 							switch ($data) {
 								//TODO
@@ -57,6 +57,5 @@ class BuyForm {
 		$form->addButton($language->translateString("gui.buyland.button.confirm"));
 		$form->addButton($language->translateString("gui.buyland.button.cancel"));
 		$player->sendForm($form);
-		return $form;
 	}
 }

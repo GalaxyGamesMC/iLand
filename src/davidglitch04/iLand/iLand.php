@@ -7,6 +7,7 @@ namespace davidglitch04\iLand;
 use davidglitch04\iLand\command\iLandCommand;
 use davidglitch04\iLand\database\YamlProvider;
 use davidglitch04\iLand\libs\CortexPE\Commando\PacketHooker;
+use davidglitch04\iLand\libs\JackMD\ConfigUpdater\ConfigUpdater;
 use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\session\SessionManager;
@@ -17,6 +18,7 @@ use pocketmine\utils\SingletonTrait;
 use function is_dir;
 use function is_file;
 use function mkdir;
+use function rename;
 use function strval;
 
 class iLand extends PluginBase {
@@ -55,6 +57,7 @@ class iLand extends PluginBase {
 		$this->saveResource("config.json");
 		self::$config = new Config($this->getDataFolder() . "config.json", Config::JSON);
 		$this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
+		$this->validateConfigs();
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
@@ -67,7 +70,25 @@ class iLand extends PluginBase {
 		) {
 			$this->getServer()->getPluginManager()->registerEvents($event, $this);
 		}
-		$this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", "Land control panel", ["iland"]));
+		$this->getServer()->getCommandMap()->register('land', new iLandCommand($this, "land", self::getLanguage()->translateString("command.land"), ["iland"]));
+	}
+
+	private function validateConfigs() : void {
+		$updated = false;
+
+		if (ConfigUpdater::checkUpdate($this, self::$config, "version", VersionInfo::CONFIG_VERSION)) {
+			$updated = true;
+			$this->reloadConfig();
+		}
+
+		if ($updated) {
+			$path = $this->getDataFolder() . 'languages/';
+			foreach ($this->languages as $file) {
+				rename($path . $file . '.ini', $path . $file . '_old.ini');
+			}
+			$this->saveResource("config.json");
+			$this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
+		}
 	}
 
 	protected function onDisable() : void {

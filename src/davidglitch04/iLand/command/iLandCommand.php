@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\command;
 
 use davidglitch04\iLand\command\SubCommands\Buy;
+use davidglitch04\iLand\command\SubCommands\Mgr;
 use davidglitch04\iLand\command\SubCommands\NewLand;
+use davidglitch04\iLand\command\SubCommands\Tp;
 use davidglitch04\iLand\form\BuyForm;
 use davidglitch04\iLand\form\iLandForm;
 use davidglitch04\iLand\iLand;
@@ -57,7 +59,7 @@ class iLandCommand extends BaseCommand {
 					$sender->getWorld()->getFolderName(),
 					$sender->getLocation()->getX(),
 					$sender->getLocation()->getY(),
-					$sender->getLocation()->getZ(), ])
+					$sender->getLocation()->getZ()])
 				);
 			}
 		} else {
@@ -68,7 +70,9 @@ class iLandCommand extends BaseCommand {
 	protected function prepare() : void {
 		$this->registerArgument(0, new RawStringArgument('args', true));
 		$this->setPermission("iland.allow.command");
-		$this->registerSubCommand(new Buy('buy', 'Buy the selected land'));
-		$this->registerSubCommand(new NewLand('new', 'New land'));
+		$this->registerSubCommand(new Buy('buy', iLand::getLanguage()->translateString("command.land_buy")));
+		$this->registerSubCommand(new NewLand('new', iLand::getLanguage()->translateString("command.land_new")));
+		$this->registerSubCommand(new Tp('tp', iLand::getLanguage()->translateString("command.land_tp")));
+		$this->registerSubCommand(new Mgr('mgr', iLand::getLanguage()->translateString("command.land_mgr")));
 	}
 }

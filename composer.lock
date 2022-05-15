@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9674e0e27a650303aa79a02aa711e647",
+    "content-hash": "8023deac8cdb6ebb8642b09ebfd097c6",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -684,6 +684,37 @@
                 }
             ],
             "time": "2022-03-18T17:20:59+00:00"
+        },
+        {
+            "name": "jackmd/configupdater",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DavidGlitch04/ConfigUpdater.git",
+                "reference": "752856ab89e905df7a05292421a04cc8b5e3b146"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DavidGlitch04/ConfigUpdater/zipball/752856ab89e905df7a05292421a04cc8b5e3b146",
+                "reference": "752856ab89e905df7a05292421a04cc8b5e3b146",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jackmd\\Configupdater\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "A handy virion for PocketMine-MP plugin developers that checks if a new version of config is available. If so then it notifies the user about the new update and updates the config.",
+            "support": {
+                "source": "https://github.com/DavidGlitch04/ConfigUpdater/tree/master"
+            },
+            "time": "2022-05-14T23:45:00+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -3340,7 +3371,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "cortexpe/commando": 20,
-        "nhanaz/libregrsp": 20
+        "nhanaz/libregrsp": 20,
+        "jackmd/configupdater": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

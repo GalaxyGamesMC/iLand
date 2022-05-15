@@ -24,11 +24,11 @@ class ManageLandForm {
 		$this->openForm($player);
 	}
 
-	private function openForm(Player $player) {
+	private function openForm(Player $player) : void {
 		$language = iLand::getLanguage();
 		$form = new SimpleForm(function (Player $player, int|null $data) {
 			if (!isset($data)) {
-				return false;
+				return;
 			}
 			$this->Mgr($player, $data + 1);
 		});
@@ -40,7 +40,6 @@ class ManageLandForm {
 			}
 		}
 		$player->sendForm($form);
-		return $form;
 	}
 
 	private function Mgr(Player $player, int $key) {
