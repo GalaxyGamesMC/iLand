@@ -4,15 +4,38 @@
 
 **Powerful land plugin, based on PMMP**
 
-## TODO
+# Features
+
+- Land management with Form UI
+- The border of the selected land
+- Custom land settings
+- Customize the person you trust
+- Transfer of land owners
+- Land sale
+- Support multiple languages
+- Easy setup.
+
+# How to Install
+
+1. Download the latest version
+2. Place the `iLand.phar` file into the `plugins` folder.
+3. Restart the server.
+4. Done!
+
+# TODO
 - [✔️] Main Form
 - [✔️] Manage Form
 - [✔️] Teleport Form
 - [✔️] Settings Form
-- [ ] OP Form 
+- [❌] OP Form 
 - [✔️] Anti Attack Land
 - [✔️] Set Pos Claim System
 - [✔️] Particel area selected
-- [ ] Added Icon For Form
+- [✔️] Added Icon For Form
 - [✔️] Land Border
-- [ ] Capital Support
+- [❌] Capital Support
+
+# Additional Notes
+
+- If you found bugs or want to give suggestions, please visit <a href="https://github.com/David-pm-pl/iLand/issues">here</a> or join our Discord server.
+- We accept all contributions! If you want to contribute, please make a pull request in <a href="https://github.com/David-pm-pl/iLand/pulls">here</a>.
