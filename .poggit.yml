@@ -17,6 +17,7 @@ projects:
       - src: ifera-mc/ConfigUpdater/ConfigUpdater
         version: ^2.0.0
       - src: Muqsit/SimplePacketHandler/SimplePacketHandler
+        version: ^0.1.0
     lint:
       phpstan: false
 ...
