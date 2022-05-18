@@ -9,7 +9,6 @@ use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 
 class iLandForm {
-
 	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}

@@ -11,7 +11,6 @@ use pocketmine\player\Player;
 use function abs;
 
 class BuyForm {
-
 	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}

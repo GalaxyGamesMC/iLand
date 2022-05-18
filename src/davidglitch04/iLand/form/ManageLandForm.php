@@ -18,7 +18,6 @@ use function is_null;
 use function strtolower;
 
 class ManageLandForm {
-
 	public function __construct(Player $player) {
 		$this->openForm($player);
 	}

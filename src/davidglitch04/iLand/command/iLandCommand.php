@@ -22,7 +22,6 @@ use function array_values;
 use function implode;
 
 class iLandCommand extends BaseCommand {
-
 	public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void {
 		$subcommands = array_values(array_map(function (BaseSubCommand $subCommand) : string {
 			return $subCommand->getName();

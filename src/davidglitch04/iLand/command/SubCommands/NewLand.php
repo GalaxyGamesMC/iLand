@@ -11,7 +11,6 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
 class NewLand extends BaseSubCommand {
-
 	protected function prepare() : void {
 	}
 

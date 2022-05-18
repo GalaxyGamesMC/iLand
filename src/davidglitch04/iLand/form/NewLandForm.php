@@ -10,7 +10,6 @@ use davidglitch04\iLand\task\TitleTask;
 use pocketmine\player\Player;
 
 class NewLandForm {
-
 	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}

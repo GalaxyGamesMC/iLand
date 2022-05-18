@@ -10,7 +10,6 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
 class Tp extends BaseSubCommand {
-
 	protected function prepare() : void {
 	}
 
