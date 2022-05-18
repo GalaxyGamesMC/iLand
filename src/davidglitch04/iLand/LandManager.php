@@ -135,8 +135,8 @@ class LandManager {
 
 	public function inLand(Position $position) : array {
 		foreach (iLand::getInstance()->getLands() as $land) {
-			$start = $this->StringToPosition($land->getStart());
-			$end = $this->StringToPosition($land->getEnd());
+			$start = $land->getStart();
+			$end = $land->getEnd();
 			$x = $position->getX();
 			$z = $position->getZ();
 			$worldname = $position->getWorld()->getFolderName();

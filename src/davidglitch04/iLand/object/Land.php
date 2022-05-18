@@ -38,7 +38,7 @@ class Land {
 
 	public function getConfigFile() : Config {
 		$name = trim(strtolower($this->getOwner()));
-		$path = $this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml";
+		$path = iLand::getInstance()->getDataFolder() . "players/" . $name[0] . "/$name.yml";
 		return new Config($path, Config::YAML);
 	}
 
