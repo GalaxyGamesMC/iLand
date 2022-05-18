@@ -11,9 +11,11 @@ use pocketmine\player\Player;
 use function abs;
 
 class BuyForm {
+
 	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}
+
 
 	private function sendForm(Player $player) : void {
 		$language = iLand::getLanguage();

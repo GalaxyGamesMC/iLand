@@ -7,12 +7,13 @@ namespace davidglitch04\iLand\form;
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
-use function strcmp;
 
 class TeleportLandForm {
+
 	public function __construct(Player $player) {
 		$this->openForm($player);
 	}
+
 
 	private function openForm(Player $player) : void {
 		$language = iLand::getLanguage();
@@ -30,9 +31,7 @@ class TeleportLandForm {
 		$form->setTitle($language->translateString("gui.landtp.title"));
 		$form->setContent($language->translateString("gui.landtp.tip"));
 		foreach (iLand::getInstance()->getProvider()->getData($player) as $key => $data) {
-			if (strcmp($data["Owner"], $player->getName()) == 0) {
-				$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
-			}
+			$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 		}
 		$player->sendForm($form);
 	}

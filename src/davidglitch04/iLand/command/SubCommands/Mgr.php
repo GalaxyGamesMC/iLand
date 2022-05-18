@@ -10,8 +10,10 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 
 class Mgr extends BaseSubCommand {
+
 	protected function prepare() : void {
 	}
+
 
 	public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void {
 		if ($sender instanceof Player) {

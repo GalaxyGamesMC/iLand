@@ -23,9 +23,8 @@ final class EconomyManager {
 		$this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
 		unset($manager);
 	}
-	/**
-	 * @return int
-	 */
+
+
 	public function getMoney(Player $player, Closure $callback) : void {
 		switch ($this->eco->getName()) {
 			case "EconomyAPI":
@@ -45,9 +44,7 @@ final class EconomyManager {
 		}
 	}
 
-	/**
-	 * @return bool
-	 */
+
 	public function reduceMoney(Player $player, int $amount, Closure $callback) : void {
 		if ($this->eco == null) {
 			$this->plugin->getLogger()->warning("You not have Economy plugin");
@@ -64,6 +61,7 @@ final class EconomyManager {
 				break;
 		}
 	}
+
 
 	public function addMoney(Player $player, float $amount) : void {
 		if ($this->eco == null) {

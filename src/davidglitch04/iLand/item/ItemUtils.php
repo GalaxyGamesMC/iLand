@@ -9,6 +9,7 @@ use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
 
 final class ItemUtils {
+
 	public static function getItem() : Item {
 		$item = StringToItemParser::getInstance()->parse(iLand::getDefaultConfig()->get("tool_name", "Wooden_Axe"));
 		if ($item !== null) {

@@ -10,6 +10,7 @@ use function is_null;
 class Session {
 	private array $data = [];
 
+
 	public function __construct(string $username) {
 		$this->data['Username'] = $username;
 		$this->data['A'] = null;

@@ -13,12 +13,14 @@ class SessionManager {
 		//NOTHING
 	}
 
+
 	public function addPlayer(Player $player) : void {
 		$name = strtolower($player->getName());
 		if (!isset(iLand::getInstance()->session[$name])) {
 			iLand::getInstance()->session[$name] = new Session($name);
 		}
 	}
+
 
 	public function inSession(Player $player) : bool {
 		$name = strtolower($player->getName());
@@ -29,12 +31,14 @@ class SessionManager {
 		}
 	}
 
+
 	public function removePlayer(Player $player) : void {
 		$name = strtolower($player->getName());
 		if (isset(iLand::getInstance()->session[$name])) {
 			unset(iLand::getInstance()->session[$name]);
 		}
 	}
+
 
 	public function getSession(Player $player) : Session {
 		$name = strtolower($player->getName());

@@ -19,16 +19,21 @@ use pocketmine\player\Player;
 class PlayerListener implements Listener {
 	protected iLand $iland;
 
+
 	public function __construct(iLand $iland) {
 		$this->iland = $iland;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function onQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
 		if ($this->iland->getSessionManager()->inSession($player)) {
 			$this->iland->getSessionManager()->removePlayer($player);
 		}
 	}
+
 
 	public function onInteract(PlayerInteractEvent $event) : void {
 		$player = $event->getPlayer();
@@ -74,17 +79,20 @@ class PlayerListener implements Listener {
 		}
 	}
 
+
 	public function onBucket(PlayerBucketEvent $event) : void {
 		if (!$this->iland->getLandManager()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
+
 	public function onDrop(PlayerDropItemEvent $event) : void {
 		if (!$this->iland->getLandManager()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
+
 
 	public function onPickup(EntityItemPickupEvent $event) : void {
 		if ($event->getEntity() instanceof Player) {

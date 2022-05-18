@@ -9,22 +9,21 @@ use davidglitch04\iLand\item\ItemUtils;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\SpawnParticleEffectPacket;
 use pocketmine\player\Player;
-use pocketmine\scheduler\CancelTaskException;
 use pocketmine\scheduler\Task;
 
 class TitleTask extends Task {
 	protected Player $player;
 
+
 	public function __construct(Player $player) {
 		$this->player = $player;
 	}
 
+
 	public function onRun() : void {
-		if (!$this->player->isConnected()) {
-			throw new CancelTaskException();
-		}
-		if (!iLand::getInstance()->getSessionManager()->inSession($this->player)) {
-			throw new CancelTaskException();
+		if (!$this->player->isConnected()
+			or !iLand::getInstance()->getSessionManager()->inSession($this->player)) {
+			$this->getHandler()->cancel();
 		}
 		$status = '';
 		$statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("A");
@@ -49,6 +48,8 @@ class TitleTask extends Task {
 			$this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [ItemUtils::getItem()->getName()]));
 		}
 	}
+
+
 	public function addBorder(
 		Player $player,
 		float $x,

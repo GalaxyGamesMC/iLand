@@ -10,16 +10,15 @@ use davidglitch04\iLand\task\TitleTask;
 use pocketmine\player\Player;
 
 class NewLandForm {
+
 	public function __construct(Player $player) {
 		$this->sendForm($player);
 	}
-	/**
-	 * @return mixed
-	 */
-	private function sendForm(Player $player) {
+
+	private function sendForm(Player $player) : void {
 		$form = new SimpleForm(function (Player $player, int|null $data) {
 			if (!isset($data)) {
-				return new iLandForm($player);
+				return;
 			}
 			if ($data === 0) {
 				iLand::getInstance()->getSessionManager()->addPlayer($player);
@@ -33,7 +32,5 @@ class NewLandForm {
 		$form->addButton($language->translateString('gui.buyland.start'));
 		$form->addButton($language->translateString('gui.general.back'));
 		$player->sendForm($form);
-
-		return $form;
 	}
 }

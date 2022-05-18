@@ -22,6 +22,7 @@ use function array_values;
 use function implode;
 
 class iLandCommand extends BaseCommand {
+
 	public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void {
 		$subcommands = array_values(array_map(function (BaseSubCommand $subCommand) : string {
 			return $subCommand->getName();
@@ -67,6 +68,9 @@ class iLandCommand extends BaseCommand {
 		}
 	}
 
+	/**
+	 * @throws \davidglitch04\iLand\libs\CortexPE\Commando\exception\ArgumentOrderException
+	 */
 	protected function prepare() : void {
 		$this->registerArgument(0, new RawStringArgument('args', true));
 		$this->setPermission("iland.allow.command");

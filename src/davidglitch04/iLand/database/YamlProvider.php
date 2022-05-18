@@ -21,9 +21,11 @@ class YamlProvider implements Provider {
 
 	protected Config $received;
 
+
 	public function __construct(iLand $iland) {
 		$this->iland = $iland;
 	}
+
 
 	public function initConfig() : void {
 		$this->received = new Config($this->iland->getDataFolder() . 'received.yml', Config::YAML);
@@ -31,6 +33,7 @@ class YamlProvider implements Provider {
 			@mkdir($this->iland->getDataFolder() . "players/");
 		}
 	}
+
 
 	public function getData(Player $player) : array {
 		$name = trim(strtolower($player->getName()));
@@ -46,12 +49,18 @@ class YamlProvider implements Provider {
 		}
 	}
 
+	/**
+	 * @param $key
+	 * @param $landdb
+	 * @throws \JsonException
+	 */
 	public function setData(Player $player, $key, $landdb) : void {
 		$name = trim(strtolower($player->getName()));
 		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
 		$data->set($key, $landdb);
 		$data->save();
 	}
+
 
 	public function CountLand(Player $player) : int {
 		$data = $this->getData($player);
@@ -62,6 +71,7 @@ class YamlProvider implements Provider {
 		}
 	}
 
+
 	public function isOverlap(Position $position) : bool {
 		foreach (iLand::getInstance()->getLands() as $land) {
 			if ($land->contains($position)) {
@@ -71,6 +81,9 @@ class YamlProvider implements Provider {
 		return false;
 	}
 
+	/**
+	 * @throws \JsonException
+	 */
 	public function addLand(
 		Player $player,
 		Position $positionA,
@@ -82,7 +95,7 @@ class YamlProvider implements Provider {
 		}
 		$name = trim(strtolower($player->getName()));
 		$landDb = [
-			"Owner" => $player->getName(),
+			"Leader" => $player->getName(),
 			"Name" => iLand::getLanguage()->translateString("gui.landmgr.unnamed"),
 			"Spawn" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
 			"Start" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
@@ -111,8 +124,9 @@ class YamlProvider implements Provider {
 		iLand::getInstance()->lands[] = new Land($this->received->get($counts + 1));
 	}
 
-
-
+	/**
+	 * @throws \JsonException
+	 */
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
 		foreach (iLand::getInstance()->getLands() as $keyland => $data) {
@@ -127,10 +141,14 @@ class YamlProvider implements Provider {
 		$data->save();
 	}
 
+
 	public function getAllReceived() : array {
 		return (array) $this->received->getAll();
 	}
 
+	/**
+	 * @throws \JsonException
+	 */
 	public function save() : void {
 		$this->received->save();
 	}

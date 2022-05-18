@@ -15,20 +15,24 @@ interface Provider {
 	/** @return void */
 	public function initConfig() : void;
 
-	/**
-	 * @return void
-	 */
+
 	public function getData(Player $name) : array;
+
 
 	public function CountLand(Player $player) : int;
 
+
 	public function isOverlap(Position $position) : bool ;
+
 
 	public function addLand(Player $player, Position $positionA, Position $positionB) : void;
 
+
 	public function delLand(Player $player, int $key) : void;
 
+
 	public function getAllReceived() : array;
+
 
 	public function save() : void;
 }

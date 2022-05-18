@@ -15,13 +15,14 @@ use function count;
 use function floatval;
 use function in_array;
 use function is_null;
-use function strcmp;
 use function strtolower;
 
 class ManageLandForm {
+
 	public function __construct(Player $player) {
 		$this->openForm($player);
 	}
+
 
 	private function openForm(Player $player) : void {
 		$language = iLand::getLanguage();
@@ -34,13 +35,14 @@ class ManageLandForm {
 		$form->setTitle($language->translateString("gui.landmgr.title"));
 		$form->setContent($language->translateString("gui.landmgr.select"));
 		foreach (iLand::getInstance()->getProvider()->getData($player) as $key => $data) {
-			if (strcmp($data["Owner"], $player->getName()) == 0) {
-				$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
-			}
+			$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 		}
 		$player->sendForm($form);
 	}
 
+	/**
+	 * @return void
+	 */
 	private function Mgr(Player $player, int $key) {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
@@ -81,6 +83,7 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
+
 	private function LandInfo(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
@@ -95,7 +98,7 @@ class ManageLandForm {
 		$length = abs((int) $start->getX() - (int) $end->getX());
 		$width = abs((int) $start->getZ() - (int) $end->getZ());
 		$params = [
-			$dataland["Owner"],
+			$dataland["Leader"],
 			$dataland["Name"],
 			$start->getWorld()->getFolderName(),
 			$start->getX() . "/" . $start->getZ(),
@@ -107,6 +110,7 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
+
 
 	private function Permission(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -140,6 +144,7 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
+
 	private function LandTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
@@ -166,6 +171,7 @@ class ManageLandForm {
 		$form->setContent($content);
 		$player->sendForm($form);
 	}
+
 
 	private function addTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -197,6 +203,7 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
+
 	private function rmTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
@@ -219,6 +226,7 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
+
 	private function LandNickname(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
@@ -238,6 +246,7 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
+
 	private function LandTransfer(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key, $language) {
@@ -252,7 +261,7 @@ class ManageLandForm {
 					if (isset($data[1])) {
 						if (!is_null(Server::getInstance()->getPlayerByPrefix($data[1]))) {
 							$landdb = iLand::getInstance()->getProvider()->getData($player)[$key];
-							$landdb["Owner"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
+							$landdb["Leader"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
 							iLand::getInstance()->getProvider()->setData($player, $key, $landdb);
 							$this->CompleteForm($player);
 						} else {
@@ -273,6 +282,7 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
+
 
 	private function DeleteLand(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -301,6 +311,7 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
+
 
 	private function CompleteForm(Player $player) : void {
 		$language = iLand::getLanguage();

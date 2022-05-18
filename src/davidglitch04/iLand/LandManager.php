@@ -27,6 +27,7 @@ class LandManager {
 		//NOTHING
 	}
 
+
 	public function PositionToString(Position $position) : string {
 		$x = (int) $position->getX();
 		$y = (int) $position->getY();
@@ -35,6 +36,7 @@ class LandManager {
 		$string = $x . "," . $y . "," . $z . "," . $world;
 		return $string;
 	}
+
 
 	public function StringToPosition(string $string) : Position {
 		$position = explode(",", $string);
@@ -46,6 +48,7 @@ class LandManager {
 		);
 	}
 
+
 	public function testPlayer(Event $event) : bool {
 		if ($event instanceof PlayerInteractEvent) {
 			$player = $event->getPlayer();
@@ -53,7 +56,7 @@ class LandManager {
 			if ($event->getAction() == PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
 				$results = $this->inLand($player->getPosition())['Results'];
 				if ($results['Status']) {
-					if ($results['Data']['Owner'] == $player->getName()) {
+					if ($results['Data']['Leader'] == $player->getName()) {
 						return true;
 					} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true)
 					&& !$results['Data']['Settings']['allow_open_chest']
@@ -71,7 +74,7 @@ class LandManager {
 			$player = $event->getPlayer();
 			$results = $this->inLand($player->getPosition())['Results'];
 			if ($results['Status']) {
-				if ($results['Data']['Owner'] == $player->getName()) {
+				if ($results['Data']['Leader'] == $player->getName()) {
 					return true;
 				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['use_bucket']) {
 					return true;
@@ -82,7 +85,7 @@ class LandManager {
 			$player = $event->getPlayer();
 			$results = $this->inLand($player->getPosition())['Results'];
 			if ($results['Status']) {
-				if ($results['Data']['Owner'] == $player->getName()) {
+				if ($results['Data']['Leader'] == $player->getName()) {
 					return true;
 				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_dropitem']) {
 					return true;
@@ -93,7 +96,7 @@ class LandManager {
 			$player = $event->getEntity();
 			$results = $this->inLand($player->getPosition())['Results'];
 			if ($results['Status']) {
-				if ($results['Data']['Owner'] == $player->getName()) {
+				if ($results['Data']['Leader'] == $player->getName()) {
 					return true;
 				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_pickupitem']) {
 					return true;
@@ -104,13 +107,14 @@ class LandManager {
 		return true;
 	}
 
+
 	public function testBlock(Event $event) : bool {
 		if ($event instanceof BlockBreakEvent) {
 			$block = $event->getBlock();
 			$player = $event->getPlayer();
 			$results = $this->inLand($block->getPosition())['Results'];
 			if ($results['Status']) {
-				if ($results['Data']['Owner'] == $player->getName()) {
+				if ($results['Data']['Leader'] == $player->getName()) {
 					return true;
 				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_destroy']) {
 					return true;
@@ -122,7 +126,7 @@ class LandManager {
 			$player = $event->getPlayer();
 			$results = $this->inLand($block->getPosition())['Results'];
 			if ($results['Status']) {
-				if ($results['Data']['Owner'] == $player->getName()) {
+				if ($results['Data']['Leader'] == $player->getName()) {
 					return true;
 				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_place']) {
 					return true;
@@ -133,6 +137,9 @@ class LandManager {
 		return true;
 	}
 
+	/**
+	 * @return array[]
+	 */
 	public function inLand(Position $position) : array {
 		foreach (iLand::getInstance()->getLands() as $land) {
 			$start = $land->getStart();

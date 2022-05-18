@@ -37,26 +37,32 @@ class iLand extends PluginBase {
 	protected YamlProvider $provider;
 
 	private static Config $config;
-
+	/** @var array|string[] $languages */
 	private array $languages = [
 		'eng',
 		'vie',
 		'zho',
 	];
 
+
 	public static function getLanguage() : Language {
 		return self::$language;
 	}
 
+
 	public static function getDefaultConfig() : Config {
 		return self::$config;
 	}
+
 
 	public function onLoad() : void {
 		$this->setInstance($this);
 		$this->provider = new YamlProvider($this);
 	}
 
+	/**
+	 * @throws libs\CortexPE\Commando\exception\HookAlreadyRegistered
+	 */
 	public function onEnable() : void {
 		$this->provider->initConfig();
 		$this->saveResource("config.json");
@@ -81,20 +87,19 @@ class iLand extends PluginBase {
 		$this->getServer()->getCommandMap()->register('iland', new iLandCommand($this, "iland", self::getLanguage()->translateString("command.land"), ["land"]));
 	}
 
+
 	public function addLands() : void {
 		foreach ($this->getProvider()->getAllReceived() as $json) {
 			$this->lands[] = new Land($json);
 		}
 	}
 
+
 	private function initPack() : void {
 		$libRegRsp = new libRegRsp($this);
 		$libRegRsp->regRsp("iLandPack.mcpack");
 	}
 
-	public function getLands() : array {
-		return $this->lands;
-	}
 
 	private function validateConfigs() : void {
 		$updated = false;
@@ -114,13 +119,16 @@ class iLand extends PluginBase {
 		}
 	}
 
+
 	private function checkUpdater() : void {
 		$this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
 	}
 
+
 	protected function onDisable() : void {
 		$this->getProvider()->save();
 	}
+
 
 	public function initLanguage(string $lang, array $languageFiles) : void {
 		$path = $this->getDataFolder() . 'languages/';
@@ -135,17 +143,26 @@ class iLand extends PluginBase {
 		self::$language = new Language($lang, $path);
 	}
 
+
 	public function getProvider() : YamlProvider {
 		return $this->provider;
 	}
+
 
 	public function getSessionManager() : SessionManager {
 		return new SessionManager();
 	}
 
+
 	public function getLandManager() : LandManager {
 		return new LandManager();
 	}
+
+
+	public function getLands() : array {
+		return $this->lands;
+	}
+
 
 	public function getFileHack() : string {
 		return $this->getFile();
