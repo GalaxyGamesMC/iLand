@@ -20,8 +20,8 @@ class TeleportLandForm {
 			if (!isset($data)) {
 				return;
 			}
-			$dataland = iLand::getInstance()->getProvider()->getAllLand()[$data + 1];
-			$position = iLand::getInstance()->getProvider()->StringToPosition($dataland["Spawn"]);
+			$dataland = iLand::getInstance()->getProvider()->getData($player)[$data + 1];
+			$position = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Spawn"]);
 			$position->getWorld()->loadChunk($position->getX(), $position->getZ());
 			$player->sendTip($language->translateString("api.safetp.tping.talk"));
 			$player->sendTitle($language->translateString("api.safetp.talk.pleasewait"), $language->translateString("api.safetp.tping.foundfoothold"));
@@ -29,7 +29,7 @@ class TeleportLandForm {
 		});
 		$form->setTitle($language->translateString("gui.landtp.title"));
 		$form->setContent($language->translateString("gui.landtp.tip"));
-		foreach (iLand::getInstance()->getProvider()->getAllLand() as $key => $data) {
+		foreach (iLand::getInstance()->getProvider()->getData($player) as $key => $data) {
 			if (strcmp($data["Owner"], $player->getName()) == 0) {
 				$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 			}

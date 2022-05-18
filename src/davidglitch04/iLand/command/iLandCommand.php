@@ -38,7 +38,7 @@ class iLandCommand extends BaseCommand {
 				$z = $sender->getPosition()->getZ();
 				$statusA = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("A");
 				$statusB = iLand::getInstance()->getSessionManager()->getSession($sender)->isNull("B");
-				if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $sender->getWorld())) {
+				if (iLand::getInstance()->getProvider()->isOverlap($sender->getPosition())) {
 					$form = new SimpleForm(function (Player $sender, int|null $data) {
 						if (!isset($data)) {
 							return false;

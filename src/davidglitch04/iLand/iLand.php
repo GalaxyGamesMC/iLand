@@ -11,6 +11,7 @@ use davidglitch04\iLand\libs\JackMD\ConfigUpdater\ConfigUpdater;
 use davidglitch04\iLand\libs\NhanAZ\libRegRsp\libRegRsp;
 use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
+use davidglitch04\iLand\object\Land;
 use davidglitch04\iLand\session\SessionManager;
 use davidglitch04\iLand\updater\GetUpdateInfo;
 use pocketmine\lang\Language;
@@ -30,6 +31,8 @@ class iLand extends PluginBase {
 	private static Language $language;
 
 	public array $session = [];
+
+	public array $lands = [];
 
 	protected YamlProvider $provider;
 
@@ -62,6 +65,7 @@ class iLand extends PluginBase {
 		$this->validateConfigs();
 		$this->initPack();
 		$this->checkUpdater();
+		$this->addLands();
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
@@ -77,9 +81,21 @@ class iLand extends PluginBase {
 		$this->getServer()->getCommandMap()->register('iland', new iLandCommand($this, "iland", self::getLanguage()->translateString("command.land"), ["land"]));
 	}
 
+	public function addLands() : void
+	{
+		foreach ($this->getProvider()->getAllReceived() as $json){
+			$this->lands[] = new Land($json);
+		}
+	}
+
 	private function initPack() : void {
 		$libRegRsp = new libRegRsp($this);
 		$libRegRsp->regRsp("iLandPack.mcpack");
+	}
+
+	public function getLands() : array
+	{
+		return $this->lands;
 	}
 
 	private function validateConfigs() : void {
@@ -127,6 +143,11 @@ class iLand extends PluginBase {
 
 	public function getSessionManager() : SessionManager {
 		return new SessionManager();
+	}
+
+	public function getLandManager() : LandManager 
+	{
+		return new LandManager();
 	}
 
 	public function getFileHack() : string {

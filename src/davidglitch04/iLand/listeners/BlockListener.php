@@ -17,13 +17,13 @@ class BlockListener implements Listener {
 	}
 
 	public function onDestroy(BlockBreakEvent $event) : void {
-		if ($this->iland->getProvider()->testBlock($event) == false) {
+		if ($this->iland->getLandManager()->testBlock($event) == false) {
 			$event->cancel();
 		}
 	}
 
 	public function onPlace(BlockPlaceEvent $event) : void {
-		if ($this->iland->getProvider()->testBlock($event) == false) {
+		if ($this->iland->getLandManager()->testBlock($event) == false) {
 			$event->cancel();
 		}
 	}

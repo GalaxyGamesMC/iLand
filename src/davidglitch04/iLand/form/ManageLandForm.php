@@ -10,7 +10,6 @@ use davidglitch04\iLand\libs\Vecnavium\FormsUI\CustomForm;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
 use pocketmine\player\Player;
 use pocketmine\Server;
-
 use function abs;
 use function count;
 use function floatval;
@@ -34,7 +33,7 @@ class ManageLandForm {
 		});
 		$form->setTitle($language->translateString("gui.landmgr.title"));
 		$form->setContent($language->translateString("gui.landmgr.select"));
-		foreach (iLand::getInstance()->getProvider()->getAllLand() as $key => $data) {
+		foreach (iLand::getInstance()->getProvider()->getData($player) as $key => $data) {
 			if (strcmp($data["Owner"], $player->getName()) == 0) {
 				$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 			}
@@ -44,7 +43,7 @@ class ManageLandForm {
 
 	private function Mgr(Player $player, int $key) {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key) {
 			if (!isset($data)) {
 				return false;
@@ -84,14 +83,14 @@ class ManageLandForm {
 
 	private function LandInfo(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
 		$form = new SimpleForm(function (Player $player, int|null $data) {
 			if (!isset($data)) {
 				return;
 			}
 		});
-		$start = iLand::getInstance()->getProvider()->StringToPosition($dataland["Start"]);
-		$end = iLand::getInstance()->getProvider()->StringToPosition($dataland["End"]);
+		$start = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Start"]);
+		$end = iLand::getInstance()->getLandManager()->StringToPosition($dataland["End"]);
 		$form->setTitle($language->translateString("gui.landmgr.landinfo.title"));
 		$length = abs((int) $start->getX() - (int) $end->getX());
 		$width = abs((int) $start->getZ() - (int) $end->getZ());
@@ -120,18 +119,17 @@ class ManageLandForm {
 			5 => "allow_pickupitem",
 			6 => "allow_destroy"
 		];
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $alltoggle) {
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
+		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $alltoggle, $dataland) {
 			if (!isset($data)) {
 				return;
 			}
-			$landdb = iLand::getInstance()->getProvider()->getData($key);
 			for ($i = 0;$i < count($alltoggle);$i++) {
 				if ($data != 0) {
-					$landdb["Settings"][$alltoggle[$i]] = $data[$i + 1];
+					$dataland["Settings"][$alltoggle[$i]] = $data[$i + 1];
 				}
 			}
-			iLand::getInstance()->getProvider()->setData($key, $landdb);
+			iLand::getInstance()->getProvider()->setData($player, $key, $dataland);
 		});
 		$form->setTitle($language->translateString("gui.landmgr.landperm.title"));
 		$form->addLabel($language->translateString("gui.landmgr.landperm.options.title"));
@@ -144,7 +142,7 @@ class ManageLandForm {
 
 	private function LandTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key) {
 			if (!isset($data)) {
 				return;
@@ -176,7 +174,7 @@ class ManageLandForm {
 				return;
 			}
 			if (isset($data[1])) {
-				$landdb = iLand::getInstance()->getProvider()->getData($key);
+				$landdb = iLand::getInstance()->getProvider()->getData($player)[$key];
 				if (in_array($data[1], $landdb['Members'], true)) {
 					$player->sendMessage($language->translateString("gui.landtrust.fail.alreadyexists"));
 					return;
@@ -186,7 +184,7 @@ class ManageLandForm {
 					return;
 				}
 				$landdb['Members'][] = strtolower($data[1]);
-				iLand::getInstance()->getProvider()->setData($key, $landdb);
+				iLand::getInstance()->getProvider()->setData($player, $key, $landdb);
 				$player->sendMessage($language->translateString("gui.landtrust.addsuccess"));
 			} else {
 				$this->addTrust($player, $key);
@@ -202,14 +200,13 @@ class ManageLandForm {
 	private function rmTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $language) {
+		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $language, $dataland) {
 			if (!isset($data)) {
 				return;
 			}
 			if (isset($data[1])) {
-				$landdb = iLand::getInstance()->getProvider()->getData($key);
-				unset($landdb['Members'][$data[1]]);
-				iLand::getInstance()->getProvider()->setData($key, $landdb);
+				unset($dataland['Members'][$data[1]]);
+				iLand::getInstance()->getProvider()->setData($player, $key, $dataland);
 				$player->sendMessage($language->translateString("gui.landtrust.rmsuccess"));
 			} else {
 				$this->rmTrust($player, $key);
@@ -224,15 +221,14 @@ class ManageLandForm {
 
 	private function LandNickname(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$form = new CustomForm(function (Player $player, array|null $data) use ($key) {
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
+		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $dataland) {
 			if (!isset($data)) {
 				return;
 			}
 			if (isset($data[1])) {
-				$landdb = iLand::getInstance()->getProvider()->getData($key);
-				$landdb["Name"] = $data[1];
-				iLand::getInstance()->getProvider()->setData($key, $landdb);
+				$dataland["Name"] = $data[1];
+				iLand::getInstance()->getProvider()->setData($player, $key, $dataland);
 				$this->CompleteForm($player);
 			}
 		});
@@ -255,9 +251,9 @@ class ManageLandForm {
 					}
 					if (isset($data[1])) {
 						if (!is_null(Server::getInstance()->getPlayerByPrefix($data[1]))) {
-							$landdb = iLand::getInstance()->getProvider()->getData($key);
+							$landdb = iLand::getInstance()->getProvider()->getData($player)[$key];
 							$landdb["Owner"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
-							iLand::getInstance()->getProvider()->setData($key, $landdb);
+							iLand::getInstance()->getProvider()->setData($player, $key, $landdb);
 							$this->CompleteForm($player);
 						} else {
 							$player->sendMessage($language->translateString("gui.general.player"));
@@ -280,9 +276,9 @@ class ManageLandForm {
 
 	private function DeleteLand(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
-		$startpos = iLand::getInstance()->getProvider()->StringToPosition($dataland["Start"]);
-		$endpos = iLand::getInstance()->getProvider()->StringToPosition($dataland["End"]);
+		$dataland = iLand::getInstance()->getProvider()->getData($player)[$key];
+		$startpos = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Start"]);
+		$endpos = iLand::getInstance()->getLandManager()->StringToPosition($dataland["End"]);
 		$length = abs((int) $startpos->getX() - (int) $endpos->getX());
 		$width = abs((int) $startpos->getZ() - (int) $endpos->getZ());
 		$priceperblock = iLand::getDefaultConfig()->get("recycle/area");
@@ -295,7 +291,7 @@ class ManageLandForm {
 			if ($data === 0) {
 				$ecomgr = new EconomyManager();
 				$ecomgr->addMoney($player, floatval($price));
-				iLand::getInstance()->getProvider()->delLand($key);
+				iLand::getInstance()->getProvider()->delLand($player, $key);
 				$this->CompleteForm($player);
 			}
 		});

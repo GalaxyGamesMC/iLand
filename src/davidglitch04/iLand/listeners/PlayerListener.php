@@ -40,7 +40,7 @@ class PlayerListener implements Listener {
 			$statusB = $this->iland->getSessionManager()->getSession($player)->isNull("B");
 			$x = $block->getPosition()->getX();
 			$z = $block->getPosition()->getZ();
-			if (iLand::getInstance()->getProvider()->isOverlap($x, $z, $x, $z, $block->getPosition()->getWorld())) {
+			if (iLand::getInstance()->getProvider()->isOverlap($player->getPosition())) {
 				$event->cancel();
 				$form = new SimpleForm(function (Player $player, int|null $data) {
 					if (!isset($data)) {
@@ -69,26 +69,26 @@ class PlayerListener implements Listener {
 				}
 			}
 		}
-		if (!$this->iland->getProvider()->testPlayer($event)) {
+		if (!$this->iland->getLandManager()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
 	public function onBucket(PlayerBucketEvent $event) : void {
-		if (!$this->iland->getProvider()->testPlayer($event)) {
+		if (!$this->iland->getLandManager()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
 	public function onDrop(PlayerDropItemEvent $event) : void {
-		if (!$this->iland->getProvider()->testPlayer($event)) {
+		if (!$this->iland->getLandManager()->testPlayer($event)) {
 			$event->cancel();
 		}
 	}
 
 	public function onPickup(EntityItemPickupEvent $event) : void {
 		if ($event->getEntity() instanceof Player) {
-			if (!$this->iland->getProvider()->testPlayer($event)) {
+			if (!$this->iland->getLandManager()->testPlayer($event)) {
 				$event->cancel();
 			}
 		}
