@@ -81,9 +81,8 @@ class iLand extends PluginBase {
 		$this->getServer()->getCommandMap()->register('iland', new iLandCommand($this, "iland", self::getLanguage()->translateString("command.land"), ["land"]));
 	}
 
-	public function addLands() : void
-	{
-		foreach ($this->getProvider()->getAllReceived() as $json){
+	public function addLands() : void {
+		foreach ($this->getProvider()->getAllReceived() as $json) {
 			$this->lands[] = new Land($json);
 		}
 	}
@@ -93,8 +92,7 @@ class iLand extends PluginBase {
 		$libRegRsp->regRsp("iLandPack.mcpack");
 	}
 
-	public function getLands() : array
-	{
+	public function getLands() : array {
 		return $this->lands;
 	}
 
@@ -145,8 +143,7 @@ class iLand extends PluginBase {
 		return new SessionManager();
 	}
 
-	public function getLandManager() : LandManager 
-	{
+	public function getLandManager() : LandManager {
 		return new LandManager();
 	}
 

@@ -9,10 +9,14 @@ use davidglitch04\iLand\object\Land;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
+use function count;
+use function file_exists;
+use function json_encode;
+use function mkdir;
 use function strtolower;
+use function trim;
 
 class YamlProvider implements Provider {
-
 	protected iLand $iland;
 
 	protected Config $received;
@@ -23,22 +27,22 @@ class YamlProvider implements Provider {
 
 	public function initConfig() : void {
 		$this->received = new Config($this->iland->getDataFolder() . 'received.yml', Config::YAML);
-		if(!file_exists($this->iland->getDataFolder() . "players/")){
+		if (!file_exists($this->iland->getDataFolder() . "players/")) {
 			@mkdir($this->iland->getDataFolder() . "players/");
 		}
 	}
 
 	public function getData(Player $player) : array {
 		$name = trim(strtolower($player->getName()));
-		if($name === ""){
+		if ($name === "") {
 			return [];
 		}
 		$path = $this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml";
-		if(!file_exists($path)){
+		if (!file_exists($path)) {
 			return [];
-		} else{
+		} else {
 			$config = new Config($path, Config::YAML);
-			return (array)$config->getAll();
+			return (array) $config->getAll();
 		}
 	}
 
@@ -51,16 +55,16 @@ class YamlProvider implements Provider {
 
 	public function CountLand(Player $player) : int {
 		$data = $this->getData($player);
-		if (empty($data)){
+		if (empty($data)) {
 			return 0;
-		} else{
+		} else {
 			return count($data);
 		}
 	}
 
 	public function isOverlap(Position $position) : bool {
-		foreach (iLand::getInstance()->getLands() as $land){
-			if ($land->contains($position)){
+		foreach (iLand::getInstance()->getLands() as $land) {
+			if ($land->contains($position)) {
 				return true;
 			}
 		}
@@ -104,16 +108,16 @@ class YamlProvider implements Provider {
 			"End" => iLand::getInstance()->getLandManager()->PositionToString($positionB)
 		]));
 		$this->received->save();
-		iLand::getInstance()->lands[] = new Land($this->received->get($counts+1));
+		iLand::getInstance()->lands[] = new Land($this->received->get($counts + 1));
 	}
 
-	
+
 
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
-		foreach (iLand::getInstance()->getLands() as $keyland => $data){
-			if ($data->equals($this->getData($player)[$key]["Start"], $this->getData($player)[$key]["End"])){
-				$this->received->remove($keyland+1);
+		foreach (iLand::getInstance()->getLands() as $keyland => $data) {
+			if ($data->equals($this->getData($player)[$key]["Start"], $this->getData($player)[$key]["End"])) {
+				$this->received->remove($keyland + 1);
 				$this->received->save();
 				unset(iLand::getInstance()->lands[$keyland]);
 			}

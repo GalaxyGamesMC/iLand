@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidglitch04\iLand;
 
 use pocketmine\block\Chest;
@@ -13,16 +15,19 @@ use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Server;
 use pocketmine\world\Position;
+use function explode;
+use function in_array;
+use function intval;
+use function max;
+use function min;
+use function strtolower;
 
-class LandManager
-{
+class LandManager {
+	public function __construct() {
+		//NOTHING
+	}
 
-    public function __construct()
-    {
-        //NOTHING
-    }
-
-    public function PositionToString(Position $position) : string {
+	public function PositionToString(Position $position) : string {
 		$x = (int) $position->getX();
 		$y = (int) $position->getY();
 		$z = (int) $position->getZ();
@@ -41,7 +46,7 @@ class LandManager
 		);
 	}
 
-    public function testPlayer(Event $event) : bool {
+	public function testPlayer(Event $event) : bool {
 		if ($event instanceof PlayerInteractEvent) {
 			$player = $event->getPlayer();
 			$block = $event->getBlock();

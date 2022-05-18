@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
-use pocketmine\event\Event;
-use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 
