@@ -6,6 +6,7 @@ namespace davidglitch04\iLand\form;
 
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
+use davidglitch04\iLand\utils\DataUtils;
 use pocketmine\player\Player;
 
 class TeleportLandForm {
@@ -20,7 +21,7 @@ class TeleportLandForm {
 			if (!isset($data)) {
 				return;
 			}
-			$dataland = iLand::getInstance()->getProvider()->getData($player)[$data + 1];
+            $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$data + 1]);
 			$position = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Spawn"]);
 			$position->getWorld()->loadChunk($position->getX(), $position->getZ());
 			$player->sendTip($language->translateString("api.safetp.tping.talk"));

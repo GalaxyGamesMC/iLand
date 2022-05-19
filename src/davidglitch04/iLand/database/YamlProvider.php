@@ -56,6 +56,7 @@ class YamlProvider implements Provider {
 	 */
 	public function setData(Player $player, $key, $landdb) : void {
 		$name = trim(strtolower($player->getName()));
+        $landdb = DataUtils::encode($landdb);
 		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
 		$data->set($key, $landdb);
 		$data->save();
@@ -113,7 +114,7 @@ class YamlProvider implements Provider {
 		];
 		@mkdir($this->iland->getDataFolder() . "players/" . $name[0] . "/");
 		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
-		$data->set($this->CountLand($player) + 1, $landDb);
+		$data->set($this->CountLand($player) + 1, DataUtils::encode($landDb));
 		$data->save();
 		$this->received->set($counts + 1, DataUtils::encode([
 			"Name" => $player->getName(),
@@ -129,8 +130,9 @@ class YamlProvider implements Provider {
 	 */
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
+        $land = DataUtils::decode($this->getData($player)[$key]);
 		foreach (iLand::getInstance()->getLands() as $keyland => $data) {
-			if ($data->equals($this->getData($player)[$key]["Start"], $this->getData($player)[$key]["End"])) {
+			if ($data->equals($land["Start"], $land["End"])) {
 				$this->received->remove($keyland + 1);
 				$this->received->save();
 				unset(iLand::getInstance()->lands[$keyland]);
