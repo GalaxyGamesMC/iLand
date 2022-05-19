@@ -48,7 +48,7 @@ class Land {
 
 	public function getData() : array {
 		foreach ($this->getConfigFile()->getAll() as $lands) {
-            $lands = DataUtils::decode($lands);
+			$lands = DataUtils::decode($lands);
 			if ($lands["Start"] == $this->startpos and $lands["End"] == $this->endpos) {
 				return $lands;
 			}

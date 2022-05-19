@@ -45,7 +45,7 @@ class ManageLandForm {
 	 */
 	private function Mgr(Player $player, int $key) {
 		$language = iLand::getLanguage();
-        $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key) {
 			if (!isset($data)) {
 				return false;
@@ -147,7 +147,7 @@ class ManageLandForm {
 
 	private function LandTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-        $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key) {
 			if (!isset($data)) {
 				return;
@@ -180,7 +180,7 @@ class ManageLandForm {
 				return;
 			}
 			if (isset($data[1])) {
-                $landdb = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+				$landdb = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 				if (in_array($data[1], $landdb['Members'], true)) {
 					$player->sendMessage($language->translateString("gui.landtrust.fail.alreadyexists"));
 					return;
@@ -229,7 +229,7 @@ class ManageLandForm {
 
 	private function LandNickname(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-        $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $dataland) {
 			if (!isset($data)) {
 				return;
@@ -260,7 +260,7 @@ class ManageLandForm {
 					}
 					if (isset($data[1])) {
 						if (!is_null(Server::getInstance()->getPlayerByPrefix($data[1]))) {
-                            $landdb = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+							$landdb = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 							$landdb["Leader"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
 							iLand::getInstance()->getProvider()->setData($player, $key, $landdb);
 							$this->CompleteForm($player);
@@ -286,7 +286,7 @@ class ManageLandForm {
 
 	private function DeleteLand(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-        $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
+		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$startpos = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Start"]);
 		$endpos = iLand::getInstance()->getLandManager()->StringToPosition($dataland["End"]);
 		$length = abs((int) $startpos->getX() - (int) $endpos->getX());

@@ -21,7 +21,7 @@ class TeleportLandForm {
 			if (!isset($data)) {
 				return;
 			}
-            $dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$data + 1]);
+			$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$data + 1]);
 			$position = iLand::getInstance()->getLandManager()->StringToPosition($dataland["Spawn"]);
 			$position->getWorld()->loadChunk($position->getX(), $position->getZ());
 			$player->sendTip($language->translateString("api.safetp.tping.talk"));

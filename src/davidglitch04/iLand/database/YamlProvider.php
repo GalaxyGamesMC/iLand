@@ -56,7 +56,7 @@ class YamlProvider implements Provider {
 	 */
 	public function setData(Player $player, $key, $landdb) : void {
 		$name = trim(strtolower($player->getName()));
-        $landdb = DataUtils::encode($landdb);
+		$landdb = DataUtils::encode($landdb);
 		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
 		$data->set($key, $landdb);
 		$data->save();
@@ -130,7 +130,7 @@ class YamlProvider implements Provider {
 	 */
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
-        $land = DataUtils::decode($this->getData($player)[$key]);
+		$land = DataUtils::decode($this->getData($player)[$key]);
 		foreach (iLand::getInstance()->getLands() as $keyland => $data) {
 			if ($data->equals($land["Start"], $land["End"])) {
 				$this->received->remove($keyland + 1);
