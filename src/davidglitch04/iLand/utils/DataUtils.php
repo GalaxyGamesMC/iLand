@@ -21,7 +21,7 @@ class DataUtils {
 	}
 
 	public static function decode(string $encrypt) : mixed {
-		$decode = json_decode($encrypt);
+		$decode = json_decode(utf8_decode($encrypt));
 		return $decode;
 	}
 
