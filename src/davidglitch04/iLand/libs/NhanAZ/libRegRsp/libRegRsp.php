@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\libs\NhanAZ\libRegRsp;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\resourcepacks\ZippedResourcePack;
+use pocketmine\resourcepacks\ResourcePack;
 use ReflectionClass;
+use Symfony\Component\Filesystem\Path;
+use function array_search;
+use function mb_strtolower;
 use function strtolower;
+use function unlink;
 
 class libRegRsp {
 	public function __construct(
@@ -15,11 +19,8 @@ class libRegRsp {
 	) {
 	}
 
-	public function regRsp(string $packName) {
-		$this->plugin->saveResource($packName, true);
-
+	public function regRsp(ResourcePack $pack) : void {
 		$manager = $this->plugin->getServer()->getResourcePackManager();
-		$pack = new ZippedResourcePack($this->plugin->getDataFolder() . $packName);
 
 		$reflection = new ReflectionClass($manager);
 
@@ -39,5 +40,29 @@ class libRegRsp {
 		$property = $reflection->getProperty("serverForceResources");
 		$property->setAccessible(true);
 		$property->setValue($manager, true);
+	}
+
+	public function unRegRsp(ResourcePack $pack) : void {
+		$manager = $this->plugin->getServer()->getResourcePackManager();
+
+		$reflection = new ReflectionClass($manager);
+
+		$property = $reflection->getProperty("resourcePacks");
+		$property->setAccessible(true);
+		$currentResourcePacks = $property->getValue($manager);
+		$key = array_search($pack, $currentResourcePacks, true);
+		if ($key !== false) {
+			unset($currentResourcePacks[$key]);
+			$property->setValue($manager, $currentResourcePacks);
+		}
+
+		$property = $reflection->getProperty("uuidList");
+		$property->setAccessible(true);
+		$currentUUIDPacks = $property->getValue($manager);
+		if (isset($currentResourcePacks[mb_strtolower($pack->getPackId())])) {
+			unset($currentUUIDPacks[mb_strtolower($pack->getPackId())]);
+			$property->setValue($manager, $currentUUIDPacks);
+		}
+		unlink(Path::join($this->plugin->getDataFolder(), $this->plugin->getName() . '.mcpack'));
 	}
 }

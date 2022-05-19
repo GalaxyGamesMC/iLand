@@ -14,8 +14,10 @@ use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\object\Land;
 use davidglitch04\iLand\session\SessionManager;
 use davidglitch04\iLand\updater\GetUpdateInfo;
+use davidglitch04\iLand\utils\DataUtils;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
+use pocketmine\resourcepacks\ResourcePack;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 use function is_dir;
@@ -33,6 +35,10 @@ class iLand extends PluginBase {
 	public array $session = [];
 
 	public array $lands = [];
+
+	private static ?ResourcePack $pack = null;
+
+	private libRegRsp $libRegRsp;
 
 	protected YamlProvider $provider;
 
@@ -72,6 +78,7 @@ class iLand extends PluginBase {
 		$this->initPack();
 		$this->checkUpdater();
 		$this->addLands();
+
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
@@ -88,6 +95,12 @@ class iLand extends PluginBase {
 	}
 
 
+	protected function onDisable() : void {
+		$this->getProvider()->save();
+		$this->libRegRsp->unRegRsp(self::$pack);
+	}
+
+
 	public function addLands() : void {
 		foreach ($this->getProvider()->getAllReceived() as $json) {
 			$this->lands[] = new Land($json);
@@ -96,8 +109,9 @@ class iLand extends PluginBase {
 
 
 	private function initPack() : void {
-		$libRegRsp = new libRegRsp($this);
-		$libRegRsp->regRsp("iLandPack.mcpack");
+		$pack = self::$pack = DataUtils::zipPack($this);
+		$this->libRegRsp = new libRegRsp($this);
+		$this->libRegRsp->regRsp($pack);
 	}
 
 
@@ -122,11 +136,6 @@ class iLand extends PluginBase {
 
 	private function checkUpdater() : void {
 		$this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
-	}
-
-
-	protected function onDisable() : void {
-		$this->getProvider()->save();
 	}
 
 

@@ -1,0 +1,22 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "iLand Resource Pack",
+        "name": "iLand",
+        "uuid": "73c23efa-d3e7-11ec-9d64-0242ac120002",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 18, 30]
+    },
+    "modules": [
+        {
+            "description": "iLand Resource Pack",
+            "type": "resources",
+            "uuid": "73c241ac-d3e7-11ec-9d64-0242ac120002",
+            "version": [1, 0, 0]
+        }
+    ],
+    "metadata": {
+        "authors":["DavidGlitch04"],
+        "url":"https://github.com/DavidGlitch04"
+    }
+}
