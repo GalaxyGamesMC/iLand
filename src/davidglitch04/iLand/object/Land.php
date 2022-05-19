@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\object;
 
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\utils\DataUtils;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use function explode;
 use function intval;
-use function json_decode;
 use function strtolower;
 use function trim;
 
@@ -22,7 +22,7 @@ class Land {
 	private string $endpos;
 
 	public function __construct(string $json) {
-		$json = (array) json_decode($json);
+		$json = (array) DataUtils::decode($json);
 		$this->leader = $json["Name"];
 		$this->startpos = $json["Start"];
 		$this->endpos = $json["End"];

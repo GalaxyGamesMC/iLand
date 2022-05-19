@@ -6,12 +6,12 @@ namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\object\Land;
+use davidglitch04\iLand\utils\DataUtils;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use function count;
 use function file_exists;
-use function json_encode;
 use function mkdir;
 use function strtolower;
 use function trim;
@@ -115,7 +115,7 @@ class YamlProvider implements Provider {
 		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
 		$data->set($this->CountLand($player) + 1, $landDb);
 		$data->save();
-		$this->received->set($counts + 1, json_encode([
+		$this->received->set($counts + 1, DataUtils::encode([
 			"Name" => $player->getName(),
 			"Start" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
 			"End" => iLand::getInstance()->getLandManager()->PositionToString($positionB)

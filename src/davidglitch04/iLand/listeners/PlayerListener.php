@@ -6,8 +6,8 @@ namespace davidglitch04\iLand\listeners;
 
 use davidglitch04\iLand\form\BuyForm;
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\item\ItemUtils;
 use davidglitch04\iLand\libs\Vecnavium\FormsUI\SimpleForm;
+use davidglitch04\iLand\utils\ItemUtils;
 use pocketmine\event\entity\EntityItemPickupEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerBucketEvent;
@@ -49,7 +49,7 @@ class PlayerListener implements Listener {
 				$event->cancel();
 				$form = new SimpleForm(function (Player $player, int|null $data) {
 					if (!isset($data)) {
-						return false;
+						return;
 					}
 				});
 				$form->setTitle(iLand::getLanguage()->translateString("gui.overlap.title"));

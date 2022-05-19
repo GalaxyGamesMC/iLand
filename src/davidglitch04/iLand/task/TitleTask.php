@@ -26,8 +26,8 @@ class TitleTask extends Task {
 			$this->getHandler()->cancel();
 		}
 		$status = '';
-		$statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("A");
-		$statusB = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull("B");
+		$statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull(location: "A");
+		$statusB = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull(location: "B");
 		if ($statusA) {
 			$status = "A";
 		} elseif ($statusB) {
@@ -39,10 +39,30 @@ class TitleTask extends Task {
 				$posA = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionA();
 				$posB = iLand::getInstance()->getSessionManager()->getSession($this->player)->getPositionB();
 				for ($y = 1;$y <= 255;$y++) {
-					$this->addBorder($this->player, $posA->getX(), $y, $posA->getZ());
-					$this->addBorder($this->player, $posB->getX(), $y, $posB->getZ());
-					$this->addBorder($this->player, $posB->getX(), $y, $posA->getZ());
-					$this->addBorder($this->player, $posA->getX(), $y, $posB->getZ());
+					$this->addBorder(
+						player: $this->player,
+						x: $posA->getX(),
+						y: $y,
+						z: $posA->getZ()
+					);
+					$this->addBorder(
+						player: $this->player,
+						x: $posB->getX(),
+						y: $y,
+						z: $posB->getZ()
+					);
+					$this->addBorder(
+						player: $this->player,
+						x: $posB->getX(),
+						y: $y,
+						z: $posA->getZ()
+					);
+					$this->addBorder(
+						player: $this->player,
+						x: $posA->getX(),
+						y: $y,
+						z: $posB->getZ()
+					);
 				}
 			}
 			$this->player->sendTitle(iLand::getLanguage()->translateString("title.selectland.complete1"), iLand::getLanguage()->translateString("title.selectland.complete2", [ItemUtils::getItem()->getName()]));

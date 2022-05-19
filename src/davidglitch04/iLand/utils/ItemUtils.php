@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\item;
+namespace davidglitch04\iLand\utils;
 
 use davidglitch04\iLand\iLand;
 use pocketmine\item\Item;
