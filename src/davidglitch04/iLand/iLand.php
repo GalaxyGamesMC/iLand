@@ -14,6 +14,7 @@ use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\object\Land;
 use davidglitch04\iLand\session\SessionManager;
 use davidglitch04\iLand\updater\GetUpdateInfo;
+use davidglitch04\PluginUpdater\PluginUpdater;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -120,9 +121,9 @@ class iLand extends PluginBase {
 	}
 
 
-	private function checkUpdater() : void {
-		$this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
-	}
+    private function checkUpdater() : void {
+        $this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
+    }
 
 
 	protected function onDisable() : void {

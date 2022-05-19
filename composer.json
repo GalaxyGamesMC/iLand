@@ -18,6 +18,7 @@
         "cortexpe/commando": "dev-master",
         "friendsofphp/php-cs-fixer": "^3.8",
         "nhanaz/libregrsp": "dev-master",
-        "jackmd/configupdater": "dev-master"
+        "jackmd/configupdater": "dev-master",
+        "davidglitch04/pluginupdater": "dev-master"
     }
 }
