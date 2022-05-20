@@ -15,17 +15,22 @@ use function strtolower;
 use function trim;
 
 class Land {
-	private string $leader;
+	private string $leader = "";
 
-	private string $startpos;
+	private array $members = [];
 
-	private string $endpos;
+	private string $startpos = "";
 
-	public function __construct(string $json) {
-		$json = (array) DataUtils::decode($json);
-		$this->leader = $json["Name"];
-		$this->startpos = $json["Start"];
-		$this->endpos = $json["End"];
+	private string $endpos = "";
+
+	private array $settings = [];
+
+	public function __construct(array $landData) {
+		$this->leader = $landData["Leader"];
+		$this->members = $landData["Members"];
+		$this->startpos = $landData["Start"];
+		$this->endpos = $landData["End"];
+		$this->settings = $landData["Settings"];
 	}
 
 
@@ -41,7 +46,7 @@ class Land {
 
 	public function getConfigFile() : Config {
 		$name = trim(strtolower($this->getLeader()));
-		$path = iLand::getInstance()->getDataFolder() . "players/" . $name[0] . "/$name.yml";
+		$path = iLand::getInstance()->getDataFolder() . "players/" . "/$name.yml";
 		return new Config($path, Config::YAML);
 	}
 
@@ -76,6 +81,14 @@ class Land {
 			intval($position[2]),
 			Server::getInstance()->getWorldManager()->getWorldByName($position[3])
 		);
+	}
+
+	public function getMembers() : array {
+		return $this->members;
+	}
+
+	public function getSettings() : array {
+		return $this->settings;
 	}
 
 

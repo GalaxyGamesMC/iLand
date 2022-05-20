@@ -18,8 +18,7 @@ use pocketmine\world\Position;
 use function explode;
 use function in_array;
 use function intval;
-use function max;
-use function min;
+use function is_null;
 use function strtolower;
 
 class LandManager {
@@ -141,31 +140,21 @@ class LandManager {
 	 * @return array[]
 	 */
 	public function inLand(Position $position) : array {
-		foreach (iLand::getInstance()->getLands() as $land) {
-			$start = $land->getStart();
-			$end = $land->getEnd();
-			$x = $position->getX();
-			$z = $position->getZ();
-			$worldname = $position->getWorld()->getFolderName();
-			$x1 = min($start->getX(), $end->getX());
-			$x2 = max($start->getX(), $end->getX());
-			$z1 = min($start->getZ(), $end->getZ());
-			$z2 = max($start->getZ(), $end->getZ());
-			if (($worldname == $land->getWorldName())
-			&& ($x >= $x1) && ($x <= $x2) && ($z >= $z1) && ($z < $z2)) {
-				return [
-					'Results' => [
-						'Status' => true,
-						'Data' => $land->getData()
-					]
-				];
-			}
+		$land = iLand::getInstance()->getProvider()->getLandByPosition($position);
+		if (!is_null($land)) {
+			return [
+				'Results' => [
+					'Status' => true,
+					'Data' => $land->getData()
+				]
+			];
+		} else {
+			return [
+				'Results' => [
+					'Status' => false,
+					'Data' => null
+				]
+			];
 		}
-		return [
-			'Results' => [
-				'Status' => false,
-				'Data' => null
-			]
-		];
 	}
 }

@@ -88,7 +88,7 @@ class ConfigUpdater {
 		$configData = explode(".", basename($configPath));
 
 		$configName = $configData[0];
-		$configExtension = "json";
+		$configExtension = "yml";
 
 		$originalConfigName = $configName . "." . $configExtension;
 		$oldConfigName = $configName . "_old." . $configExtension;

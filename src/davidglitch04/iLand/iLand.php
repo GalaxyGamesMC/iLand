@@ -11,7 +11,6 @@ use davidglitch04\iLand\libs\JackMD\ConfigUpdater\ConfigUpdater;
 use davidglitch04\iLand\libs\NhanAZ\libRegRsp\libRegRsp;
 use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
-use davidglitch04\iLand\object\Land;
 use davidglitch04\iLand\session\SessionManager;
 use davidglitch04\iLand\updater\GetUpdateInfo;
 use davidglitch04\iLand\utils\DataUtils;
@@ -33,8 +32,6 @@ class iLand extends PluginBase {
 	private static Language $language;
 
 	public array $session = [];
-
-	public array $lands = [];
 
 	private static ?ResourcePack $pack = null;
 
@@ -71,13 +68,12 @@ class iLand extends PluginBase {
 	 */
 	public function onEnable() : void {
 		$this->provider->initConfig();
-		$this->saveResource("config.json");
-		self::$config = new Config($this->getDataFolder() . "config.json", Config::JSON);
+		$this->saveResource("config.yml");
+		self::$config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
 		$this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
 		$this->validateConfigs();
 		$this->initPack();
 		$this->checkUpdater();
-		$this->addLands();
 
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
@@ -96,15 +92,7 @@ class iLand extends PluginBase {
 
 
 	protected function onDisable() : void {
-		$this->getProvider()->save();
 		$this->libRegRsp->unRegRsp(self::$pack);
-	}
-
-
-	public function addLands() : void {
-		foreach ($this->getProvider()->getAllReceived() as $json) {
-			$this->lands[] = new Land($json);
-		}
 	}
 
 
@@ -128,7 +116,7 @@ class iLand extends PluginBase {
 			foreach ($this->languages as $file) {
 				rename($path . $file . '.ini', $path . $file . '_old.ini');
 			}
-			$this->saveResource("config.json");
+			$this->saveResource("config.yml");
 			$this->initLanguage(strval(self::getDefaultConfig()->get('language', 'eng')), $this->languages);
 		}
 	}
@@ -165,11 +153,6 @@ class iLand extends PluginBase {
 
 	public function getLandManager() : LandManager {
 		return new LandManager();
-	}
-
-
-	public function getLands() : array {
-		return $this->lands;
 	}
 
 

@@ -12,6 +12,8 @@ use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use function count;
 use function file_exists;
+use function glob;
+use function is_null;
 use function mkdir;
 use function strtolower;
 use function trim;
@@ -28,7 +30,6 @@ class YamlProvider implements Provider {
 
 
 	public function initConfig() : void {
-		$this->received = new Config($this->iland->getDataFolder() . 'received.yml', Config::YAML);
 		if (!file_exists($this->iland->getDataFolder() . "players/")) {
 			@mkdir($this->iland->getDataFolder() . "players/");
 		}
@@ -40,7 +41,7 @@ class YamlProvider implements Provider {
 		if ($name === "") {
 			return [];
 		}
-		$path = $this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml";
+		$path = $this->iland->getDataFolder() . "players/" . "$name.yml";
 		if (!file_exists($path)) {
 			return [];
 		} else {
@@ -57,7 +58,7 @@ class YamlProvider implements Provider {
 	public function setData(Player $player, $key, $landdb) : void {
 		$name = trim(strtolower($player->getName()));
 		$landdb = DataUtils::encode($landdb);
-		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
+		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
 		$data->set($key, $landdb);
 		$data->save();
 	}
@@ -74,26 +75,21 @@ class YamlProvider implements Provider {
 
 
 	public function isOverlap(Position $position) : bool {
-		foreach (iLand::getInstance()->getLands() as $land) {
-			if ($land->contains($position)) {
-				return true;
-			}
+		if (!is_null($this->getLandByPosition($position))) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
 	 * @throws \JsonException
 	 */
 	public function addLand(
-		Player $player,
+		Player   $player,
 		Position $positionA,
 		Position $positionB
-		) : void {
-		$counts = 0;
-		foreach ((array) $this->received->getAll() as $lands) {
-			$counts = $counts + 1;
-		}
+	) : void {
 		$name = trim(strtolower($player->getName()));
 		$landDb = [
 			"Leader" => $player->getName(),
@@ -112,17 +108,10 @@ class YamlProvider implements Provider {
 				"allow_destroy" => false
 			]
 		];
-		@mkdir($this->iland->getDataFolder() . "players/" . $name[0] . "/");
-		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
+		@mkdir($this->iland->getDataFolder() . "players/");
+		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
 		$data->set($this->CountLand($player) + 1, DataUtils::encode($landDb));
 		$data->save();
-		$this->received->set($counts + 1, DataUtils::encode([
-			"Name" => $player->getName(),
-			"Start" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
-			"End" => iLand::getInstance()->getLandManager()->PositionToString($positionB)
-		]));
-		$this->received->save();
-		iLand::getInstance()->lands[] = new Land($this->received->get($counts + 1));
 	}
 
 	/**
@@ -131,27 +120,29 @@ class YamlProvider implements Provider {
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
 		$land = DataUtils::decode($this->getData($player)[$key]);
-		foreach (iLand::getInstance()->getLands() as $keyland => $data) {
-			if ($data->equals($land["Start"], $land["End"])) {
-				$this->received->remove($keyland + 1);
-				$this->received->save();
-				unset(iLand::getInstance()->lands[$keyland]);
-			}
-		}
-		$data = new Config($this->iland->getDataFolder() . "players/" . $name[0] . "/$name.yml", Config::YAML);
+		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
 		$data->remove($key);
 		$data->save();
 	}
 
-
-	public function getAllReceived() : array {
-		return (array) $this->received->getAll();
-	}
-
-	/**
-	 * @throws \JsonException
-	 */
-	public function save() : void {
-		$this->received->save();
+	public function getLandByPosition(Position $position) : Land|null {
+		$x = $position->x;
+		$z = $position->z;
+		$world = $position->world->getFolderName();
+		foreach (glob($this->iland->getDataFolder() . "players/" . "*.yml") as $filename) {
+			$config = new Config($filename, Config::YAML);
+			foreach ($config->getAll() as $lands) {
+				$lands = DataUtils::decode($lands);
+				$start = $this->iland->getLandManager()->StringToPosition($lands["Start"]);
+				$end = $this->iland->getLandManager()->StringToPosition($lands["End"]);
+				if ($start->getWorld()->getFolderName() == $world) {
+					if (($x <= $end->getX() && $x >= $start->getX()
+						&& $z >= $start->getZ() && $z <= $end->getZ())) {
+						return new Land($lands);
+					}
+				}
+			}
+		}
+		return null;
 	}
 }

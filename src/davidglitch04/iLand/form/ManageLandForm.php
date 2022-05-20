@@ -35,20 +35,19 @@ class ManageLandForm {
 		$form->setTitle($language->translateString("gui.landmgr.title"));
 		$form->setContent($language->translateString("gui.landmgr.select"));
 		foreach (iLand::getInstance()->getProvider()->getData($player) as $key => $data) {
+			$data = DataUtils::decode($data);
 			$form->addButton($data["Name"], 0, "textures/iLand/selectLand");
 		}
 		$player->sendForm($form);
 	}
 
-	/**
-	 * @return void
-	 */
-	private function Mgr(Player $player, int $key) {
+
+	private function Mgr(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$form = new SimpleForm(function (Player $player, int|null $data) use ($key) {
 			if (!isset($data)) {
-				return false;
+				return;
 			}
 			switch ($data) {
 				case 0:
@@ -206,7 +205,7 @@ class ManageLandForm {
 
 	private function rmTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
-		$dataland = iLand::getInstance()->getProvider()->getAllLand()[$key];
+		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
 		$form = new CustomForm(function (Player $player, array|null $data) use ($key, $language, $dataland) {
 			if (!isset($data)) {
 				return;

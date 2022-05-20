@@ -7,21 +7,22 @@ namespace davidglitch04\iLand\utils;
 use davidglitch04\iLand\iLand;
 use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\utils\Filesystem;
-use Symfony\Component\Filesystem\Path;
+use Webmozart\PathUtil\Path;
 use function json_decode;
 use function json_encode;
 use function preg_replace;
 use function str_contains;
+use function utf8_decode;
 use function utf8_encode;
 
 class DataUtils {
-	public static function encode(array $data) : mixed {
+	public static function encode(mixed $data) : mixed {
 		$encode = utf8_encode(json_encode($data));
 		return $encode;
 	}
 
-	public static function decode(string $encrypt) : mixed {
-		$decode = json_decode(utf8_decode($encrypt));
+	public static function decode(mixed $encrypt) : mixed {
+		$decode = json_decode(utf8_decode($encrypt), true);
 		return $decode;
 	}
 

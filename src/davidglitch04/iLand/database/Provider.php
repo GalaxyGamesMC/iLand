@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\database;
 
 use davidglitch04\iLand\iLand;
+use davidglitch04\iLand\object\Land;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 
@@ -30,9 +31,5 @@ interface Provider {
 
 	public function delLand(Player $player, int $key) : void;
 
-
-	public function getAllReceived() : array;
-
-
-	public function save() : void;
+	public function getLandByPosition(Position $position) : Land|null;
 }

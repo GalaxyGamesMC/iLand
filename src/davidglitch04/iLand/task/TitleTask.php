@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace davidglitch04\iLand\task;
 
 use davidglitch04\iLand\iLand;
-use davidglitch04\iLand\item\ItemUtils;
+use davidglitch04\iLand\utils\ItemUtils;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\SpawnParticleEffectPacket;
 use pocketmine\player\Player;
+use pocketmine\scheduler\CancelTaskException;
 use pocketmine\scheduler\Task;
 
 class TitleTask extends Task {
@@ -21,9 +22,8 @@ class TitleTask extends Task {
 
 
 	public function onRun() : void {
-		if (!$this->player->isConnected()
-			or !iLand::getInstance()->getSessionManager()->inSession($this->player)) {
-			$this->getHandler()->cancel();
+		if (!$this->player->isConnected() or !iLand::getInstance()->getSessionManager()->inSession($this->player)) {
+			throw new CancelTaskException();
 		}
 		$status = '';
 		$statusA = iLand::getInstance()->getSessionManager()->getSession($this->player)->isNull(location: "A");

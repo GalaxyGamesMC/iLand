@@ -7,7 +7,7 @@ namespace davidglitch04\iLand\libs\NhanAZ\libRegRsp;
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ResourcePack;
 use ReflectionClass;
-use Symfony\Component\Filesystem\Path;
+use Webmozart\PathUtil\Path;
 use function array_search;
 use function mb_strtolower;
 use function strtolower;
