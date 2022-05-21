@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0-beta",
-  "time": 1652576220,
-  "link": "https://github.com/David-pm-pl/iLand/releases/tag/v1.0.1-beta",
-  "download_link": "https://poggit.pmmp.io/r/175835/iLand_dev-76.phar",
-  "patch_notes": "## Whats New ?\n- Release v1.0.0-beta"
+  "version": "1.0.1",
+  "time": 1653119036,
+  "link": "https://github.com/David-pm-pl/iLand/releases/tag/v1.0.1",
+  "download_link": "https://poggit.pmmp.io/r/175835/iLand_dev-82.phar",
+  "patch_notes": "## Whats New ?\n- Supported Vietnamese language\n- Dev builds\n- Fix land transfer"
 }
