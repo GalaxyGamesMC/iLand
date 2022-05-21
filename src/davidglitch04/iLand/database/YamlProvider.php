@@ -41,7 +41,7 @@ class YamlProvider implements Provider {
 		if ($name === "") {
 			return [];
 		}
-		$path = $this->iland->getDataFolder() . "players/" . "$name.yml";
+		$path = $this->iland->getDataFolder() . "players/" . $name . ".yml";
 		if (!file_exists($path)) {
 			return [];
 		} else {
@@ -58,7 +58,7 @@ class YamlProvider implements Provider {
 	public function setData(Player $player, $key, $landdb) : void {
 		$name = trim(strtolower($player->getName()));
 		$landdb = DataUtils::encode($landdb);
-		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
+		$data = new Config($this->iland->getDataFolder() . "players/" . $name . ".yml", Config::YAML);
 		$data->set($key, $landdb);
 		$data->save();
 	}
@@ -109,7 +109,7 @@ class YamlProvider implements Provider {
 			]
 		];
 		@mkdir($this->iland->getDataFolder() . "players/");
-		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
+		$data = new Config($this->iland->getDataFolder() . "players/" . $name . ".yml", Config::YAML);
 		$data->set($this->CountLand($player) + 1, DataUtils::encode($landDb));
 		$data->save();
 	}
@@ -119,7 +119,7 @@ class YamlProvider implements Provider {
 	 */
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
-		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
+		$data = new Config($this->iland->getDataFolder() . "players/" . $name . ".yml", Config::YAML);
 		$data->remove($key);
 		$data->save();
 	}
