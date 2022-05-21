@@ -1,9 +1,8 @@
-{
-    "version": 280,
-    "language": "eng",
-    "config": "Yaml",
-    "price/area": 70.0,
-    "recycle/area": 35.0,
-    "particel-selected": false,
-    "tool_name": "Wooden_Axe"
-}
+version: 281
+language: "eng"
+config: "Yaml"
+price/area: 70.0
+recycle/area: 35.0
+particel-selected: false
+tool_name: "Wooden_Axe"
+enable-dev-builds: false

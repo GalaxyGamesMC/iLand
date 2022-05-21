@@ -76,6 +76,10 @@ class iLand extends PluginBase {
 		$this->checkUpdater();
 
 		if (VersionInfo::IS_DEVELOPMENT_BUILD) {
+			if (!self::$config->get("enable-dev-builds", false)) {
+				$this->getLogger()->emergency("To use this build anyway, set enable-dev-builds to true in your config.yml");
+				$this->getServer()->forceShutdown();
+			}
 			$this->getLogger()->warning(self::getLanguage()->translateString('is.development.build'));
 		}
 		if (!PacketHooker::isRegistered()) {
