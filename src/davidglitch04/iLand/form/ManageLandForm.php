@@ -259,9 +259,11 @@ class ManageLandForm {
 					}
 					if (isset($data[1])) {
 						if (!is_null(Server::getInstance()->getPlayerByPrefix($data[1]))) {
+                            $target = Server::getInstance()->getPlayerByPrefix($data[1]);
 							$landdb = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
-							$landdb["Leader"] = Server::getInstance()->getPlayerByPrefix($data[1])->getName();
-							iLand::getInstance()->getProvider()->setData($player, $key, $landdb);
+							$landdb["Leader"] = $target->getName();
+                            iLand::getInstance()->getProvider()->delLand($player, $key);
+							iLand::getInstance()->getProvider()->setData($target, $key, $landdb);
 							$this->CompleteForm($player);
 						} else {
 							$player->sendMessage($language->translateString("gui.general.player"));

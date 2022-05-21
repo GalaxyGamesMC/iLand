@@ -119,7 +119,6 @@ class YamlProvider implements Provider {
 	 */
 	public function delLand(Player $player, int $key) : void {
 		$name = trim(strtolower($player->getName()));
-		$land = DataUtils::decode($this->getData($player)[$key]);
 		$data = new Config($this->iland->getDataFolder() . "players/" . "$name.yml", Config::YAML);
 		$data->remove($key);
 		$data->save();
