@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace davidglitch04\iLand;
 
 final class VersionInfo {
-	public const PLUGIN_VERSION = '1.0.1';
-	public const IS_DEVELOPMENT_BUILD = false;
+	public const PLUGIN_VERSION = '1.0.2';
+	public const IS_DEVELOPMENT_BUILD = true;
 	public const BUILD_CHANNEL = 'stable';
 	public const CONFIG_VERSION = 281;
 }
