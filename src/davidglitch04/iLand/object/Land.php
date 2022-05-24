@@ -16,7 +16,7 @@ use function strtolower;
 use function trim;
 
 class Land {
-	private string $leaderxuid = "";
+	private string $leader = "";
 
 	private array $members = [];
 
@@ -27,7 +27,7 @@ class Land {
 	private array $settings = [];
 
 	public function __construct(array $landData) {
-		$this->leaderxuid = $landData["Leader"];
+		$this->leader = $landData["Leader"];
 		$this->members = $landData["Members"];
 		$this->startpos = $landData["Start"];
 		$this->endpos = $landData["End"];
@@ -36,12 +36,12 @@ class Land {
 
 
 	public function getLeader() : string {
-		return $this->leaderxuid;
+		return $this->leader;
 	}
 
 	public function isLeader(Player $player) : bool
 	{
-		return $this->getLeader() == $player->getXuid();
+		return $this->getLeader() == $player->getName();
 	}
 
 	public function getMembers() : array {

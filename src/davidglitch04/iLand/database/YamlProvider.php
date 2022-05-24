@@ -92,7 +92,7 @@ class YamlProvider implements Provider {
 	) : void {
 		$name = trim(strtolower($player->getName()));
 		$landDb = [
-			"Leader" => $player->getXuid(),
+			"Leader" => $player->getName(),
 			"Name" => iLand::getLanguage()->translateString("gui.landmgr.unnamed"),
 			"Spawn" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
 			"Start" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
