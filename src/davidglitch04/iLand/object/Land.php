@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand\object;
@@ -35,7 +55,6 @@ class Land {
 		$this->settings = $landData["Settings"];
 	}
 
-
 	public function getLeader() : string {
 		return $this->leader;
 	}
@@ -56,11 +75,9 @@ class Land {
 		return $this->settings;
 	}
 
-
 	public function getWorldName() : string {
 		return $this->getStart()->getWorld()->getFolderName();
 	}
-
 
 	public function getConfigFile() : Config {
 		$name = trim(strtolower($this->getLeader()));
@@ -68,17 +85,15 @@ class Land {
 		return new Config($path, Config::YAML);
 	}
 
-
 	public function getData() : array {
 		foreach ($this->getConfigFile()->getAll() as $lands) {
 			$lands = DataUtils::decode($lands);
-			if ($lands["Start"] == $this->startpos and $lands["End"] == $this->endpos) {
+			if ($lands["Start"] == $this->startpos && $lands["End"] == $this->endpos) {
 				return $lands;
 			}
 		}
 		return [];
 	}
-
 
 	public function getStart() : Position {
 		$position = explode(",", $this->startpos);
@@ -90,7 +105,6 @@ class Land {
 		);
 	}
 
-
 	public function getEnd() : Position {
 		$position = explode(",", $this->endpos);
 		return new Position(
@@ -100,7 +114,6 @@ class Land {
 			Server::getInstance()->getWorldManager()->getWorldByName($position[3])
 		);
 	}
-
 
 	public function contains(Position $position) : bool {
 		$start = $this->getStart();
@@ -114,10 +127,9 @@ class Land {
 		return false;
 	}
 
-
 	public function equals(string $startpos, string $endpos) : bool {
 		$worldname = iLand::getInstance()->getLandManager()->StringToPosition($startpos)->getWorld()->getFolderName();
-		if ($this->getWorldName() == $worldname and $startpos == $this->startpos and $endpos == $this->endpos) {
+		if ($this->getWorldName() == $worldname && $startpos == $this->startpos && $endpos == $this->endpos) {
 			return true;
 		} else {
 			return false;

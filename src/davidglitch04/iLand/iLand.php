@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand;
@@ -47,16 +67,13 @@ class iLand extends PluginBase {
 		'zho',
 	];
 
-
 	public static function getLanguage() : Language {
 		return self::$language;
 	}
 
-
 	public static function getDefaultConfig() : Config {
 		return self::$config;
 	}
-
 
 	public function onLoad() : void {
 		$this->setInstance($this);
@@ -94,18 +111,15 @@ class iLand extends PluginBase {
 		$this->getServer()->getCommandMap()->register('iland', new iLandCommand($this, "iland", self::getLanguage()->translateString("command.land"), ["land"]));
 	}
 
-
 	protected function onDisable() : void {
 		$this->libRegRsp->unRegRsp(self::$pack);
 	}
-
 
 	private function initPack() : void {
 		$pack = self::$pack = DataUtils::zipPack($this);
 		$this->libRegRsp = new libRegRsp($this);
 		$this->libRegRsp->regRsp($pack);
 	}
-
 
 	private function validateConfigs() : void {
 		$updated = false;
@@ -125,11 +139,9 @@ class iLand extends PluginBase {
 		}
 	}
 
-
 	private function checkUpdater() : void {
 		$this->getServer()->getAsyncPool()->submitTask(new GetUpdateInfo($this, "https://raw.githubusercontent.com/David-pm-pl/iLand/stable/poggit_news.json"));
 	}
-
 
 	public function initLanguage(string $lang, array $languageFiles) : void {
 		$path = $this->getDataFolder() . 'languages/';
@@ -144,21 +156,17 @@ class iLand extends PluginBase {
 		self::$language = new Language($lang, $path);
 	}
 
-
 	public function getProvider() : YamlProvider {
 		return $this->provider;
 	}
-
 
 	public function getSessionManager() : SessionManager {
 		return new SessionManager();
 	}
 
-
 	public function getLandManager() : LandManager {
 		return new LandManager();
 	}
-
 
 	public function getFileHack() : string {
 		return $this->getFile();

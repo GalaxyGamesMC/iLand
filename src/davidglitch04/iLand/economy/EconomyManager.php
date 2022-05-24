@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand\economy;
@@ -24,7 +44,6 @@ final class EconomyManager {
 		unset($manager);
 	}
 
-
 	public function getMoney(Player $player, Closure $callback) : void {
 		switch ($this->eco->getName()) {
 			case "EconomyAPI":
@@ -44,7 +63,6 @@ final class EconomyManager {
 		}
 	}
 
-
 	public function reduceMoney(Player $player, int $amount, Closure $callback) : void {
 		if ($this->eco == null) {
 			$this->plugin->getLogger()->warning("You not have Economy plugin");
@@ -61,7 +79,6 @@ final class EconomyManager {
 				break;
 		}
 	}
-
 
 	public function addMoney(Player $player, float $amount) : void {
 		if ($this->eco == null) {

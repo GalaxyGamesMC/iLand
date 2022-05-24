@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand\utils;
@@ -31,7 +51,7 @@ class DataUtils {
 		$zip = new \ZipArchive();
 		$zip->open(Path::join($iLand->getDataFolder(), $iLand->getName() . '.mcpack'), \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 		foreach ($iLand->getResources() as $resource) {
-			if ($resource->isFile() and str_contains($resource->getPathname(), 'iLandPack')) {
+			if ($resource->isFile() && str_contains($resource->getPathname(), 'iLandPack')) {
 				$relativePath = Path::normalize(preg_replace("/.*[\/\\\\]iLandPack[\/\\\\].*/U", '', $resource->getPathname()));
 				$iLand->saveResource(Path::join('iLandPack', $relativePath), false);
 				$zip->addFile(Path::join($iLand->getDataFolder(), 'iLandPack', $relativePath), $relativePath);

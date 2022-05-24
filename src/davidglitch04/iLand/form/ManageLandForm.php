@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand\form;
@@ -23,7 +43,6 @@ class ManageLandForm {
 		$this->openForm($player);
 	}
 
-
 	private function openForm(Player $player) : void {
 		$language = iLand::getLanguage();
 		$form = new SimpleForm(function (Player $player, int|null $data) {
@@ -40,7 +59,6 @@ class ManageLandForm {
 		}
 		$player->sendForm($form);
 	}
-
 
 	private function Mgr(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -82,7 +100,6 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
-
 	private function LandInfo(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
@@ -109,7 +126,6 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
-
 
 	private function Permission(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -143,7 +159,6 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
-
 	private function LandTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
@@ -170,7 +185,6 @@ class ManageLandForm {
 		$form->setContent($content);
 		$player->sendForm($form);
 	}
-
 
 	private function addTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -202,7 +216,6 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
-
 	private function rmTrust(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
@@ -225,7 +238,6 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
-
 	private function LandNickname(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
@@ -244,7 +256,6 @@ class ManageLandForm {
 		$form->addInput("", $dataland["Name"]);
 		$player->sendForm($form);
 	}
-
 
 	private function LandTransfer(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
@@ -284,7 +295,6 @@ class ManageLandForm {
 		$player->sendForm($form);
 	}
 
-
 	private function DeleteLand(Player $player, int $key) : void {
 		$language = iLand::getLanguage();
 		$dataland = DataUtils::decode(iLand::getInstance()->getProvider()->getData($player)[$key]);
@@ -312,7 +322,6 @@ class ManageLandForm {
 		$form->addButton($language->translateString("gui.general.close"));
 		$player->sendForm($form);
 	}
-
 
 	private function CompleteForm(Player $player) : void {
 		$language = iLand::getLanguage();

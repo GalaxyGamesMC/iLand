@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand\database;
@@ -25,18 +45,15 @@ class YamlProvider implements Provider {
 
 	protected Config $received;
 
-
 	public function __construct(iLand $iland) {
 		$this->iland = $iland;
 	}
-
 
 	public function initConfig() : void {
 		if (!file_exists($this->iland->getDataFolder() . "players/")) {
 			@mkdir($this->iland->getDataFolder() . "players/");
 		}
 	}
-
 
 	public function getData(Player $player) : array {
 		$name = trim(strtolower($player->getName()));
@@ -65,7 +82,6 @@ class YamlProvider implements Provider {
 		$data->save();
 	}
 
-
 	public function CountLand(Player $player) : int {
 		$data = $this->getData($player);
 		if (empty($data)) {
@@ -74,7 +90,6 @@ class YamlProvider implements Provider {
 			return count($data);
 		}
 	}
-
 
 	public function isOverlap(Position $position) : bool {
 		if (!is_null($this->getLandByPosition($position))) {

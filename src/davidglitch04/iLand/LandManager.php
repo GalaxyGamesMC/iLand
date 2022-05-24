@@ -1,5 +1,25 @@
 <?php
 
+/*
+ *
+ *   _____ _                     _
+ *  |_   _| |                   | |
+ *    | | | |     __ _ _ __   __| |
+ *    | | | |    / _` | '_ \ / _` |
+ *   _| |_| |___| (_| | | | | (_| |
+ *  |_____|______\__,_|_| |_|\__,_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author DavidGlitch04
+ * @link https://github.com/David-pm-pl/iLand
+ *
+ *
+*/
+
 declare(strict_types=1);
 
 namespace davidglitch04\iLand;
@@ -25,7 +45,6 @@ class LandManager {
 		//NOTHING
 	}
 
-
 	public function PositionToString(Position $position) : string {
 		$x = (int) $position->getX();
 		$y = (int) $position->getY();
@@ -34,7 +53,6 @@ class LandManager {
 		$string = $x . "," . $y . "," . $z . "," . $world;
 		return $string;
 	}
-
 
 	public function StringToPosition(string $string) : Position {
 		$position = explode(",", $string);
@@ -45,7 +63,6 @@ class LandManager {
 			Server::getInstance()->getWorldManager()->getWorldByName($position[3])
 		);
 	}
-
 
 	public function testPlayer(Event $event) : bool {
 		if ($event instanceof PlayerInteractEvent) {
@@ -93,7 +110,7 @@ class LandManager {
 		} elseif ($event instanceof EntityItemPickupEvent) {
 			$player = $event->getEntity();
 			$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
-			if ($land instanceof Land and $player instanceof Player) {
+			if ($land instanceof Land && $player instanceof Player) {
 				if ($land->isLeader($player)) {
 					return true;
 				} elseif ($land->isMember($player) && $land->getSettings()['allow_pickupitem']) {
@@ -104,7 +121,6 @@ class LandManager {
 		}
 		return true;
 	}
-
 
 	public function testBlock(Event $event) : bool {
 		if ($event instanceof BlockBreakEvent) {
