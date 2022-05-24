@@ -11,6 +11,7 @@ use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use function explode;
+use function in_array;
 use function intval;
 use function strtolower;
 use function trim;
@@ -39,8 +40,7 @@ class Land {
 		return $this->leader;
 	}
 
-	public function isLeader(Player $player) : bool
-	{
+	public function isLeader(Player $player) : bool {
 		return $this->getLeader() == $player->getName();
 	}
 
@@ -48,8 +48,7 @@ class Land {
 		return $this->members;
 	}
 
-	public function isMember(Player $player) : bool
-	{
+	public function isMember(Player $player) : bool {
 		return in_array(strtolower($player->getName()), $this->getMembers(), true);
 	}
 

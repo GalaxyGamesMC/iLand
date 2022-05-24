@@ -53,16 +53,16 @@ class LandManager {
 			$block = $event->getBlock();
 			if ($event->getAction() == PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
 				$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
-				if ($land instanceof Land){
-					if($land->isLeader($player)){
+				if ($land instanceof Land) {
+					if ($land->isLeader($player)) {
 						return true;
 					} elseif ($land->isMember($player)
 					&& !$land->getSettings()['allow_open_chest']
-					&& $block instanceof Chest){
+					&& $block instanceof Chest) {
 						return false;
 					} elseif ($land->isMember($player)
 					&& !$land->getSettings()['use_furnace']
-					&& $block instanceof Furnace){
+					&& $block instanceof Furnace) {
 						return false;
 					}
 					return true;
