@@ -93,7 +93,7 @@ class YamlProvider implements Provider {
 		Position $positionB
 	) : void {
 		$name = trim(strtolower($player->getName()));
-		if ($player->getWorld()->getFolderName() !== $player->getWorld()->getDisplayName()){
+		if ($player->getWorld()->getFolderName() !== $player->getWorld()->getDisplayName()) {
 			throw new WorldException("World foldername does not match world displayname");
 			return;
 		}

@@ -17,12 +17,13 @@ use function utf8_encode;
 
 class DataUtils {
 	public static function encode(mixed $data) : mixed {
-		$encode = utf8_encode(json_encode($data));
+		$encode = utf8_encode(json_encode($data, JSON_HEX_QUOT));
 		return $encode;
 	}
 
 	public static function decode(mixed $encrypt) : mixed {
-		$decode = json_decode(utf8_decode($encrypt), true);
+		$depth = 512;
+		$decode = json_decode(utf8_decode($encrypt), true, $depth, JSON_HEX_QUOT);
 		return $decode;
 	}
 
