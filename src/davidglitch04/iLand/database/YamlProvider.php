@@ -10,6 +10,8 @@ use davidglitch04\iLand\utils\DataUtils;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
+use pocketmine\world\WorldException;
+
 use function count;
 use function file_exists;
 use function glob;
@@ -91,7 +93,13 @@ class YamlProvider implements Provider {
 		Position $positionB
 	) : void {
 		$name = trim(strtolower($player->getName()));
-		$landDb = [
+		if ($player->getWorld()->getFolderName() !== $player->getWorld()->getDisplayName()){
+			throw new WorldException("World foldername does not match world displayname");
+			return;
+		}
+		@mkdir($this->iland->getDataFolder() . "players/");
+		$data = new Config($this->iland->getDataFolder() . "players/" . $name . ".yml", Config::YAML);
+		$data->set($this->CountLand($player) + 1, DataUtils::encode([
 			"Leader" => $player->getName(),
 			"Name" => iLand::getLanguage()->translateString("gui.landmgr.unnamed"),
 			"Spawn" => iLand::getInstance()->getLandManager()->PositionToString($positionA),
@@ -107,10 +115,7 @@ class YamlProvider implements Provider {
 				"allow_pickupitem" => false,
 				"allow_destroy" => false
 			]
-		];
-		@mkdir($this->iland->getDataFolder() . "players/");
-		$data = new Config($this->iland->getDataFolder() . "players/" . $name . ".yml", Config::YAML);
-		$data->set($this->CountLand($player) + 1, DataUtils::encode($landDb));
+		]));
 		$data->save();
 	}
 
