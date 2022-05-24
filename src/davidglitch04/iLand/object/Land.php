@@ -6,6 +6,7 @@ namespace davidglitch04\iLand\object;
 
 use davidglitch04\iLand\iLand;
 use davidglitch04\iLand\utils\DataUtils;
+use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
@@ -15,7 +16,7 @@ use function strtolower;
 use function trim;
 
 class Land {
-	private string $leader = "";
+	private string $leaderxuid = "";
 
 	private array $members = [];
 
@@ -26,7 +27,7 @@ class Land {
 	private array $settings = [];
 
 	public function __construct(array $landData) {
-		$this->leader = $landData["Leader"];
+		$this->leaderxuid = $landData["Leader"];
 		$this->members = $landData["Members"];
 		$this->startpos = $landData["Start"];
 		$this->endpos = $landData["End"];
@@ -35,7 +36,25 @@ class Land {
 
 
 	public function getLeader() : string {
-		return $this->leader;
+		return $this->leaderxuid;
+	}
+
+	public function isLeader(Player $player) : bool
+	{
+		return $this->getLeader() == $player->getXuid();
+	}
+
+	public function getMembers() : array {
+		return $this->members;
+	}
+
+	public function isMember(Player $player) : bool
+	{
+		return in_array(strtolower($player->getName()), $this->getMembers(), true);
+	}
+
+	public function getSettings() : array {
+		return $this->settings;
 	}
 
 
@@ -81,14 +100,6 @@ class Land {
 			intval($position[2]),
 			Server::getInstance()->getWorldManager()->getWorldByName($position[3])
 		);
-	}
-
-	public function getMembers() : array {
-		return $this->members;
-	}
-
-	public function getSettings() : array {
-		return $this->settings;
 	}
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace davidglitch04\iLand;
 
+use davidglitch04\iLand\object\Land;
 use pocketmine\block\Chest;
 use pocketmine\block\Furnace;
 use pocketmine\event\block\BlockBreakEvent;
@@ -13,13 +14,11 @@ use pocketmine\event\Event;
 use pocketmine\event\player\PlayerBucketEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\Position;
 use function explode;
-use function in_array;
 use function intval;
-use function is_null;
-use function strtolower;
 
 class LandManager {
 	public function __construct() {
@@ -53,17 +52,17 @@ class LandManager {
 			$player = $event->getPlayer();
 			$block = $event->getBlock();
 			if ($event->getAction() == PlayerInteractEvent::RIGHT_CLICK_BLOCK) {
-				$results = $this->inLand($player->getPosition())['Results'];
-				if ($results['Status']) {
-					if ($results['Data']['Leader'] == $player->getName()) {
+				$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
+				if ($land instanceof Land){
+					if($land->isLeader($player)){
 						return true;
-					} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true)
-					&& !$results['Data']['Settings']['allow_open_chest']
-					&& $block instanceof Chest) {
+					} elseif ($land->isMember($player)
+					&& !$land->getSettings()['allow_open_chest']
+					&& $block instanceof Chest){
 						return false;
-					} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true)
-					&& !$results['Data']['Settings']['use_furnace']
-					&& $block instanceof Furnace) {
+					} elseif ($land->isMember($player)
+					&& !$land->getSettings()['use_furnace']
+					&& $block instanceof Furnace){
 						return false;
 					}
 					return true;
@@ -71,33 +70,33 @@ class LandManager {
 			}
 		} elseif ($event instanceof PlayerBucketEvent) {
 			$player = $event->getPlayer();
-			$results = $this->inLand($player->getPosition())['Results'];
-			if ($results['Status']) {
-				if ($results['Data']['Leader'] == $player->getName()) {
+			$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
+			if ($land instanceof Land) {
+				if ($land->isLeader($player)) {
 					return true;
-				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['use_bucket']) {
+				} elseif ($land->isMember($player) && $land->getSettings()['use_bucket']) {
 					return true;
 				}
 				return false;
 			}
 		} elseif ($event instanceof PlayerDropItemEvent) {
 			$player = $event->getPlayer();
-			$results = $this->inLand($player->getPosition())['Results'];
-			if ($results['Status']) {
-				if ($results['Data']['Leader'] == $player->getName()) {
+			$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
+			if ($land instanceof Land) {
+				if ($land->isLeader($player)) {
 					return true;
-				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_dropitem']) {
+				} elseif ($land->isMember($player) && $land->getSettings()['allow_dropitem']) {
 					return true;
 				}
 				return false;
 			}
 		} elseif ($event instanceof EntityItemPickupEvent) {
 			$player = $event->getEntity();
-			$results = $this->inLand($player->getPosition())['Results'];
-			if ($results['Status']) {
-				if ($results['Data']['Leader'] == $player->getName()) {
+			$land = iLand::getInstance()->getProvider()->getLandByPosition($player->getPosition());
+			if ($land instanceof Land and $player instanceof Player) {
+				if ($land->isLeader($player)) {
 					return true;
-				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_pickupitem']) {
+				} elseif ($land->isMember($player) && $land->getSettings()['allow_pickupitem']) {
 					return true;
 				}
 				return false;
@@ -111,11 +110,11 @@ class LandManager {
 		if ($event instanceof BlockBreakEvent) {
 			$block = $event->getBlock();
 			$player = $event->getPlayer();
-			$results = $this->inLand($block->getPosition())['Results'];
-			if ($results['Status']) {
-				if ($results['Data']['Leader'] == $player->getName()) {
+			$land = iLand::getInstance()->getProvider()->getLandByPosition($block->getPosition());
+			if ($land instanceof Land) {
+				if ($land->isLeader($player)) {
 					return true;
-				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_destroy']) {
+				} elseif ($land->isMember($player) && $land->getSettings()['allow_destroy']) {
 					return true;
 				}
 				return false;
@@ -123,38 +122,16 @@ class LandManager {
 		} elseif ($event instanceof BlockPlaceEvent) {
 			$block = $event->getBlock();
 			$player = $event->getPlayer();
-			$results = $this->inLand($block->getPosition())['Results'];
-			if ($results['Status']) {
-				if ($results['Data']['Leader'] == $player->getName()) {
+			$land = iLand::getInstance()->getProvider()->getLandByPosition($block->getPosition());
+			if ($land instanceof Land) {
+				if ($land->isLeader($player)) {
 					return true;
-				} elseif (in_array(strtolower($player->getName()), $results['Data']['Members'], true) && $results['Data']['Settings']['allow_place']) {
+				} elseif ($land->isMember($player) && $land->getSettings()['allow_place']) {
 					return true;
 				}
 				return false;
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * @return array[]
-	 */
-	public function inLand(Position $position) : array {
-		$land = iLand::getInstance()->getProvider()->getLandByPosition($position);
-		if (!is_null($land)) {
-			return [
-				'Results' => [
-					'Status' => true,
-					'Data' => $land->getData()
-				]
-			];
-		} else {
-			return [
-				'Results' => [
-					'Status' => false,
-					'Data' => null
-				]
-			];
-		}
 	}
 }
