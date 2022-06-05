@@ -37,8 +37,8 @@
 
 # Additional Notes
 
-- If you found bugs or want to give suggestions, please visit <a href="https://github.com/David-pm-pl/iLand/issues">here</a> or join our Discord server.
-- We accept all contributions! If you want to contribute, please make a pull request in <a href="https://github.com/David-pm-pl/iLand/pulls">here</a>.
+- If you found bugs or want to give suggestions, please visit <a href="https://github.com/BlockMagicDev/iLand/issues">here</a> or join our Discord server.
+- We accept all contributions! If you want to contribute, please make a pull request in <a href="https://github.com/BlockMagicDev/iLand/pulls">here</a>.
 
 # Credits
 
