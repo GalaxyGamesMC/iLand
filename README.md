@@ -1,6 +1,6 @@
 <h1>iLand<img src="assets/images/icon.png" height="64" width="64" align="left"></img></h1><br/>
 
-[![Lint](https://poggit.pmmp.io/ci.shield/David-pm-pl/iLand/iLand)](https://poggit.pmmp.io/ci/David-pm-pl/iLand/iLand)
+[![Lint](https://poggit.pmmp.io/ci.shield/BlockMagicDev/iLand/iLand)](https://poggit.pmmp.io/ci/BlockMagicDev/iLand/iLand)
 
 **Powerful land plugin, based on PMMP**
 
