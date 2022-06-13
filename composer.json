@@ -14,7 +14,6 @@
         }
     ],
     "require": {
-      "jasonwynn10/libpmquery": "dev-master",
       "php": "^8.0.18",
       "pocketmine/pocketmine-mp": "4.4.2"
     },
