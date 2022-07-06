@@ -28,12 +28,12 @@ use davidglitch04\iLand\command\iLandCommand;
 use davidglitch04\iLand\database\YamlProvider;
 use davidglitch04\iLand\libs\CortexPE\Commando\PacketHooker;
 use davidglitch04\iLand\libs\JackMD\ConfigUpdater\ConfigUpdater;
-use davidglitch04\iLand\libs\NhanAZ\libRegRsp\libRegRsp;
 use davidglitch04\iLand\listeners\BlockListener;
 use davidglitch04\iLand\listeners\PlayerListener;
 use davidglitch04\iLand\session\SessionManager;
 use davidglitch04\iLand\updater\GetUpdateInfo;
 use davidglitch04\iLand\utils\DataUtils;
+use davidglitch04\iLand\utils\RspUtils;
 use pocketmine\lang\Language;
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ResourcePack;
@@ -55,7 +55,7 @@ class iLand extends PluginBase {
 
 	private static ?ResourcePack $pack = null;
 
-	private libRegRsp $libRegRsp;
+	private RspUtils $RspUtils;
 
 	protected YamlProvider $provider;
 
@@ -112,13 +112,13 @@ class iLand extends PluginBase {
 	}
 
 	protected function onDisable() : void {
-		$this->libRegRsp->unRegRsp(self::$pack);
+		$this->RspUtils->unRegRsp(self::$pack);
 	}
 
 	private function initPack() : void {
 		$pack = self::$pack = DataUtils::zipPack($this);
-		$this->libRegRsp = new libRegRsp($this);
-		$this->libRegRsp->regRsp($pack);
+		$this->RspUtils = new RspUtils($this);
+		$this->RspUtils->regRsp($pack);
 	}
 
 	private function validateConfigs() : void {

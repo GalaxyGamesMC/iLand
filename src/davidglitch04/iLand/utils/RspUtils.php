@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace davidglitch04\iLand\libs\NhanAZ\libRegRsp;
+namespace davidglitch04\iLand\utils;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ResourcePack;
@@ -13,7 +13,7 @@ use function mb_strtolower;
 use function strtolower;
 use function unlink;
 
-class libRegRsp {
+class RspUtils {
 	public function __construct(
 		private PluginBase $plugin
 	) {
