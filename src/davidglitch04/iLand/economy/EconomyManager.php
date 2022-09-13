@@ -90,7 +90,7 @@ final class EconomyManager {
 				$this->eco->addMoney($player, $amount);
 				break;
 			case "BedrockEconomy":
-				$this->eco->getAPI() - addToPlayerBalance($player->getName(), $amount);
+				$this->eco->getAPI()->addToPlayerBalance($player->getName(), $amount);
 				break;
 		}
 	}
