@@ -29,7 +29,6 @@ use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\player\Player;
 use pocketmine\Server;
-use function addToPlayerBalance;
 use function assert;
 use function ceil;
 use function is_float;
