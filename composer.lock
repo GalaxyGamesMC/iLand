@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4a1a15a4a5c11b35e8b1113b3d6cc7c",
+    "content-hash": "f032e00a65d4ad973479e9b4fb15e43a",
     "packages": [
         {
             "name": "adhocore/json-comment",
-            "version": "1.1.2",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adhocore/php-json-comment.git",
-                "reference": "fc2f76979f0a44a5f5bc2a2b600d0762fe0e78e7"
+                "reference": "651023f9fe52e9efa2198cbaf6e481d1968e2377"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adhocore/php-json-comment/zipball/fc2f76979f0a44a5f5bc2a2b600d0762fe0e78e7",
-                "reference": "fc2f76979f0a44a5f5bc2a2b600d0762fe0e78e7",
+                "url": "https://api.github.com/repos/adhocore/php-json-comment/zipball/651023f9fe52e9efa2198cbaf6e481d1968e2377",
+                "reference": "651023f9fe52e9efa2198cbaf6e481d1968e2377",
                 "shasum": ""
             },
             "require": {
@@ -51,15 +51,19 @@
             ],
             "support": {
                 "issues": "https://github.com/adhocore/php-json-comment/issues",
-                "source": "https://github.com/adhocore/php-json-comment/tree/1.1.2"
+                "source": "https://github.com/adhocore/php-json-comment/tree/1.2.1"
             },
             "funding": [
                 {
                     "url": "https://paypal.me/ji10",
                     "type": "custom"
+                },
+                {
+                    "url": "https://github.com/adhocore",
+                    "type": "github"
                 }
             ],
-            "time": "2021-04-09T03:06:06+00:00"
+            "time": "2022-10-02T11:22:07+00:00"
         },
         {
             "name": "brick/math",
@@ -245,16 +249,16 @@
         },
         {
             "name": "pocketmine/bedrock-data",
-            "version": "1.11.0+bedrock-1.19.30",
+            "version": "1.12.0+bedrock-1.19.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pmmp/BedrockData.git",
-                "reference": "2cca1d48421db20740ffd1ce67b40b91acc61187"
+                "reference": "32690f1dac05608b558fe7c40b6d634772c8e416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/BedrockData/zipball/2cca1d48421db20740ffd1ce67b40b91acc61187",
-                "reference": "2cca1d48421db20740ffd1ce67b40b91acc61187",
+                "url": "https://api.github.com/repos/pmmp/BedrockData/zipball/32690f1dac05608b558fe7c40b6d634772c8e416",
+                "reference": "32690f1dac05608b558fe7c40b6d634772c8e416",
                 "shasum": ""
             },
             "type": "library",
@@ -265,22 +269,22 @@
             "description": "Blobs of data generated from Minecraft: Bedrock Edition, used by PocketMine-MP",
             "support": {
                 "issues": "https://github.com/pmmp/BedrockData/issues",
-                "source": "https://github.com/pmmp/BedrockData/tree/bedrock-1.19.30"
+                "source": "https://github.com/pmmp/BedrockData/tree/bedrock-1.19.40"
             },
-            "time": "2022-09-20T18:19:22+00:00"
+            "time": "2022-10-25T21:45:24+00:00"
         },
         {
             "name": "pocketmine/bedrock-protocol",
-            "version": "13.0.0+bedrock-1.19.30",
+            "version": "14.0.0+bedrock-1.19.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pmmp/BedrockProtocol.git",
-                "reference": "94de2221676ca717587e1ff4e45445c24ada1749"
+                "reference": "b455a742779fee94d25f931cc2cbf6b2c5d61c1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/BedrockProtocol/zipball/94de2221676ca717587e1ff4e45445c24ada1749",
-                "reference": "94de2221676ca717587e1ff4e45445c24ada1749",
+                "url": "https://api.github.com/repos/pmmp/BedrockProtocol/zipball/b455a742779fee94d25f931cc2cbf6b2c5d61c1f",
+                "reference": "b455a742779fee94d25f931cc2cbf6b2c5d61c1f",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +298,7 @@
                 "ramsey/uuid": "^4.1"
             },
             "require-dev": {
-                "phpstan/phpstan": "1.8.0",
+                "phpstan/phpstan": "1.8.8",
                 "phpstan/phpstan-phpunit": "^1.0.0",
                 "phpstan/phpstan-strict-rules": "^1.0.0",
                 "phpunit/phpunit": "^9.5"
@@ -312,9 +316,9 @@
             "description": "An implementation of the Minecraft: Bedrock Edition protocol in PHP",
             "support": {
                 "issues": "https://github.com/pmmp/BedrockProtocol/issues",
-                "source": "https://github.com/pmmp/BedrockProtocol/tree/bedrock-1.19.30"
+                "source": "https://github.com/pmmp/BedrockProtocol/tree/bedrock-1.19.40"
             },
-            "time": "2022-09-20T18:35:00+00:00"
+            "time": "2022-10-25T21:51:46+00:00"
         },
         {
             "name": "pocketmine/binaryutils",
@@ -723,16 +727,16 @@
         },
         {
             "name": "pocketmine/pocketmine-mp",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pmmp/PocketMine-MP.git",
-                "reference": "785dc7125614b074dbe8c4d80fbd51a24c8e9011"
+                "reference": "0d5287bf0bd7138113e1c154d3c3a3b83a407d82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/PocketMine-MP/zipball/785dc7125614b074dbe8c4d80fbd51a24c8e9011",
-                "reference": "785dc7125614b074dbe8c4d80fbd51a24c8e9011",
+                "url": "https://api.github.com/repos/pmmp/PocketMine-MP/zipball/0d5287bf0bd7138113e1c154d3c3a3b83a407d82",
+                "reference": "0d5287bf0bd7138113e1c154d3c3a3b83a407d82",
                 "shasum": ""
             },
             "require": {
@@ -765,8 +769,8 @@
                 "netresearch/jsonmapper": "^4.0",
                 "php": "^8.0",
                 "php-64bit": "*",
-                "pocketmine/bedrock-data": "~1.11.0+bedrock-1.19.30",
-                "pocketmine/bedrock-protocol": "~13.0.0+bedrock-1.19.30",
+                "pocketmine/bedrock-data": "~1.12.0+bedrock-1.19.40",
+                "pocketmine/bedrock-protocol": "~14.0.0+bedrock-1.19.40",
                 "pocketmine/binaryutils": "^0.2.1",
                 "pocketmine/callback-validator": "^1.0.2",
                 "pocketmine/classloader": "^0.2.0",
@@ -784,7 +788,7 @@
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
-                "phpstan/phpstan": "1.8.5",
+                "phpstan/phpstan": "1.8.11",
                 "phpstan/phpstan-phpunit": "^1.1.0",
                 "phpstan/phpstan-strict-rules": "^1.2.0",
                 "phpunit/phpunit": "^9.2"
@@ -806,7 +810,7 @@
             "homepage": "https://pmmp.io",
             "support": {
                 "issues": "https://github.com/pmmp/PocketMine-MP/issues",
-                "source": "https://github.com/pmmp/PocketMine-MP/tree/4.9.0"
+                "source": "https://github.com/pmmp/PocketMine-MP/tree/4.10.0"
             },
             "funding": [
                 {
@@ -818,7 +822,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-09-20T19:09:38+00:00"
+            "time": "2022-10-26T00:19:02+00:00"
         },
         {
             "name": "pocketmine/raklib",
